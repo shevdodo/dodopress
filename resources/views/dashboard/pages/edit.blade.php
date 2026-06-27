@@ -237,6 +237,7 @@
                         <option value="default" {{ old('template', $page->template) == 'default' ? 'selected' : '' }}>Default Template</option>
                         <option value="full-width" {{ old('template', $page->template) == 'full-width' ? 'selected' : '' }}>Full Width</option>
                         <option value="blank" {{ old('template', $page->template) == 'blank' ? 'selected' : '' }}>Blank (Raw HTML)</option>
+                        <option value="contact" {{ old('template', $page->template) == 'contact' ? 'selected' : '' }}>Contact Page</option>
                     </select>
                 </div>
 
@@ -273,7 +274,7 @@
         @endif
     </form>
 
-    @if($page->template !== 'homepage')
+    @if($page->template !== 'homepage' && $page->template !== 'contact')
     <style>
         /* Hide TinyMCE API Key Warning */
         .tox-notifications-container { display: none !important; }

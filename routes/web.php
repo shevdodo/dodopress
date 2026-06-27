@@ -234,5 +234,9 @@ Route::get('/{slug}', function ($slug) {
     if ($page->template === 'homepage') {
         return redirect('/');
     }
+    // If page has contact template, render the professional contact view
+    if ($page->template === 'contact') {
+        return view('pages.contact', compact('page'));
+    }
     return view('page', compact('page'));
 })->name('page.show');

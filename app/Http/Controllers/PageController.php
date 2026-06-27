@@ -127,6 +127,14 @@ class PageController extends Controller
             $data['slug'] = '__homepage__';
         }
 
+        // Handle contact page structured content
+        if ($page->template === 'contact' && $request->has('cp')) {
+            $cp = $request->input('cp');
+            $data['content'] = json_encode($cp);
+            $data['template'] = 'contact';
+            $data['status'] = 'published';
+        }
+
         $page->update($data);
 
         return redirect()->route('superuser.pages.index')->with('status', 'Page updated successfully.');
