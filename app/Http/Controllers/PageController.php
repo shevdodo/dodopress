@@ -11,8 +11,33 @@ class PageController extends Controller
 {
     public function index()
     {
-        // Load homepage first, then rest of pages
+        // Auto-create homepage if it doesn't exist
         $homePage = Page::where('slug', '__homepage__')->first();
+        if (!$homePage) {
+            $homePage = Page::create([
+                'title'    => 'Home',
+                'slug'     => '__homepage__',
+                'content'  => json_encode([
+                    'hero_badge'    => 'Koleksi Eksklusif 2024',
+                    'hero_title'    => "Keanggunan Tradisi\ndalam Balutan Modern",
+                    'hero_subtitle' => 'Temukan koleksi batik terbaik yang dirancang khusus untuk menyempurnakan gaya Anda di setiap momen istimewa.',
+                    'hero_cta_primary'   => 'Belanja Sekarang',
+                    'hero_cta_secondary' => 'Lihat Jurnal',
+                    'categories_title'   => 'Kategori Pilihan',
+                    'products_title'     => 'Produk Unggulan',
+                    'products_subtitle'  => 'Temukan koleksi batik pilihan kami yang dibuat dengan penuh keahlian dan cinta.',
+                    'vp_title_1' => 'Kualitas Premium',
+                    'vp_desc_1'  => 'Dibuat dari bahan pilihan dengan teknik membatik terbaik yang diwariskan turun-temurun.',
+                    'vp_title_2' => 'Harga Bersaing',
+                    'vp_desc_2'  => 'Dapatkan koleksi batik eksklusif dengan harga yang sesuai dengan kualitas premium yang kami tawarkan.',
+                    'vp_title_3' => 'Layanan Cepat',
+                    'vp_desc_3'  => 'Tim kami siap membantu Anda dengan layanan responsif untuk setiap pertanyaan dan pemesanan.',
+                ]),
+                'status'   => 'published',
+                'template' => 'homepage',
+                'order'    => 0,
+            ]);
+        }
         $pages = Page::where('slug', '!=', '__homepage__')->with(['category', 'parent'])->orderBy('order')->latest()->paginate(10);
         return view('dashboard.pages.index', compact('pages', 'homePage'));
     }
