@@ -47,16 +47,16 @@
                 </div>
                 <div class="space-y-4">
                     <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-1">Badge Text <span class="text-xs text-gray-400 font-normal">(mis: "Koleksi Eksklusif")</span></label>
-                        <input type="text" name="hp[hero_badge]" value="{{ $hpContent['hero_badge'] ?? 'Koleksi Eksklusif' }}" class="w-full border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:border-brand-500 focus:ring-brand-500/20 focus:ring">
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Badge Text <span class="text-xs text-gray-400 font-normal">(mis: "Selamat Datang")</span></label>
+                        <input type="text" name="hp[hero_badge]" value="{{ $hpContent['hero_badge'] ?? 'Selamat Datang' }}" class="w-full border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:border-brand-500 focus:ring-brand-500/20 focus:ring">
                     </div>
                     <div>
                         <label class="block text-sm font-semibold text-gray-700 mb-1">Judul Utama <span class="text-xs text-gray-400 font-normal">(gunakan Enter untuk baris baru)</span></label>
-                        <textarea name="hp[hero_title]" rows="2" class="w-full border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:border-brand-500 focus:ring-brand-500/20 focus:ring">{{ $hpContent['hero_title'] ?? "Keanggunan Tradisi\ndalam Balutan Modern" }}</textarea>
+                        <textarea name="hp[hero_title]" rows="2" class="w-full border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:border-brand-500 focus:ring-brand-500/20 focus:ring">{{ $hpContent['hero_title'] ?? "Bangun Website\nImpian Anda" }}</textarea>
                     </div>
                     <div>
                         <label class="block text-sm font-semibold text-gray-700 mb-1">Subjudul / Deskripsi Hero</label>
-                        <textarea name="hp[hero_subtitle]" rows="2" class="w-full border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:border-brand-500 focus:ring-brand-500/20 focus:ring">{{ $hpContent['hero_subtitle'] ?? 'Temukan koleksi batik terbaik yang dirancang khusus untuk menyempurnakan gaya Anda di setiap momen.' }}</textarea>
+                        <textarea name="hp[hero_subtitle]" rows="2" class="w-full border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:border-brand-500 focus:ring-brand-500/20 focus:ring">{{ $hpContent['hero_subtitle'] ?? 'Platform CMS profesional yang dirancang untuk membantu Anda membangun dan mengelola website dengan mudah dan cepat.' }}</textarea>
                     </div>
                     <div>
                         <x-media-picker name="hero_bg" label="Gambar Background Hero (Slider)" :current="$hpContent['hero_bg'] ?? ''" preview-size="lg" />
@@ -64,11 +64,11 @@
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label class="block text-sm font-semibold text-gray-700 mb-1">Tombol Utama (CTA)</label>
-                            <input type="text" name="hp[hero_cta_primary]" value="{{ $hpContent['hero_cta_primary'] ?? 'Belanja Sekarang' }}" class="w-full border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:border-brand-500 focus:ring-brand-500/20 focus:ring">
+                            <input type="text" name="hp[hero_cta_primary]" value="{{ $hpContent['hero_cta_primary'] ?? 'Mulai Sekarang' }}" class="w-full border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:border-brand-500 focus:ring-brand-500/20 focus:ring">
                         </div>
                         <div>
                             <label class="block text-sm font-semibold text-gray-700 mb-1">Tombol Kedua</label>
-                            <input type="text" name="hp[hero_cta_secondary]" value="{{ $hpContent['hero_cta_secondary'] ?? 'Lihat Jurnal' }}" class="w-full border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:border-brand-500 focus:ring-brand-500/20 focus:ring">
+                            <input type="text" name="hp[hero_cta_secondary]" value="{{ $hpContent['hero_cta_secondary'] ?? 'Pelajari Lebih Lanjut' }}" class="w-full border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:border-brand-500 focus:ring-brand-500/20 focus:ring">
                         </div>
                     </div>
                 </div>
@@ -85,15 +85,15 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-sm font-semibold text-gray-700 mb-1">Judul Seksi Kategori</label>
-                        <input type="text" name="hp[categories_title]" value="{{ $hpContent['categories_title'] ?? 'Kategori Pilihan' }}" class="w-full border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:border-brand-500 focus:ring-brand-500/20 focus:ring">
+                        <input type="text" name="hp[categories_title]" value="{{ $hpContent['categories_title'] ?? 'Jelajahi Kategori' }}" class="w-full border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:border-brand-500 focus:ring-brand-500/20 focus:ring">
                     </div>
                     <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-1">Judul Seksi Produk Terbaru</label>
-                        <input type="text" name="hp[products_title]" value="{{ $hpContent['products_title'] ?? 'Koleksi Terbaru' }}" class="w-full border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:border-brand-500 focus:ring-brand-500/20 focus:ring">
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Judul Seksi Produk & Layanan</label>
+                        <input type="text" name="hp[products_title]" value="{{ $hpContent['products_title'] ?? 'Produk Unggulan' }}" class="w-full border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:border-brand-500 focus:ring-brand-500/20 focus:ring">
                     </div>
                     <div class="sm:col-span-2">
                         <label class="block text-sm font-semibold text-gray-700 mb-1">Subjudul Seksi Produk</label>
-                        <input type="text" name="hp[products_subtitle]" value="{{ $hpContent['products_subtitle'] ?? 'Pilihan busana batik terbaik untuk gaya Anda.' }}" class="w-full border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:border-brand-500 focus:ring-brand-500/20 focus:ring">
+                        <input type="text" name="hp[products_subtitle]" value="{{ $hpContent['products_subtitle'] ?? 'Temukan berbagai produk dan layanan terbaik kami.' }}" class="w-full border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:border-brand-500 focus:ring-brand-500/20 focus:ring">
                     </div>
                 </div>
             </div>
@@ -154,9 +154,9 @@
                     <h3 class="font-bold text-gray-900">Seksi Keunggulan (3 Kolom)</h3>
                 </div>
                 <div class="space-y-5">
-                    @foreach([['1','Kualitas Premium','Dibuat dari bahan pilihan dengan teknik membatik terbaik yang diwariskan turun-temurun.'],
-                              ['2','Harga Kompetitif','Dapatkan koleksi batik eksklusif dengan harga yang sesuai dengan kualitas yang diberikan.'],
-                              ['3','Layanan Cepat','Tim kami siap membantu Anda dengan layanan responsif untuk setiap pertanyaan dan pemesanan.']] as [$n, $defTitle, $defDesc])
+                    @foreach([['1','Kualitas Terbaik','Kami menggunakan teknologi dan standar terbaik untuk memberikan hasil yang optimal bagi Anda.'],
+                              ['2','Harga Terjangkau','Nikmati layanan berkualitas dengan harga yang kompetitif dan transparan tanpa biaya tersembunyi.'],
+                              ['3','Dukungan 24/7','Tim support profesional kami siap membantu Anda kapan pun Anda membutuhkannya.']] as [$n, $defTitle, $defDesc])
                     <div class="p-4 bg-gray-50 rounded-xl">
                         <p class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3">Poin {{ $n }}</p>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">

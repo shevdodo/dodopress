@@ -222,9 +222,17 @@ try {
     // DB might not be ready yet
 }
 
+// Redirect direct access to __homepage__ slug to root
 Route::get('/{slug}', function ($slug) {
+    if ($slug === '__homepage__') {
+        return redirect('/');
+    }
     $page = \App\Models\Page::where('slug', $slug)
         ->where('status', 'published')
         ->firstOrFail();
+    // If page has homepage template, redirect to root
+    if ($page->template === 'homepage') {
+        return redirect('/');
+    }
     return view('page', compact('page'));
 })->name('page.show');

@@ -23,9 +23,9 @@
     }
     $latestPosts = \App\Models\Post::where('status', 'published')->latest()->take(3)->get();
     $testimonials = [
-        ['name' => 'Sari Dewi', 'role' => 'Pelanggan Setia', 'text' => 'Batiknya luar biasa!'],
-        ['name' => 'Adi Pratama', 'role' => 'Kolektor Batik', 'text' => 'Kualitas batik tidak diragukan lagi.'],
-        ['name' => 'Maya Indah', 'role' => 'Desainer', 'text' => 'Produknya selalu konsisten berkualitas.'],
+        ['name' => 'Ahmad Fauzi', 'role' => 'Pengusaha', 'text' => 'Platform ini sangat membantu bisnis saya berkembang pesat!'],
+        ['name' => 'Dewi Sartika', 'role' => 'Content Creator', 'text' => 'Sangat mudah digunakan, fiturnya lengkap dan supportnya cepat.'],
+        ['name' => 'Budi Santoso', 'role' => 'Owner Toko Online', 'text' => 'CMS terbaik yang pernah saya gunakan. Sangat direkomendasikan!'],
     ];
 @endphp
 
@@ -71,30 +71,30 @@
                     <div class="animate-fade-in-up stagger-1">
                         <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-sm font-semibold tracking-wider uppercase shadow-lg mb-8">
                             <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                            {{ $hc('hero_badge', 'Koleksi Eksklusif 2024') }}
+                            {{ $hc('hero_badge', 'Selamat Datang') }}
                         </span>
                     </div>
                     <h1 class="animate-fade-in-up stagger-2 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6 tracking-tight">
-                        {!! nl2br(e($hc('hero_title', "Keanggunan Tradisi\ndalam Balutan Modern"))) !!}
+                        {!! nl2br(e($hc('hero_title', "Bangun Website\nImpian Anda"))) !!}
                     </h1>
                     <p class="animate-fade-in-up stagger-3 text-lg sm:text-xl text-gray-200 max-w-2xl mb-10 leading-relaxed">
-                        {{ $hc('hero_subtitle', 'Temukan koleksi batik terbaik untuk menyempurnakan gaya Anda.') }}
+                        {{ $hc('hero_subtitle', 'Platform CMS profesional yang dirancang untuk membantu Anda membangun dan mengelola website dengan mudah dan cepat.') }}
                     </p>
                     <div class="animate-fade-in-up stagger-4 flex flex-col sm:flex-row items-center gap-4">
                         <a href="{{ route('product.index') }}" class="group relative inline-flex items-center gap-2 px-8 py-4 bg-brand-600 text-white rounded-full text-lg font-bold hover:bg-brand-700 transition-all duration-300 shadow-2xl overflow-hidden">
                             <span class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></span>
-                            {{ $hc('hero_cta_primary', 'Belanja Sekarang') }}
+                            {{ $hc('hero_cta_primary', 'Mulai Sekarang') }}
                             <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
                         </a>
                         <a href="{{ route('post.index') }}" class="inline-flex items-center gap-2 px-8 py-4 border-2 border-white/30 text-white rounded-full text-lg font-bold hover:bg-white hover:text-gray-900 backdrop-blur-sm transition-all duration-300 group">
-                            {{ $hc('hero_cta_secondary', 'Lihat Jurnal') }}
+                            {{ $hc('hero_cta_secondary', 'Pelajari Lebih Lanjut') }}
                             <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
                         </a>
                     </div>
                     <div class="animate-fade-in-up stagger-5 mt-16 grid grid-cols-3 gap-8 max-w-lg">
-                        <div><div class="text-3xl sm:text-4xl font-bold text-white">50+</div><div class="text-sm text-gray-300 mt-1">Koleksi</div></div>
-                        <div><div class="text-3xl sm:text-4xl font-bold text-white">1000+</div><div class="text-sm text-gray-300 mt-1">Pelanggan</div></div>
-                        <div><div class="text-3xl sm:text-4xl font-bold text-white">5★</div><div class="text-sm text-gray-300 mt-1">Ulasan</div></div>
+                        <div><div class="text-3xl sm:text-4xl font-bold text-white">10+</div><div class="text-sm text-gray-300 mt-1">Tahun Pengalaman</div></div>
+                        <div><div class="text-3xl sm:text-4xl font-bold text-white">500+</div><div class="text-sm text-gray-300 mt-1">Klien Puas</div></div>
+                        <div><div class="text-3xl sm:text-4xl font-bold text-white">99%</div><div class="text-sm text-gray-300 mt-1">Uptime</div></div>
                     </div>
                 </div>
             </div>
@@ -113,7 +113,7 @@
             <div class="bg-white rounded-3xl shadow-2xl p-8 sm:p-12">
                 <div class="text-center mb-12">
                     <span class="text-brand-600 font-semibold text-sm tracking-widest uppercase">Kategori</span>
-                    <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mt-2">{{ $hc('categories_title', 'Kategori Pilihan') }}</h2>
+                    <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mt-2">{{ $hc('categories_title', 'Jelajahi Kategori') }}</h2>
                     <div class="w-20 h-1 bg-gradient-to-r from-brand-400 to-brand-600 mx-auto mt-4 rounded-full"></div>
                 </div>
                 @php
@@ -153,10 +153,10 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row md:items-end md:justify-between mb-12 sm:mb-16">
                 <div>
-                    <span class="text-brand-600 font-semibold text-sm tracking-widest uppercase">Produk</span>
+                    <span class="text-brand-600 font-semibold text-sm tracking-widest uppercase">Produk & Layanan</span>
                     <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mt-2">{{ $hc('products_title', 'Produk Unggulan') }}</h2>
                     <div class="w-20 h-1 bg-gradient-to-r from-brand-400 to-brand-600 mt-4 rounded-full"></div>
-                    <p class="mt-6 text-gray-600 max-w-xl text-lg">{{ $hc('products_subtitle', 'Temukan koleksi batik pilihan kami.') }}</p>
+                    <p class="mt-6 text-gray-600 max-w-xl text-lg">{{ $hc('products_subtitle', 'Temukan berbagai produk dan layanan terbaik kami.') }}</p>
                 </div>
                 <a href="{{ route('product.index') }}" class="hidden md:inline-flex items-center gap-2 mt-4 md:mt-0 px-6 py-3 border-2 border-brand-200 text-brand-700 rounded-full font-bold hover:bg-brand-50 hover:border-brand-300 transition-all duration-300 group">
                     Lihat Semua <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
@@ -243,22 +243,22 @@
                     <div class="w-20 h-20 mx-auto bg-gradient-to-br from-brand-500/20 to-brand-700/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 border border-brand-700/30">
                         <svg class="w-10 h-10 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" /></svg>
                     </div>
-                    <h3 class="text-xl font-bold mb-4">{{ $hc('vp_title_1', 'Kualitas Premium') }}</h3>
-                    <p class="text-brand-200 leading-relaxed">{{ $hc('vp_desc_1', 'Dibuat dari bahan pilihan dengan teknik membatik terbaik yang diwariskan turun-temurun.') }}</p>
+                    <h3 class="text-xl font-bold mb-4">{{ $hc('vp_title_1', 'Kualitas Terbaik') }}</h3>
+                    <p class="text-brand-200 leading-relaxed">{{ $hc('vp_desc_1', 'Kami menggunakan teknologi dan standar terbaik untuk memberikan hasil yang optimal bagi Anda.') }}</p>
                 </div>
                 <div class="text-center group">
                     <div class="w-20 h-20 mx-auto bg-gradient-to-br from-brand-500/20 to-brand-700/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 border border-brand-700/30">
                         <svg class="w-10 h-10 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                     </div>
-                    <h3 class="text-xl font-bold mb-4">{{ $hc('vp_title_2', 'Harga Bersaing') }}</h3>
-                    <p class="text-brand-200 leading-relaxed">{{ $hc('vp_desc_2', 'Dapatkan koleksi batik eksklusif dengan harga yang sesuai dengan kualitas premium yang kami tawarkan.') }}</p>
+                    <h3 class="text-xl font-bold mb-4">{{ $hc('vp_title_2', 'Harga Terjangkau') }}</h3>
+                    <p class="text-brand-200 leading-relaxed">{{ $hc('vp_desc_2', 'Nikmati layanan berkualitas dengan harga yang kompetitif dan transparan tanpa biaya tersembunyi.') }}</p>
                 </div>
                 <div class="text-center group">
                     <div class="w-20 h-20 mx-auto bg-gradient-to-br from-brand-500/20 to-brand-700/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 border border-brand-700/30">
                         <svg class="w-10 h-10 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
                     </div>
-                    <h3 class="text-xl font-bold mb-4">{{ $hc('vp_title_3', 'Layanan Cepat') }}</h3>
-                    <p class="text-brand-200 leading-relaxed">{{ $hc('vp_desc_3', 'Tim kami siap membantu Anda dengan layanan responsif untuk setiap pertanyaan dan pemesanan.') }}</p>
+                    <h3 class="text-xl font-bold mb-4">{{ $hc('vp_title_3', 'Dukungan 24/7') }}</h3>
+                    <p class="text-brand-200 leading-relaxed">{{ $hc('vp_desc_3', 'Tim support profesional kami siap membantu Anda kapan pun Anda membutuhkannya.') }}</p>
                 </div>
             </div>
         </div>
@@ -360,8 +360,8 @@
             <div class="absolute bottom-0 left-0 w-64 h-64 bg-white rounded-full blur-3xl"></div>
         </div>
         <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4">Dapatkan Update Koleksi Terbaru</h2>
-            <p class="text-lg text-brand-200 mb-10 max-w-2xl mx-auto">Berlangganan newsletter untuk info koleksi batik terbaru dan penawaran spesial.</p>
+            <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4">Tetap Terhubung Dengan Kami</h2>
+            <p class="text-lg text-brand-200 mb-10 max-w-2xl mx-auto">Berlangganan newsletter kami untuk mendapatkan informasi terbaru, tips, dan penawaran menarik.</p>
             <div class="flex flex-col sm:flex-row items-center gap-4 max-w-lg mx-auto">
                 <input type="email" placeholder="Masukkan email Anda"
                     class="w-full px-6 py-4 rounded-full border-0 bg-white/10 backdrop-blur-sm text-white placeholder-brand-300 focus:outline-none focus:ring-2 focus:ring-white/30 text-base">

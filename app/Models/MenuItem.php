@@ -35,8 +35,8 @@ class MenuItem extends Model
         if ($this->type === 'page') {
             $page = Page::find($this->reference_id);
             if (!$page) return '#';
-            // Home page (slug = 'home') always resolves to root /
-            if ($page->slug === 'home') return url('/');
+            // Home page resolves to root /
+            if ($page->slug === 'home' || $page->template === 'homepage') return url('/');
             return url('/' . $page->slug);
         }
 
