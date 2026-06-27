@@ -11,6 +11,19 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\MediaController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\InstallController;
+
+/*
+|--------------------------------------------------------------------------
+| Installer Routes
+|--------------------------------------------------------------------------
+*/
+Route::get('/install', [InstallController::class, 'requirements'])->name('install.requirements');
+Route::get('/install/database', [InstallController::class, 'database'])->name('install.database');
+Route::post('/install/database', [InstallController::class, 'processDatabase'])->name('install.database.process');
+Route::get('/install/admin', [InstallController::class, 'admin'])->name('install.admin');
+Route::post('/install/admin', [InstallController::class, 'processAdmin'])->name('install.admin.process');
+Route::get('/install/complete', [InstallController::class, 'complete'])->name('install.complete');
 
 /*
 |--------------------------------------------------------------------------
