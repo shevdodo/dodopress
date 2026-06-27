@@ -32,7 +32,7 @@ class DefaultMenuSeeder extends Seeder
         $items = [
             [
                 'title'        => 'Home',
-                'url'          => '/home',
+                'url'          => '/',
                 'type'         => 'page',
                 'reference_id' => $pages['home'] ?? null,
                 'order'        => 1,
