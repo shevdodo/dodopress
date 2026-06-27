@@ -28,5 +28,8 @@ class DatabaseSeeder extends Seeder
             'email' => 'super@example.com',
             'role' => 'superuser',
         ]);
+
+        $this->call(DefaultPagesSeeder::class);
+        $this->call(DefaultMenuSeeder::class);
     }
 }
