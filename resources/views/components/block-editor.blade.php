@@ -120,5 +120,112 @@
 .dd-repeater-remove:hover { background: #fecaca; }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
-<script>window.DD_BLOCKS = @json($allBlocks);</script>
-<script src="{{ asset('js/block-editor.js') }}"></script>
+<script>
+    window.DD_BLOCKS = @json($allBlocks);
+    window.DD_STORAGE_URL = '{{ asset("storage") }}/';
+</script><script src="{{ asset('js/block-editor.js') }}?v={{ filemtime(public_path('js/block-editor.js')) }}"></script>
+
+{{-- Global Media Library Modal for Block Editor --}}
+<div id="dd-global-media-modal"
+    x-data="globalMediaModal()"
+    x-show="open"
+    @open-global-media.window="openModal($event.detail.callback)"
+    @keydown.escape.window="open = false"
+    class="fixed inset-0 z-[200] flex items-center justify-center bg-gray-900/60 backdrop-blur-sm"
+    style="display:none">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-4xl mx-4 max-h-[85vh] flex flex-col overflow-hidden" @click.stop>
+        <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between bg-gray-50">
+            <h3 class="font-bold text-gray-900 text-lg">Pilih dari Media</h3>
+            <div class="flex items-center gap-3">
+                <input x-model="search" @input.debounce.400ms="loadMedia()"
+                    type="text" placeholder="Cari gambar..."
+                    class="text-sm border-gray-300 rounded-lg px-3 py-1.5 focus:border-brand-500 focus:ring focus:ring-brand-500/20">
+                <button type="button" @click="open = false" class="text-gray-400 hover:text-gray-600 transition">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+            </div>
+        </div>
+        <div class="flex-1 overflow-y-auto p-6 relative">
+            <template x-if="loading">
+                <div class="flex items-center justify-center h-48">
+                    <svg class="animate-spin w-8 h-8 text-brand-500" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+                    </svg>
+                </div>
+            </template>
+            <template x-if="!loading && files.length === 0">
+                <div class="text-center py-16 text-gray-400">
+                    <p class="font-medium">Belum ada gambar di media library</p>
+                </div>
+            </template>
+            <div x-show="!loading && files.length > 0" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-3">
+                <template x-for="file in files" :key="file.path">
+                    <button type="button" @click="selectFile(file)"
+                        :class="selected && selected.path === file.path ? 'ring-2 ring-brand-500 ring-offset-2' : 'hover:ring-2 hover:ring-gray-300 hover:ring-offset-1'"
+                        class="relative aspect-square rounded-lg overflow-hidden bg-gray-100 transition group">
+                        <img :src="file.url" :alt="file.name" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition"></div>
+                        <template x-if="selected && selected.path === file.path">
+                            <div class="absolute top-1 right-1 bg-brand-500 rounded-full w-5 h-5 flex items-center justify-center">
+                                <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            </div>
+                        </template>
+                    </button>
+                </template>
+            </div>
+        </div>
+        <div class="px-6 py-4 border-t border-gray-100 flex items-center justify-between bg-gray-50">
+            <p x-show="selected" class="text-sm text-gray-600 truncate max-w-xs" x-text="selected ? selected.name : ''"></p>
+            <div class="flex gap-3 ml-auto">
+                <button type="button" @click="open = false" class="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 font-medium transition">Batal</button>
+                <button type="button" @click="confirmSelect()" :disabled="!selected" :class="selected ? 'bg-brand-600 hover:bg-brand-700 text-white' : 'bg-gray-200 text-gray-400 cursor-not-allowed'" class="px-5 py-2 text-sm font-semibold rounded-xl transition shadow-sm">Pilih Gambar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function globalMediaModal() {
+        return {
+            open: false,
+            loading: false,
+            files: [],
+            selected: null,
+            search: '',
+            callback: null,
+
+            openModal(cb) {
+                this.callback = cb;
+                this.open = true;
+                this.search = '';
+                this.$nextTick(() => {
+                    this.loadMedia();
+                });
+            },
+            loadMedia() {
+                this.loading = true;
+                this.selected = null;
+                const querySearch = this.search || '';
+                fetch(`{{ route('superuser.media.api') }}?type=image&search=${encodeURIComponent(querySearch)}&_t=${new Date().getTime()}`)
+                    .then(r => r.json())
+                    .then(data => {
+                        this.files = data.files || [];
+                        this.loading = false;
+                    })
+                    .catch(() => { this.loading = false; });
+            },
+            selectFile(file) {
+                this.selected = file;
+            },
+            confirmSelect() {
+                if (!this.selected || !this.callback) return;
+                // Just pass the path so the frontend asset helper can render it properly, 
+                // or the URL if it works directly. Dodopress block frontend might expect relative path for asset('storage/..')
+                // Let's pass the relative path.
+                this.callback(this.selected.path, this.selected.url);
+                this.open = false;
+            }
+        }
+    }
+</script>

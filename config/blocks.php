@@ -532,5 +532,455 @@ Impian Anda',
         'social_yt' => '',
       ),
     ),
+    'about' => 
+    array (
+      'name' => 'About Page',
+      'icon' => '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>',
+      'component' => 'components.blocks.about',
+      'fields' => 
+      array (
+        'badge' => 
+        array (
+          'type' => 'text',
+          'label' => 'Badge Hero',
+        ),
+        'title' => 
+        array (
+          'type' => 'text',
+          'label' => 'Judul Hero',
+        ),
+        'subtitle' => 
+        array (
+          'type' => 'textarea',
+          'label' => 'Subtitle Hero',
+        ),
+        'hero_bg' => 
+        array (
+          'type' => 'image',
+          'label' => 'Gambar Background',
+        ),
+        'story_title' => 
+        array (
+          'type' => 'text',
+          'label' => 'Judul Cerita',
+        ),
+        'story_content' => 
+        array (
+          'type' => 'textarea',
+          'label' => 'Konten Cerita',
+        ),
+        'story_image' => 
+        array (
+          'type' => 'image',
+          'label' => 'Gambar Cerita',
+        ),
+        'vision_title' => 
+        array (
+          'type' => 'text',
+          'label' => 'Judul Visi',
+        ),
+        'vision_text' => 
+        array (
+          'type' => 'textarea',
+          'label' => 'Teks Visi',
+        ),
+        'mission_title' => 
+        array (
+          'type' => 'text',
+          'label' => 'Judul Misi',
+        ),
+        'mission_text' => 
+        array (
+          'type' => 'textarea',
+          'label' => 'Teks Misi',
+        ),
+        'stats' => 
+        array (
+          'type' => 'repeater',
+          'label' => 'Statistik',
+          'subfields' => 
+          array (
+            0 => 
+            array (
+              'key' => 'number',
+              'type' => 'text',
+              'label' => 'Angka (Mis: 10+)',
+            ),
+            1 => 
+            array (
+              'key' => 'label',
+              'type' => 'text',
+              'label' => 'Label (Mis: Tahun Pengalaman)',
+            ),
+          ),
+        ),
+      ),
+      'default' => 
+      array (
+        'badge' => 'Tentang Kami',
+        'title' => 'Mengenal Lebih Dekat',
+        'subtitle' => 'Kami berdedikasi untuk memberikan solusi terbaik dan inovatif bagi kebutuhan digital Anda.',
+        'hero_bg' => '',
+        'story_title' => 'Cerita Perjalanan Kami',
+        'story_content' => 'Berawal dari visi sederhana, kami terus berkembang dan berinovasi. Tim kami terdiri dari para ahli yang bersemangat untuk menciptakan produk yang berdampak positif.',
+        'story_image' => '',
+        'vision_title' => 'Visi Kami',
+        'vision_text' => 'Menjadi pelopor inovasi digital yang memberikan nilai tambah bagi masyarakat dan bisnis di seluruh dunia.',
+        'mission_title' => 'Misi Kami',
+        'mission_text' => 'Mengembangkan produk berkualitas, membangun kolaborasi yang kuat, dan terus beradaptasi dengan teknologi terbaru.',
+        'stats' => 
+        array (
+          0 => 
+          array (
+            'number' => '10+',
+            'label' => 'Tahun Pengalaman',
+          ),
+          1 => 
+          array (
+            'number' => '500+',
+            'label' => 'Klien Bahagia',
+          ),
+          2 => 
+          array (
+            'number' => '50+',
+            'label' => 'Anggota Tim',
+          ),
+        ),
+      ),
+    ),
+    'home_hero' => 
+    array (
+      'name' => 'Home Hero',
+      'icon' => '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"/></svg>',
+      'component' => 'components.blocks.home_hero',
+      'fields' => 
+      array (
+        'hero_bg' => 
+        array (
+          'type' => 'image',
+          'label' => 'Gambar Latar',
+        ),
+        'badge' => 
+        array (
+          'type' => 'text',
+          'label' => 'Badge Text',
+        ),
+        'title' => 
+        array (
+          'type' => 'textarea',
+          'label' => 'Judul',
+        ),
+        'subtitle' => 
+        array (
+          'type' => 'textarea',
+          'label' => 'Sub Judul',
+        ),
+        'cta_primary_text' => 
+        array (
+          'type' => 'text',
+          'label' => 'Tombol Utama (Teks)',
+        ),
+        'cta_primary_link' => 
+        array (
+          'type' => 'text',
+          'label' => 'Tombol Utama (Link)',
+        ),
+        'cta_secondary_text' => 
+        array (
+          'type' => 'text',
+          'label' => 'Tombol Kedua (Teks)',
+        ),
+        'cta_secondary_link' => 
+        array (
+          'type' => 'text',
+          'label' => 'Tombol Kedua (Link)',
+        ),
+        'stats' => 
+        array (
+          'type' => 'repeater',
+          'label' => 'Statistik',
+          'subfields' => 
+          array (
+            0 => 
+            array (
+              'key' => 'number',
+              'type' => 'text',
+              'label' => 'Angka',
+            ),
+            1 => 
+            array (
+              'key' => 'label',
+              'type' => 'text',
+              'label' => 'Label',
+            ),
+          ),
+        ),
+      ),
+      'default' => 
+      array (
+        'hero_bg' => '',
+        'badge' => 'Selamat Datang',
+        'title' => 'Bangun Website
+Impian Anda',
+        'subtitle' => 'Platform CMS profesional yang dirancang untuk membantu Anda membangun dan mengelola website dengan mudah dan cepat.',
+        'cta_primary_text' => 'Mulai Sekarang',
+        'cta_primary_link' => '/products',
+        'cta_secondary_text' => 'Pelajari Lebih Lanjut',
+        'cta_secondary_link' => '/posts',
+        'stats' => 
+        array (
+          0 => 
+          array (
+            'number' => '10+',
+            'label' => 'Tahun Pengalaman',
+          ),
+          1 => 
+          array (
+            'number' => '500+',
+            'label' => 'Klien Puas',
+          ),
+          2 => 
+          array (
+            'number' => '99%',
+            'label' => 'Uptime',
+          ),
+        ),
+      ),
+    ),
+    'home_categories' => 
+    array (
+      'name' => 'Home Kategori',
+      'icon' => '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>',
+      'component' => 'components.blocks.home_categories',
+      'fields' => 
+      array (
+        'title' => 
+        array (
+          'type' => 'text',
+          'label' => 'Judul Kategori',
+        ),
+        'category_ids' => 
+        array (
+          'type' => 'text',
+          'label' => 'ID Kategori (opsional, pisahkan dengan koma)',
+        ),
+      ),
+      'default' => 
+      array (
+        'title' => 'Jelajahi Kategori',
+        'category_ids' => '',
+      ),
+    ),
+    'home_products' => 
+    array (
+      'name' => 'Home Produk',
+      'icon' => '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>',
+      'component' => 'components.blocks.home_products',
+      'fields' => 
+      array (
+        'title' => 
+        array (
+          'type' => 'text',
+          'label' => 'Judul Produk',
+        ),
+        'subtitle' => 
+        array (
+          'type' => 'textarea',
+          'label' => 'Sub Judul',
+        ),
+        'limit' => 
+        array (
+          'type' => 'text',
+          'label' => 'Jumlah Produk',
+        ),
+      ),
+      'default' => 
+      array (
+        'title' => 'Produk Unggulan',
+        'subtitle' => 'Temukan berbagai produk dan layanan terbaik kami.',
+        'limit' => '8',
+      ),
+    ),
+    'home_value_props' => 
+    array (
+      'name' => 'Home Mengapa Kami',
+      'icon' => '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.514M11 4v.01M11 8v.01"/></svg>',
+      'component' => 'components.blocks.home_value_props',
+      'fields' => 
+      array (
+        'subtitle' => 
+        array (
+          'type' => 'text',
+          'label' => 'Subtitle Kecil',
+        ),
+        'title' => 
+        array (
+          'type' => 'text',
+          'label' => 'Judul Utama',
+        ),
+        'props' => 
+        array (
+          'type' => 'repeater',
+          'label' => 'Nilai Jual',
+          'subfields' => 
+          array (
+            0 => 
+            array (
+              'key' => 'title',
+              'type' => 'text',
+              'label' => 'Judul',
+            ),
+            1 => 
+            array (
+              'key' => 'desc',
+              'type' => 'textarea',
+              'label' => 'Deskripsi',
+            ),
+          ),
+        ),
+      ),
+      'default' => 
+      array (
+        'subtitle' => 'Mengapa Memilih Kami',
+        'title' => 'Kenapa Kami?',
+        'props' => 
+        array (
+          0 => 
+          array (
+            'title' => 'Kualitas Terbaik',
+            'desc' => 'Kami menggunakan teknologi dan standar terbaik untuk memberikan hasil yang optimal bagi Anda.',
+          ),
+          1 => 
+          array (
+            'title' => 'Harga Terjangkau',
+            'desc' => 'Nikmati layanan berkualitas dengan harga yang kompetitif dan transparan tanpa biaya tersembunyi.',
+          ),
+          2 => 
+          array (
+            'title' => 'Dukungan 24/7',
+            'desc' => 'Tim support profesional kami siap membantu Anda kapan pun Anda membutuhkannya.',
+          ),
+        ),
+      ),
+    ),
+    'home_testimonials' => 
+    array (
+      'name' => 'Home Testimoni',
+      'icon' => '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>',
+      'component' => 'components.blocks.home_testimonials',
+      'fields' => 
+      array (
+        'title' => 
+        array (
+          'type' => 'text',
+          'label' => 'Judul Testimoni',
+        ),
+        'testimonials' => 
+        array (
+          'type' => 'repeater',
+          'label' => 'Daftar Testimoni',
+          'subfields' => 
+          array (
+            0 => 
+            array (
+              'key' => 'name',
+              'type' => 'text',
+              'label' => 'Nama',
+            ),
+            1 => 
+            array (
+              'key' => 'role',
+              'type' => 'text',
+              'label' => 'Peran / Jabatan',
+            ),
+            2 => 
+            array (
+              'key' => 'text',
+              'type' => 'textarea',
+              'label' => 'Teks Testimoni',
+            ),
+          ),
+        ),
+      ),
+      'default' => 
+      array (
+        'title' => 'Apa Kata Pelanggan Kami',
+        'testimonials' => 
+        array (
+          0 => 
+          array (
+            'name' => 'Ahmad Fauzi',
+            'role' => 'Pengusaha',
+            'text' => 'Platform ini sangat membantu bisnis saya berkembang pesat!',
+          ),
+          1 => 
+          array (
+            'name' => 'Dewi Sartika',
+            'role' => 'Content Creator',
+            'text' => 'Sangat mudah digunakan, fiturnya lengkap dan supportnya cepat.',
+          ),
+          2 => 
+          array (
+            'name' => 'Budi Santoso',
+            'role' => 'Owner Toko Online',
+            'text' => 'CMS terbaik yang pernah saya gunakan. Sangat direkomendasikan!',
+          ),
+        ),
+      ),
+    ),
+    'home_news' => 
+    array (
+      'name' => 'Home Berita',
+      'icon' => '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>',
+      'component' => 'components.blocks.home_news',
+      'fields' => 
+      array (
+        'title' => 
+        array (
+          'type' => 'text',
+          'label' => 'Judul Section',
+        ),
+        'limit' => 
+        array (
+          'type' => 'text',
+          'label' => 'Jumlah Artikel',
+        ),
+      ),
+      'default' => 
+      array (
+        'title' => 'Artikel Terbaru',
+        'limit' => '3',
+      ),
+    ),
+    'home_cta' => 
+    array (
+      'name' => 'Home CTA (Newsletter)',
+      'icon' => '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>',
+      'component' => 'components.blocks.home_cta',
+      'fields' => 
+      array (
+        'title' => 
+        array (
+          'type' => 'text',
+          'label' => 'Judul',
+        ),
+        'subtitle' => 
+        array (
+          'type' => 'textarea',
+          'label' => 'Sub Judul',
+        ),
+        'button_text' => 
+        array (
+          'type' => 'text',
+          'label' => 'Teks Tombol',
+        ),
+      ),
+      'default' => 
+      array (
+        'title' => 'Tetap Terhubung Dengan Kami',
+        'subtitle' => 'Berlangganan newsletter kami untuk mendapatkan informasi terbaru, tips, dan penawaran menarik.',
+        'button_text' => 'Berlangganan',
+      ),
+    ),
   ),
 );

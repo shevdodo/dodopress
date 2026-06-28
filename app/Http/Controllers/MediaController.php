@@ -124,8 +124,9 @@ class MediaController extends Controller
     /**
      * Get all media files from storage with optional filtering.
      */
-    protected function getMediaFiles(string $type = 'all', string $search = ''): array
+    protected function getMediaFiles(string $type = 'all', ?string $search = ''): array
     {
+        $search = (string) $search;
         $allFiles = Storage::disk('public')->allFiles('media');
         $files = [];
 

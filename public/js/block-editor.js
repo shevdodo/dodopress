@@ -25,6 +25,14 @@
         initCollapse();
     });
 
+    function getPreviewUrl(val, explicitUrl) {
+        if (explicitUrl) return explicitUrl;
+        if (!val) return '';
+        if (val.startsWith('http://') || val.startsWith('https://') || val.startsWith('data:')) return val;
+        const base = window.DD_STORAGE_URL || '/storage/';
+        return base + val;
+    }
+
     function initSort() {
         if (typeof Sortable === 'undefined') return;
         Sortable.create(container, {
@@ -325,16 +333,46 @@
             case 'image': {
                 const iw = document.createElement('div');
                 iw.className = 'dd-image-field';
+                
+                const wrap = document.createElement('div');
+                wrap.style.display = 'flex';
+                wrap.style.gap = '8px';
+
                 const ii = document.createElement('input');
                 ii.type = 'text';
                 ii.name = k;
                 ii.className = 'dd-field-input';
+                ii.style.flex = '1';
                 ii.value = String(v || '');
                 ii.placeholder = 'Image URL...';
-                iw.appendChild(ii);
+                wrap.appendChild(ii);
+
+                const ib = document.createElement('button');
+                ib.type = 'button';
+                ib.className = 'dd-btn-media dd-btn-sm';
+                ib.textContent = 'Browse';
+                ib.onclick = function () {
+                    window.dispatchEvent(new CustomEvent('open-global-media', {
+                        detail: {
+                            callback: function(path, url) {
+                                ii.value = path;
+                                ip.src = getPreviewUrl(path, url);
+                                ip.style.display = 'block';
+                            }
+                        }
+                    }));
+                };
+                wrap.appendChild(ib);
+                iw.appendChild(wrap);
+
                 const ip = document.createElement('img');
                 ip.className = 'dd-image-preview';
-                if (v) ip.src = v;
+                ip.style.marginTop = '8px';
+                if (v) { ip.src = getPreviewUrl(v); ip.style.display = 'block'; } else { ip.style.display = 'none'; }
+                ii.addEventListener('input', function() {
+                    ip.src = getPreviewUrl(ii.value);
+                    ip.style.display = ii.value ? 'block' : 'none';
+                });
                 iw.appendChild(ip);
                 w.appendChild(iw);
                 break;
@@ -353,8 +391,13 @@
                 ga.className = 'dd-btn-media dd-btn-sm';
                 ga.textContent = '+ Add Image';
                 ga.onclick = function () {
-                    const u = prompt('Image URL:');
-                    if (u) gl.appendChild(galItem(k, u));
+                    window.dispatchEvent(new CustomEvent('open-global-media', {
+                        detail: {
+                            callback: function(path, url) {
+                                gl.appendChild(galItem(k, path, url));
+                            }
+                        }
+                    }));
                 };
                 gw.appendChild(ga);
                 w.appendChild(gw);
@@ -395,12 +438,13 @@
         return w;
     }
 
-    function galItem(k, u) {
+    function galItem(k, u, explicitUrl) {
         const d = document.createElement('div');
         d.className = 'dd-gallery-item';
+        const srcUrl = getPreviewUrl(u, explicitUrl);
         d.innerHTML =
             '<input type="hidden" name="' + k + '[]" value="' + u.replace(/"/g, '&quot;') + '">' +
-            '<img src="' + u.replace(/"/g, '&quot;') + '" alt="" onerror="this.style.display=\'none\'">' +
+            '<img src="' + srcUrl.replace(/"/g, '&quot;') + '" alt="" onerror="this.style.display=\'none\'">' +
             '<button type="button" class="dd-gallery-remove">&times;</button>';
         d.querySelector('.dd-gallery-remove').onclick = function () { d.remove(); };
         return d;

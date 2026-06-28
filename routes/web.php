@@ -33,7 +33,14 @@ Route::get('/install/complete', [InstallController::class, 'complete'])->name('i
 */
 
 Route::get('/', function () {
-    return view('landing');
+    $page = \App\Models\Page::where('slug', '__homepage__')->first();
+    if ($page && $page->status === 'published') {
+        if ($page->template === 'contact') {
+            return view('pages.contact', compact('page'));
+        }
+        return view('page', compact('page'));
+    }
+    return view('landing'); // Fallback just in case
 })->name('landing');
 
 /*
