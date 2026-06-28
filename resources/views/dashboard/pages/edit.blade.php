@@ -25,9 +25,6 @@
         @if($page->template === 'block')
         {{-- ===== BLOCK EDITOR ===== --}}
         <input type="hidden" name="template" value="block">
-        <input type="hidden" name="status" value="published">
-        <input type="hidden" name="slug" value="{{ $page->slug }}">
-        <input type="hidden" name="title" value="{{ $page->title }}">
         <div class="flex-1 space-y-6">
             <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
                 <div class="mb-6">

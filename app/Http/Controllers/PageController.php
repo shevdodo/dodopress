@@ -161,6 +161,11 @@ class PageController extends Controller
             $data['slug'] = Str::slug($data['slug']);
         }
 
+        // Protect homepage slug
+        if ($page->slug === '__homepage__') {
+            $data['slug'] = '__homepage__';
+        }
+
         // (Homepage custom old template logic removed since it uses Block Editor)
 
 

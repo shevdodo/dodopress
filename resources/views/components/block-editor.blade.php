@@ -8,9 +8,14 @@
             $existingData = $decoded['blocks'] ?? $decoded;
         }
     }
+    $allProductCategories = \App\Models\Category::where('type', 'product')->orderBy('name')->get(['id', 'name']);
 @endphp
 
 <textarea id="blocks-json" name="content" class="hidden">{{ json_encode(['blocks' => $existingData]) }}</textarea>
+<script>
+    window.appProductCategories = @json($allProductCategories);
+</script>
+
 
 <div id="dd-block-editor" class="space-y-4">
     <div class="bg-white rounded-xl border border-gray-200 shadow-sm">

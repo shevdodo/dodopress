@@ -14,6 +14,9 @@
         try {
             const e = ta.value ? JSON.parse(ta.value) : [];
             blocks = Array.isArray(e) ? e : e.blocks || [];
+            blocks.forEach(function(b) {
+                if (!b.id) b.id = 'b_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5);
+            });
         } catch (e) {
             blocks = [];
         }
@@ -297,7 +300,7 @@
                 });
                 nd[k] = imgs;
             } else {
-                nd[k] = document.querySelector('[name="' + k + '"]')?.value || '';
+                nd[k] = form.querySelector('[name="' + k + '"]')?.value || '';
             }
         });
 
@@ -441,6 +444,64 @@
                 };
                 rw.appendChild(ra);
                 w.appendChild(rw);
+                break;
+            }
+            case 'product_categories': {
+                const cw = document.createElement('div');
+                cw.className = 'dd-categories-field';
+                cw.style.display = 'grid';
+                cw.style.gridTemplateColumns = 'repeat(2, minmax(0, 1fr))';
+                cw.style.gap = '8px';
+                cw.style.marginTop = '8px';
+                
+                let selectedIds = [];
+                if (typeof v === 'string') {
+                    selectedIds = v.split(',').map(id => id.trim()).filter(id => id);
+                } else if (Array.isArray(v)) {
+                    selectedIds = v.map(String);
+                }
+                
+                const hid = document.createElement('input');
+                hid.type = 'hidden';
+                hid.name = k;
+                hid.value = selectedIds.join(',');
+                hid.className = 'dd-field-input';
+                
+                if (window.appProductCategories) {
+                    window.appProductCategories.forEach(function(cat) {
+                        const lbl = document.createElement('label');
+                        lbl.className = 'dd-category-label';
+                        lbl.style.display = 'flex';
+                        lbl.style.alignItems = 'center';
+                        lbl.style.gap = '8px';
+                        lbl.style.fontSize = '14px';
+                        lbl.style.cursor = 'pointer';
+                        
+                        const chk = document.createElement('input');
+                        chk.type = 'checkbox';
+                        chk.value = cat.id;
+                        chk.checked = selectedIds.includes(String(cat.id));
+                        chk.style.borderRadius = '4px';
+                        chk.style.borderColor = '#d1d5db';
+                        chk.style.color = '#4f46e5'; // brand color
+                        
+                        chk.addEventListener('change', function() {
+                            if (this.checked) {
+                                if (!selectedIds.includes(this.value)) selectedIds.push(this.value);
+                            } else {
+                                selectedIds = selectedIds.filter(id => id !== this.value);
+                            }
+                            hid.value = selectedIds.join(',');
+                        });
+                        
+                        lbl.appendChild(chk);
+                        lbl.appendChild(document.createTextNode(' ' + cat.name));
+                        cw.appendChild(lbl);
+                    });
+                }
+                
+                w.appendChild(cw);
+                w.appendChild(hid);
                 break;
             }
             default: {
