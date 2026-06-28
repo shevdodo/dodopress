@@ -18,7 +18,7 @@
                 <!-- Post Permalink Base -->
                 <div>
                     <label for="post_permalink_base" class="block text-sm font-semibold text-gray-800 mb-1">Post Permalink Base</label>
-                    <p class="text-xs text-gray-500 mb-2">Set the base slug for blog posts. Leave empty to use the default root path (e.g. <code>/my-post</code>).</p>
+                    <p class="text-xs text-gray-500 mb-2">Set the base slug for blog posts. Leave empty to use the default root path (e.g. <code>/blog/my-post</code>).</p>
                     <div class="flex items-center">
                         <span class="bg-gray-100 border border-r-0 border-gray-300 rounded-l-xl px-4 py-2.5 text-gray-500 text-sm">{{ url('/') }}/</span>
                         <input type="text" name="post_permalink_base" id="post_permalink_base" value="{{ $settings['post_permalink_base'] ?? '' }}" class="flex-1 border-gray-300 rounded-r-xl shadow-sm focus:border-brand-500 focus:ring focus:ring-brand-500/20 px-4 py-2.5 transition text-sm" placeholder="e.g. blog or post">
@@ -29,7 +29,7 @@
                 <!-- Product Permalink Base -->
                 <div>
                     <label for="product_permalink_base" class="block text-sm font-semibold text-gray-800 mb-1">Product Permalink Base</label>
-                    <p class="text-xs text-gray-500 mb-2">Set the base slug for products. Leave empty to use the default root path (e.g. <code>/my-product</code>).</p>
+                    <p class="text-xs text-gray-500 mb-2">Set the base slug for products. Leave empty to use the default root path (e.g. <code>/store/my-product</code>).</p>
                     <div class="flex items-center">
                         <span class="bg-gray-100 border border-r-0 border-gray-300 rounded-l-xl px-4 py-2.5 text-gray-500 text-sm">{{ url('/') }}/</span>
                         <input type="text" name="product_permalink_base" id="product_permalink_base" value="{{ $settings['product_permalink_base'] ?? '' }}" class="flex-1 border-gray-300 rounded-r-xl shadow-sm focus:border-brand-500 focus:ring focus:ring-brand-500/20 px-4 py-2.5 transition text-sm" placeholder="e.g. store or product">

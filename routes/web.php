@@ -153,8 +153,8 @@ require __DIR__ . '/auth.php';
 */
 
 try {
-    $postBase = \App\Models\Setting::where('key', 'post_permalink_base')->value('value') ?: 'post';
-    $productBase = \App\Models\Setting::where('key', 'product_permalink_base')->value('value') ?: 'product';
+    $postBase = \App\Models\Setting::where('key', 'post_permalink_base')->value('value') ?: 'blog';
+    $productBase = \App\Models\Setting::where('key', 'product_permalink_base')->value('value') ?: 'store';
     
     // Post Routes
     Route::get("/{$postBase}", function (\Illuminate\Http\Request $request) {

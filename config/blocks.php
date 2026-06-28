@@ -761,8 +761,8 @@ Impian Anda',
         ),
         'category_ids' => 
         array (
-          'type' => 'text',
-          'label' => 'ID Kategori (opsional, pisahkan dengan koma)',
+          'type' => 'product_categories',
+          'label' => 'Pilih Kategori Produk',
         ),
       ),
       'default' => 

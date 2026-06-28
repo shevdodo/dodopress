@@ -12,8 +12,11 @@
 @endphp
 
 <textarea id="blocks-json" name="content" class="hidden">{{ json_encode(['blocks' => $existingData]) }}</textarea>
+<script id="app-product-categories-data" type="application/json">
+    {!! json_encode($allProductCategories) !!}
+</script>
 <script>
-    window.appProductCategories = @json($allProductCategories);
+    window.appProductCategories = JSON.parse(document.getElementById('app-product-categories-data').textContent);
 </script>
 
 
@@ -125,8 +128,11 @@
 .dd-repeater-remove:hover { background: #fecaca; }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+<script id="app-dd-blocks-data" type="application/json">
+    {!! json_encode($allBlocks) !!}
+</script>
 <script>
-    window.DD_BLOCKS = @json($allBlocks);
+    window.DD_BLOCKS = JSON.parse(document.getElementById('app-dd-blocks-data').textContent);
     window.DD_STORAGE_URL = '{{ asset("storage") }}/';
 </script><script src="{{ asset('js/block-editor.js') }}?v={{ filemtime(public_path('js/block-editor.js')) }}"></script>
 
