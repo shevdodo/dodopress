@@ -17,23 +17,37 @@ class DefaultPagesSeeder extends Seeder
                 'title'   => 'Home',
                 'slug'    => '__homepage__',
                 'content' => json_encode([
-                    'hero_badge'    => 'Selamat Datang',
-                    'hero_title'    => "Bangun Website\nImpian Anda",
-                    'hero_subtitle' => 'Platform CMS profesional yang dirancang untuk membantu Anda membangun dan mengelola website dengan mudah dan cepat.',
-                    'hero_cta_primary'   => 'Mulai Sekarang',
-                    'hero_cta_secondary' => 'Pelajari Lebih Lanjut',
-                    'categories_title'   => 'Jelajahi Kategori',
-                    'products_title'     => 'Produk Unggulan',
-                    'products_subtitle'  => 'Temukan berbagai produk dan layanan terbaik kami.',
-                    'vp_title_1' => 'Kualitas Terbaik',
-                    'vp_desc_1'  => 'Kami menggunakan teknologi dan standar terbaik untuk memberikan hasil yang optimal bagi Anda.',
-                    'vp_title_2' => 'Harga Terjangkau',
-                    'vp_desc_2'  => 'Nikmati layanan berkualitas dengan harga yang kompetitif dan transparan tanpa biaya tersembunyi.',
-                    'vp_title_3' => 'Dukungan 24/7',
-                    'vp_desc_3'  => 'Tim support profesional kami siap membantu Anda kapan pun Anda membutuhkannya.',
+                    'blocks' => [
+                        [
+                            'id' => 'hero_1',
+                            'type' => 'home_hero',
+                            'data' => [
+                                'badge' => 'Selamat Datang',
+                                'title' => "Bangun Website\nImpian Anda",
+                                'subtitle' => 'Platform CMS profesional yang dirancang untuk membantu Anda membangun dan mengelola website dengan mudah dan cepat.',
+                                'cta_primary_text' => 'Mulai Sekarang',
+                                'cta_primary_link' => '/products',
+                                'cta_secondary_text' => 'Pelajari Lebih Lanjut',
+                                'cta_secondary_link' => '/posts',
+                                'stats' => [
+                                    ['number' => '10+', 'label' => 'Tahun Pengalaman'],
+                                    ['number' => '500+', 'label' => 'Klien Puas'],
+                                    ['number' => '99%', 'label' => 'Uptime'],
+                                ]
+                            ]
+                        ],
+                        [
+                            'id' => 'cat_1',
+                            'type' => 'home_categories',
+                            'data' => [
+                                'title' => 'Jelajahi Kategori',
+                                'category_ids' => ''
+                            ]
+                        ]
+                    ]
                 ]),
                 'status'   => 'published',
-                'template' => 'homepage',
+                'template' => 'block',
                 'order'    => 0,
             ],
             [
