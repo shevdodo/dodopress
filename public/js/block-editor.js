@@ -258,6 +258,9 @@
             m.classList.add('hidden');
             m.classList.remove('flex');
         }
+        const form = document.getElementById('dd-block-form');
+        if (form) form.innerHTML = '';
+        
         activeId = null;
         document.removeEventListener('keydown', escH);
     }
