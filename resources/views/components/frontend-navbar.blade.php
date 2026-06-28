@@ -18,7 +18,7 @@
                 <div class="flex-shrink-0 flex items-center">
                     <a href="{{ url('/') }}" class="flex items-center space-x-3">
                         @if($siteIcon)
-                            <img src="{{ asset('storage/' . $siteIcon) }}" width="40" height="40" alt="{{ $siteTitle }}" class="h-10 {{ $shapeClass }} {{ $siteIconShape != 'rectangle' ? 'w-10 object-cover' : 'w-auto object-contain max-w-[140px]' }}">
+                            <img src="{{ asset('storage/' . $siteIcon) }}" alt="{{ $siteTitle }}" class="h-12 {{ $shapeClass }} {{ $siteIconShape != 'rectangle' ? 'w-12 object-cover' : 'w-auto object-contain max-w-[200px]' }}">
                         @endif
                         <span class="text-2xl font-extrabold text-brand-700 tracking-tight">
                             {{ $siteTitle }}
@@ -102,7 +102,7 @@
             <!-- Center: Logo -->
             <a href="{{ url('/') }}" class="flex justify-center items-center">
                 @if($siteIcon)
-                    <img src="{{ asset('storage/' . $siteIcon) }}" width="48" height="48" alt="{{ $siteTitle }}" class="h-12 w-12 rounded-full object-cover border border-gray-100 shadow-sm">
+                    <img src="{{ asset('storage/' . $siteIcon) }}" alt="{{ $siteTitle }}" class="h-10 {{ $shapeClass }} {{ $siteIconShape != 'rectangle' ? 'w-10 object-cover' : 'w-auto object-contain max-w-[150px]' }} shadow-sm">
                 @else
                     <span class="text-xl font-bold text-brand-700">{{ $siteTitle }}</span>
                 @endif
