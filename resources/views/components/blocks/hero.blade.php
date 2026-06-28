@@ -8,7 +8,7 @@
     $bgImage = $data['bg_image'] ?? '';
 @endphp
 
-<section class="relative overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white py-20 lg:py-32">
+<section class="relative overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white pt-36 pb-20 lg:pt-44 lg:pb-32">
     @if($bgImage)
     <div class="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30" style="background-image: url('{{ $bgImage }}')"></div>
     <div class="absolute inset-0 bg-gradient-to-br from-gray-900/80 via-gray-800/80 to-gray-900/80"></div>

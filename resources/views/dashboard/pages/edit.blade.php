@@ -360,16 +360,6 @@
                     </select>
                 </div>
 
-                <div class="mb-6">
-                    <label for="category_id" class="block text-sm font-semibold text-gray-800 mb-1">Category</label>
-                    <select id="category_id" name="category_id" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-brand-500 focus:ring focus:ring-brand-500/20 px-4 py-2 bg-white">
-                        <option value="">-- No Category --</option>
-                        @foreach($categories as $category)
-                            <option value="{{ $category->id }}" {{ old('category_id', $page->category_id) == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
                 <button type="submit" class="w-full px-6 py-2.5 bg-brand-600 text-white font-semibold rounded-xl hover:bg-brand-700 transition shadow-lg shadow-brand-600/30">
                     Save Changes
                 </button>

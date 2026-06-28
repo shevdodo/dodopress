@@ -394,5 +394,143 @@ Impian Anda',
         'height' => 'md',
       ),
     ),
+    'contact' => 
+    array (
+      'name' => 'Contact Page',
+      'icon' => '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>',
+      'component' => 'components.blocks.contact',
+      'fields' => 
+      array (
+        'badge' => 
+        array (
+          'type' => 'text',
+          'label' => 'Badge Hero',
+        ),
+        'title' => 
+        array (
+          'type' => 'text',
+          'label' => 'Judul Hero',
+        ),
+        'subtitle' => 
+        array (
+          'type' => 'textarea',
+          'label' => 'Subtitle Hero',
+        ),
+        'info1_title' => 
+        array (
+          'type' => 'text',
+          'label' => 'Info 1 — Judul (mis: Alamat)',
+        ),
+        'info1_desc' => 
+        array (
+          'type' => 'text',
+          'label' => 'Info 1 — Detail',
+        ),
+        'info2_title' => 
+        array (
+          'type' => 'text',
+          'label' => 'Info 2 — Judul (mis: Telepon)',
+        ),
+        'info2_desc' => 
+        array (
+          'type' => 'text',
+          'label' => 'Info 2 — Detail',
+        ),
+        'info3_title' => 
+        array (
+          'type' => 'text',
+          'label' => 'Info 3 — Judul (mis: Email)',
+        ),
+        'info3_desc' => 
+        array (
+          'type' => 'text',
+          'label' => 'Info 3 — Detail',
+        ),
+        'info4_title' => 
+        array (
+          'type' => 'text',
+          'label' => 'Info 4 — Judul (mis: Jam Buka)',
+        ),
+        'info4_desc' => 
+        array (
+          'type' => 'text',
+          'label' => 'Info 4 — Detail',
+        ),
+        'form_title' => 
+        array (
+          'type' => 'text',
+          'label' => 'Judul Form',
+        ),
+        'form_subtitle' => 
+        array (
+          'type' => 'text',
+          'label' => 'Subtitle Form',
+        ),
+        'btn_text' => 
+        array (
+          'type' => 'text',
+          'label' => 'Teks Tombol Kirim',
+        ),
+        'map_title' => 
+        array (
+          'type' => 'text',
+          'label' => 'Judul Map',
+        ),
+        'map_embed' => 
+        array (
+          'type' => 'textarea',
+          'label' => 'Embed Google Maps (kode iframe)',
+        ),
+        'social_wa' => 
+        array (
+          'type' => 'text',
+          'label' => 'WhatsApp URL',
+        ),
+        'social_fb' => 
+        array (
+          'type' => 'text',
+          'label' => 'Facebook URL',
+        ),
+        'social_ig' => 
+        array (
+          'type' => 'text',
+          'label' => 'Instagram URL',
+        ),
+        'social_tw' => 
+        array (
+          'type' => 'text',
+          'label' => 'X / Twitter URL',
+        ),
+        'social_yt' => 
+        array (
+          'type' => 'text',
+          'label' => 'YouTube URL',
+        ),
+      ),
+      'default' => 
+      array (
+        'badge' => 'Hubungi Kami',
+        'title' => 'Get In Touch',
+        'subtitle' => 'Kami siap membantu Anda. Kirimkan pesan dan tim kami akan merespons dalam 1×24 jam kerja.',
+        'info1_title' => 'Alamat',
+        'info1_desc' => 'Jl. Contoh No. 123, Jakarta',
+        'info2_title' => 'Telepon',
+        'info2_desc' => '+62 812-3456-7890',
+        'info3_title' => 'Email',
+        'info3_desc' => 'halo@example.com',
+        'info4_title' => 'Jam Operasional',
+        'info4_desc' => 'Senin–Jumat, 08.00–17.00',
+        'form_title' => 'Kirim Pesan',
+        'form_subtitle' => 'Isi formulir di bawah dan kami akan segera menghubungi Anda.',
+        'btn_text' => 'Kirim Pesan',
+        'map_title' => 'Lokasi Kami',
+        'map_embed' => '',
+        'social_wa' => '',
+        'social_fb' => '',
+        'social_ig' => '',
+        'social_tw' => '',
+        'social_yt' => '',
+      ),
+    ),
   ),
 );
