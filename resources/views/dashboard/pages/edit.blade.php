@@ -205,14 +205,6 @@
         <input type="hidden" name="title" value="{{ $page->title }}">
         <div class="flex-1 space-y-6">
 
-        @elseif($page->template === 'block')
-        <input type="hidden" name="template" value="block">
-        <input type="hidden" name="status" value="published">
-        <input type="hidden" name="slug" value="{{ $page->slug }}">
-        <input type="hidden" name="title" value="{{ $page->title }}">
-        <div class="flex-1">
-            <x-block-editor :content="$page->content ?? ''" />
-        </div>
             <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
                 <div class="flex items-center gap-3 mb-5 pb-4 border-b border-gray-100">
                     <div class="w-8 h-8 rounded-xl bg-brand-100 flex items-center justify-center">
@@ -280,6 +272,10 @@
         </div>
         @elseif($page->template === 'block')
         {{-- ===== BLOCK EDITOR ===== --}}
+        <input type="hidden" name="template" value="block">
+        <input type="hidden" name="status" value="published">
+        <input type="hidden" name="slug" value="{{ $page->slug }}">
+        <input type="hidden" name="title" value="{{ $page->title }}">
         <div class="flex-1 space-y-6">
             <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
                 <div class="mb-6">
