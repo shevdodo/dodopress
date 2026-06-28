@@ -14,27 +14,86 @@ class PageController extends Controller
         // Auto-create homepage if it doesn't exist
         $homePage = Page::where('slug', '__homepage__')->first();
         if (!$homePage) {
+            $blocks = [
+                [
+                    'type' => 'home_hero',
+                    'data' => [
+                        'hero_bg' => '',
+                        'badge' => 'Selamat Datang',
+                        'title' => "Bangun Website\nImpian Anda",
+                        'subtitle' => 'Platform CMS profesional yang dirancang untuk membantu Anda membangun dan mengelola website dengan mudah dan cepat.',
+                        'cta_primary_text' => 'Mulai Sekarang',
+                        'cta_primary_link' => '/product',
+                        'cta_secondary_text' => 'Pelajari Lebih Lanjut',
+                        'cta_secondary_link' => '/post',
+                        'stats' => [
+                            ['number' => '10+', 'label' => 'Tahun Pengalaman'],
+                            ['number' => '500+', 'label' => 'Klien Puas'],
+                            ['number' => '99%', 'label' => 'Uptime'],
+                        ]
+                    ]
+                ],
+                [
+                    'type' => 'home_categories',
+                    'data' => [
+                        'title' => 'Jelajahi Kategori',
+                        'category_ids' => ''
+                    ]
+                ],
+                [
+                    'type' => 'home_products',
+                    'data' => [
+                        'title' => 'Produk Unggulan',
+                        'subtitle' => 'Temukan berbagai produk dan layanan terbaik kami.',
+                        'limit' => '8'
+                    ]
+                ],
+                [
+                    'type' => 'home_value_props',
+                    'data' => [
+                        'subtitle' => 'Mengapa Memilih Kami',
+                        'title' => 'Kenapa Kami?',
+                        'props' => [
+                            ['title' => 'Kualitas Terbaik', 'desc' => 'Kami menggunakan teknologi dan standar terbaik untuk memberikan hasil yang optimal bagi Anda.'],
+                            ['title' => 'Harga Terjangkau', 'desc' => 'Nikmati layanan berkualitas dengan harga yang kompetitif dan transparan tanpa biaya tersembunyi.'],
+                            ['title' => 'Dukungan 24/7', 'desc' => 'Tim support profesional kami siap membantu Anda kapan pun Anda membutuhkannya.'],
+                        ]
+                    ]
+                ],
+                [
+                    'type' => 'home_testimonials',
+                    'data' => [
+                        'title' => 'Apa Kata Pelanggan Kami',
+                        'testimonials' => [
+                            ['name' => 'Ahmad Fauzi', 'role' => 'Pengusaha', 'text' => 'Platform ini sangat membantu bisnis saya berkembang pesat!'],
+                            ['name' => 'Dewi Sartika', 'role' => 'Content Creator', 'text' => 'Sangat mudah digunakan, fiturnya lengkap dan supportnya cepat.'],
+                            ['name' => 'Budi Santoso', 'role' => 'Owner Toko Online', 'text' => 'CMS terbaik yang pernah saya gunakan. Sangat direkomendasikan!'],
+                        ]
+                    ]
+                ],
+                [
+                    'type' => 'home_news',
+                    'data' => [
+                        'title' => 'Artikel Terbaru',
+                        'limit' => '3'
+                    ]
+                ],
+                [
+                    'type' => 'home_cta',
+                    'data' => [
+                        'title' => 'Tetap Terhubung Dengan Kami',
+                        'subtitle' => 'Berlangganan newsletter kami untuk mendapatkan informasi terbaru, tips, dan penawaran menarik.',
+                        'button_text' => 'Berlangganan'
+                    ]
+                ]
+            ];
+
             $homePage = Page::create([
                 'title'    => 'Home',
                 'slug'     => '__homepage__',
-                'content'  => json_encode([
-                    'hero_badge'    => 'Selamat Datang',
-                    'hero_title'    => "Bangun Website\nImpian Anda",
-                    'hero_subtitle' => 'Platform CMS profesional yang dirancang untuk membantu Anda membangun dan mengelola website dengan mudah dan cepat.',
-                    'hero_cta_primary'   => 'Mulai Sekarang',
-                    'hero_cta_secondary' => 'Pelajari Lebih Lanjut',
-                    'categories_title'   => 'Jelajahi Kategori',
-                    'products_title'     => 'Produk Unggulan',
-                    'products_subtitle'  => 'Temukan berbagai produk dan layanan terbaik kami.',
-                    'vp_title_1' => 'Kualitas Terbaik',
-                    'vp_desc_1'  => 'Kami menggunakan teknologi dan standar terbaik untuk memberikan hasil yang optimal bagi Anda.',
-                    'vp_title_2' => 'Harga Terjangkau',
-                    'vp_desc_2'  => 'Nikmati layanan berkualitas dengan harga yang kompetitif dan transparan tanpa biaya tersembunyi.',
-                    'vp_title_3' => 'Dukungan 24/7',
-                    'vp_desc_3'  => 'Tim support profesional kami siap membantu Anda kapan pun Anda membutuhkannya.',
-                ]),
+                'content'  => json_encode(['blocks' => $blocks]),
                 'status'   => 'published',
-                'template' => 'homepage',
+                'template' => 'block',
                 'order'    => 0,
             ]);
         }
@@ -102,38 +161,8 @@ class PageController extends Controller
             $data['slug'] = Str::slug($data['slug']);
         }
 
-        // Handle homepage structured content
-        if ($page->template === 'homepage' && $request->has('hp')) {
-            $hp = $request->input('hp');
+        // (Homepage custom old template logic removed since it uses Block Editor)
 
-            // Retrieve existing background image if not replaced
-            $currentHpContent = [];
-            if (!empty($page->content)) {
-                $decoded = json_decode($page->content, true);
-                if (json_last_error() === JSON_ERROR_NONE) $currentHpContent = $decoded;
-            }
-
-            $heroBg = $currentHpContent['hero_bg'] ?? null;
-            if ($request->hasFile('hero_bg')) {
-                $heroBg = $request->file('hero_bg')->store('media/' . date('Y/m'), 'public');
-            } elseif ($request->has('hero_bg_media_path')) {
-                $heroBg = $request->input('hero_bg_media_path');
-            }
-            $hp['hero_bg'] = $heroBg;
-
-            $data['content'] = json_encode($hp);
-            $data['template'] = 'homepage';
-            $data['status'] = 'published';
-            $data['slug'] = '__homepage__';
-        }
-
-        // Handle contact page structured content
-        if ($page->template === 'contact' && $request->has('cp')) {
-            $cp = $request->input('cp');
-            $data['content'] = json_encode($cp);
-            $data['template'] = 'contact';
-            $data['status'] = 'published';
-        }
 
         $page->update($data);
 

@@ -205,38 +205,44 @@
     }
 
     function openEditor(id) {
-        const i = blocks.findIndex(function (b) { return b.id === id; });
-        if (i === -1) return;
-        const block = blocks[i];
-        const def = B[block.type];
-        if (!def) return;
+        try {
+            const i = blocks.findIndex(function (b) { return b.id === id; });
+            if (i === -1) return;
+            const block = blocks[i];
+            const def = B[block.type];
+            if (!def) return;
 
-        activeId = id;
-        const modal = document.getElementById('dd-block-modal');
-        const form = document.getElementById('dd-block-form');
-        const title = document.getElementById('dd-block-modal-title');
-        if (!modal || !form) return;
+            activeId = id;
+            const modal = document.getElementById('dd-block-modal');
+            const form = document.getElementById('dd-block-form');
+            const title = document.getElementById('dd-block-modal-title');
+            if (!modal || !form) return;
 
-        title.textContent = 'Edit: ' + (def.name || block.type);
-        form.innerHTML = '';
-        form.dataset.blockId = id;
+            title.textContent = 'Edit: ' + (def.name || block.type);
+            form.innerHTML = '';
+            form.dataset.blockId = id;
 
-        if (def.fields) {
-            Object.keys(def.fields).forEach(function (k) {
-                form.appendChild(buildField(k, def.fields[k], block.data[k]));
-            });
+            const data = block.data || {};
+            if (def.fields) {
+                Object.keys(def.fields).forEach(function (k) {
+                    form.appendChild(buildField(k, def.fields[k], data[k]));
+                });
+            }
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+
+            document.getElementById('dd-modal-close').onclick = closeEditor;
+            document.getElementById('dd-modal-cancel').onclick = closeEditor;
+            document.getElementById('dd-modal-save').onclick = saveEditor;
+            modal.querySelector('.fixed.inset-0').onclick = function (e) {
+                if (e.target === this) closeEditor();
+            };
+            document.addEventListener('keydown', escH);
+        } catch (err) {
+            console.error('Error opening editor:', err);
+            alert('Error: ' + err.message);
         }
-
-        modal.classList.remove('hidden');
-        modal.classList.add('flex');
-
-        document.getElementById('dd-modal-close').onclick = closeEditor;
-        document.getElementById('dd-modal-cancel').onclick = closeEditor;
-        document.getElementById('dd-modal-save').onclick = saveEditor;
-        modal.querySelector('.fixed.inset-0').onclick = function (e) {
-            if (e.target === this) closeEditor();
-        };
-        document.addEventListener('keydown', escH);
     }
 
     function escH(e) {
@@ -271,7 +277,13 @@
                 const items = [];
                 form.querySelectorAll('[data-repeater="' + k + '"]').forEach(function (r) {
                     const item = {};
-                    (f.subfields || []).forEach(function (sf) {
+                    let sfArray = [];
+                    if (Array.isArray(f.subfields)) {
+                        sfArray = f.subfields;
+                    } else if (f.subfields && typeof f.subfields === 'object') {
+                        sfArray = Object.values(f.subfields);
+                    }
+                    sfArray.forEach(function (sf) {
                         const inp = r.querySelector('[name="' + k + '[' + sf.key + '][]"]');
                         if (inp) item[sf.key] = inp.value;
                     });
@@ -406,7 +418,13 @@
             case 'repeater': {
                 const rw = document.createElement('div');
                 rw.className = 'dd-repeater-field';
-                const sf = f.subfields || [];
+                let sfArray = [];
+                if (Array.isArray(f.subfields)) {
+                    sfArray = f.subfields;
+                } else if (f.subfields && typeof f.subfields === 'object') {
+                    sfArray = Object.values(f.subfields);
+                }
+                const sf = sfArray;
                 const items = Array.isArray(v) ? v : [];
                 const rl = document.createElement('div');
                 rl.className = 'dd-repeater-list';
@@ -442,9 +460,11 @@
         const d = document.createElement('div');
         d.className = 'dd-gallery-item';
         const srcUrl = getPreviewUrl(u, explicitUrl);
+        const safeU = String(u || '');
+        const safeUrl = String(srcUrl || '');
         d.innerHTML =
-            '<input type="hidden" name="' + k + '[]" value="' + u.replace(/"/g, '&quot;') + '">' +
-            '<img src="' + srcUrl.replace(/"/g, '&quot;') + '" alt="" onerror="this.style.display=\'none\'">' +
+            '<input type="hidden" name="' + k + '[]" value="' + safeU.replace(/"/g, '&quot;') + '">' +
+            '<img src="' + safeUrl.replace(/"/g, '&quot;') + '" alt="" onerror="this.style.display=\'none\'">' +
             '<button type="button" class="dd-gallery-remove">&times;</button>';
         d.querySelector('.dd-gallery-remove').onclick = function () { d.remove(); };
         return d;
@@ -456,8 +476,18 @@
         d.dataset.repeater = k;
 
         let h = '';
-        sf.forEach(function (f) {
-            const v = data[f.key] || '';
+        data = data || {};
+        
+        // Ensure sf is an array
+        let sfArray = [];
+        if (Array.isArray(sf)) {
+            sfArray = sf;
+        } else if (sf && typeof sf === 'object') {
+            sfArray = Object.values(sf);
+        }
+
+        sfArray.forEach(function (f) {
+            const v = data[f.key] !== undefined && data[f.key] !== null ? String(data[f.key]) : '';
             if (f.type === 'textarea') {
                 h += '<textarea name="' + k + '[' + f.key + '][]" class="dd-field-input dd-repeater-input" placeholder="' + escapeAttr(f.label) + '">' + v.replace(/"/g, '&quot;') + '</textarea>';
             } else {
