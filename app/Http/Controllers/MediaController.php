@@ -69,19 +69,39 @@ class MediaController extends Controller
 
                 // Build a unique filename
                 $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-                $extension = $file->getClientOriginalExtension();
-                $safeName = Str::slug($originalName) . '-' . uniqid() . '.' . $extension;
+                
+                $isImage = str_starts_with($file->getMimeType(), 'image/') && $file->getMimeType() !== 'image/svg+xml';
 
-                // Store under media/year/month/
-                $folder = 'media/' . date('Y/m');
-                $path = $file->storeAs($folder, $safeName, 'public');
+                if ($isImage) {
+                    $extension = 'webp';
+                    $safeName = Str::slug($originalName) . '-' . uniqid() . '.' . $extension;
+                    $folder = 'media/' . date('Y/m');
+                    $path = $folder . '/' . $safeName;
+
+                    $manager = new \Intervention\Image\ImageManager(new \Intervention\Image\Drivers\Gd\Driver());
+                    $image = $manager->read($file->getRealPath());
+                    $encoded = $image->toWebp(80);
+                    
+                    Storage::disk('public')->put($path, $encoded->toString());
+                    
+                    $finalMime = 'image/webp';
+                    $finalSize = strlen($encoded->toString());
+                } else {
+                    $extension = $file->getClientOriginalExtension();
+                    $safeName = Str::slug($originalName) . '-' . uniqid() . '.' . $extension;
+                    $folder = 'media/' . date('Y/m');
+                    $path = $file->storeAs($folder, $safeName, 'public');
+                    
+                    $finalMime = $file->getMimeType();
+                    $finalSize = $file->getSize();
+                }
 
                 $uploaded[] = [
-                    'name' => $file->getClientOriginalName(),
+                    'name' => $originalName . '.' . $extension,
                     'path' => $path,
                     'url'  => asset('storage/' . $path),
-                    'size' => $file->getSize(),
-                    'mime' => $file->getMimeType(),
+                    'size' => $finalSize,
+                    'mime' => $finalMime,
                 ];
             }
         }
