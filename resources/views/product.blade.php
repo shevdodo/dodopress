@@ -22,24 +22,48 @@
     <x-theme-config />
 </head>
 
-<body class="font-sans antialiased text-gray-900 bg-gray-50 min-h-screen flex flex-col" x-data="{ lightboxOpen: false }">
+<body class="font-sans antialiased text-gray-900 bg-gray-50 min-h-screen flex flex-col" x-data="{ lightboxOpen: false, activeLightboxImage: '' }">
     <x-frontend-navbar />
 
     <main class="flex-grow pt-8 pb-12">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden flex flex-col md:flex-row">
                 <div class="w-full md:w-1/2 p-8 sm:p-12 flex items-center justify-center bg-gray-50">
-                    @if($product->image)
-                        <div class="cursor-pointer group relative w-full max-w-md" @click="lightboxOpen = true">
-                            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-full rounded-2xl shadow-lg object-cover transition transform group-hover:scale-[1.02] duration-300">
-                            <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl flex items-center justify-center">
-                                <div class="bg-white/90 p-3 rounded-full text-gray-800 shadow-xl transform scale-90 group-hover:scale-100 transition-transform duration-300">
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" /></svg>
+                    @php
+                        $allImages = [];
+                        if($product->image) $allImages[] = $product->image;
+                        if(!empty($product->images) && is_array($product->images)) {
+                            foreach($product->images as $img) {
+                                $allImages[] = $img;
+                            }
+                        }
+                    @endphp
+                    
+                    @if(count($allImages) > 0)
+                        <div x-data="{ mainImage: '{{ asset('storage/' . $allImages[0]) }}' }" class="w-full max-w-md flex flex-col gap-4">
+                            <div class="cursor-pointer group relative w-full aspect-[4/5]" @click="activeLightboxImage = mainImage; lightboxOpen = true">
+                                <img :src="mainImage" alt="{{ $product->name }}" class="w-full h-full rounded-2xl shadow-lg object-cover transition transform group-hover:scale-[1.02] duration-300">
+                                <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl flex items-center justify-center">
+                                    <div class="bg-white/90 p-3 rounded-full text-gray-800 shadow-xl transform scale-90 group-hover:scale-100 transition-transform duration-300">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" /></svg>
+                                    </div>
                                 </div>
                             </div>
+                            
+                            @if(count($allImages) > 1)
+                                <div class="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
+                                    @foreach($allImages as $img)
+                                        <button @click="mainImage = '{{ asset('storage/' . $img) }}'" 
+                                                :class="mainImage === '{{ asset('storage/' . $img) }}' ? 'border-brand-500 ring-2 ring-brand-500/50' : 'border-transparent opacity-70 hover:opacity-100'"
+                                                class="flex-shrink-0 w-20 h-20 rounded-xl overflow-hidden border-2 transition-all">
+                                            <img src="{{ asset('storage/' . $img) }}" class="w-full h-full object-cover">
+                                        </button>
+                                    @endforeach
+                                </div>
+                            @endif
                         </div>
                     @else
-                        <div class="w-full max-w-md aspect-square bg-gray-200 rounded-2xl flex items-center justify-center">
+                        <div class="w-full max-w-md aspect-[4/5] bg-gray-200 rounded-2xl flex items-center justify-center">
                             <svg class="w-20 h-20 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
                         </div>
                     @endif
@@ -176,16 +200,14 @@
     <x-frontend-footer />
 
     <!-- Lightbox Modal -->
-    @if($product->image)
     <div x-show="lightboxOpen" style="display: none;" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-sm" x-transition.opacity>
         <button @click="lightboxOpen = false" class="absolute top-6 right-6 text-white/70 hover:text-white transition z-10 bg-black/50 p-2 rounded-full">
             <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
         </button>
-        <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="max-w-[90vw] max-h-[90vh] object-contain shadow-2xl" @click.away="lightboxOpen = false">
+        <img :src="activeLightboxImage" alt="{{ $product->name }}" class="max-w-[90vw] max-h-[90vh] object-contain shadow-2xl" @click.away="lightboxOpen = false">
         <div class="absolute bottom-6 left-0 right-0 text-center pointer-events-none">
             <p class="text-white/80 text-lg font-medium tracking-wider drop-shadow-md">{{ $product->name }}</p>
         </div>
     </div>
-    @endif
 </body>
 </html>

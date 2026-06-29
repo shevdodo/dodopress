@@ -9,11 +9,27 @@
                 'right' => 'object-right',
                 default => 'object-center',
             };
+            
+            $posMobile = $data['bg_position_mobile'] ?? 'center';
+            $posClassMobile = match($posMobile) {
+                'top' => 'object-top',
+                'bottom' => 'object-bottom',
+                'left' => 'object-left',
+                'right' => 'object-right',
+                default => 'object-center',
+            };
+            
+            $hasMobileImg = !empty($data['hero_bg_mobile']);
         @endphp
+        
         @if(!empty($data['hero_bg']))
-            <img src="{{ asset('storage/' . $data['hero_bg']) }}" alt="Hero" class="w-full h-full object-cover {{ $posClass }}" />
+            <img src="{{ asset('storage/' . $data['hero_bg']) }}" alt="Hero Desktop" class="w-full h-full object-cover {{ $posClass }} {{ $hasMobileImg ? 'hidden md:block' : 'block' }}" />
         @else
-            <img src="{{ asset('storage/slider_bg.jpg') }}" alt="Hero" class="w-full h-full object-cover {{ $posClass }}" />
+            <img src="{{ asset('storage/slider_bg.jpg') }}" alt="Hero Desktop" class="w-full h-full object-cover {{ $posClass }} {{ $hasMobileImg ? 'hidden md:block' : 'block' }}" />
+        @endif
+        
+        @if($hasMobileImg)
+            <img src="{{ asset('storage/' . $data['hero_bg_mobile']) }}" alt="Hero Mobile" class="w-full h-full object-cover {{ $posClassMobile }} block md:hidden" />
         @endif
         <div class="absolute inset-0 bg-gradient-to-r from-gray-900/80 via-gray-900/50 to-gray-900/30"></div>
         <div class="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-transparent to-transparent"></div>

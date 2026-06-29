@@ -658,12 +658,30 @@ Impian Anda',
         'hero_bg' => 
         array (
           'type' => 'image',
-          'label' => 'Gambar Latar',
+          'label' => 'Gambar Latar (Desktop)',
         ),
         'bg_position' => 
         array (
           'type' => 'select',
           'label' => 'Posisi Gambar',
+          'options' => 
+          array (
+            'center' => 'Tengah (Center)',
+            'top' => 'Atas (Top)',
+            'bottom' => 'Bawah (Bottom)',
+            'left' => 'Kiri (Left)',
+            'right' => 'Kanan (Right)',
+          ),
+        ),
+        'hero_bg_mobile' => 
+        array (
+          'type' => 'image',
+          'label' => 'Gambar Latar (Mobile)',
+        ),
+        'bg_position_mobile' => 
+        array (
+          'type' => 'select',
+          'label' => 'Posisi Gambar (Mobile)',
           'options' => 
           array (
             'center' => 'Tengah (Center)',
@@ -733,6 +751,8 @@ Impian Anda',
       array (
         'hero_bg' => '',
         'bg_position' => 'center',
+        'hero_bg_mobile' => '',
+        'bg_position_mobile' => 'center',
         'badge' => 'Selamat Datang',
         'title' => 'Bangun Website
 Impian Anda',

@@ -56,10 +56,10 @@
             <div class="order-2 lg:order-1 relative">
                 @if($story_image)
                     <div class="rounded-3xl overflow-hidden shadow-2xl relative z-10">
-                        <img src="{{ asset('storage/'.$story_image) }}" alt="Our Story" class="w-full h-auto object-cover aspect-[4/5] lg:aspect-auto">
+                        <img src="{{ asset('storage/'.$story_image) }}" alt="Our Story" class="w-full h-auto object-cover aspect-video">
                     </div>
                 @else
-                    <div class="rounded-3xl overflow-hidden shadow-2xl relative z-10 bg-gradient-to-tr from-brand-100 to-gray-100 aspect-[4/5] flex items-center justify-center">
+                    <div class="rounded-3xl overflow-hidden shadow-2xl relative z-10 bg-gradient-to-tr from-brand-100 to-gray-100 aspect-video flex items-center justify-center">
                         <svg class="w-24 h-24 text-brand-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                     </div>
                 @endif

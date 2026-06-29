@@ -71,6 +71,31 @@ class ProductController extends Controller
             $data['image'] = $request->input('image_media_path');
         }
 
+        $images = [];
+        if ($request->hasFile('gallery_images')) {
+            $folder = 'media/' . date('Y/m');
+            foreach ($request->file('gallery_images') as $file) {
+                $isImage = str_starts_with($file->getMimeType(), 'image/') && $file->getMimeType() !== 'image/svg+xml';
+                
+                if ($isImage) {
+                    $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                    $safeName = Str::slug($originalName) . '-' . uniqid() . '.webp';
+                    $path = $folder . '/' . $safeName;
+                    
+                    $manager = new \Intervention\Image\ImageManager(new \Intervention\Image\Drivers\Gd\Driver());
+                    $image = $manager->read($file->getRealPath());
+                    $encoded = $image->toWebp(80);
+                    
+                    Storage::disk('public')->put($path, $encoded->toString());
+                    $images[] = $path;
+                } else {
+                    $safeName = Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)) . '-' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $images[] = $file->storeAs($folder, $safeName, 'public');
+                }
+            }
+        }
+        $data['images'] = $images;
+
         Product::create($data);
 
         return redirect()->route('superuser.products.index')->with('status', 'Product created successfully.');
@@ -118,6 +143,44 @@ class ProductController extends Controller
         } elseif ($request->has('image_media_path')) {
             $data['image'] = $request->input('image_media_path');
         }
+
+        $existingGallery = $request->input('existing_gallery', []);
+        $deleteGallery = $request->input('delete_gallery', []);
+        
+        $images = [];
+        foreach ($existingGallery as $idx => $img) {
+            // Check if this index is marked for deletion
+            if (!in_array($idx, $deleteGallery)) {
+                $images[] = $img;
+            } else {
+                // Optionally delete the file from storage
+                // Storage::disk('public')->delete($img);
+            }
+        }
+        
+        if ($request->hasFile('gallery_images')) {
+            $folder = 'media/' . date('Y/m');
+            foreach ($request->file('gallery_images') as $file) {
+                $isImage = str_starts_with($file->getMimeType(), 'image/') && $file->getMimeType() !== 'image/svg+xml';
+                
+                if ($isImage) {
+                    $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                    $safeName = Str::slug($originalName) . '-' . uniqid() . '.webp';
+                    $path = $folder . '/' . $safeName;
+                    
+                    $manager = new \Intervention\Image\ImageManager(new \Intervention\Image\Drivers\Gd\Driver());
+                    $image = $manager->read($file->getRealPath());
+                    $encoded = $image->toWebp(80);
+                    
+                    Storage::disk('public')->put($path, $encoded->toString());
+                    $images[] = $path;
+                } else {
+                    $safeName = Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)) . '-' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $images[] = $file->storeAs($folder, $safeName, 'public');
+                }
+            }
+        }
+        $data['images'] = $images;
 
         $product->update($data);
 

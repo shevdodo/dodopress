@@ -117,7 +117,16 @@
 
                 <!-- Product Image -->
                 <div class="mb-5">
-                    <x-media-picker name="image" label="Product Image" preview-size="lg" />
+                    <x-media-picker name="image" label="Foto Utama (Thumbnail)" preview-size="lg" />
+                </div>
+                
+                <!-- Product Gallery -->
+                <div class="mb-5 pt-4 border-t border-gray-100">
+                    <label class="block text-sm font-semibold text-gray-800 mb-2">Product Gallery (Opsional)</label>
+                    <div class="mt-2">
+                        <label class="text-xs text-gray-500 block mb-1">Tambah Foto Gallery (Pilih banyak file):</label>
+                        <input type="file" name="gallery_images[]" multiple accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100">
+                    </div>
                 </div>
 
                 <div class="pt-4 mt-2 border-t border-gray-100">
