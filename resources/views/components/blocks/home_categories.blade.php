@@ -14,7 +14,7 @@
 
 <section class="relative z-20 -mt-20 pb-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="bg-white rounded-3xl shadow-2xl p-8 sm:p-12">
+        <div class="bg-white rounded-3xl shadow-2xl p-4 sm:p-12">
             <div class="text-center mb-12">
                 <span class="text-brand-600 font-semibold text-sm tracking-widest uppercase">Kategori</span>
                 <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mt-2">{{ $data['title'] ?? 'Jelajahi Kategori' }}</h2>
@@ -28,12 +28,13 @@
                     $catCount === 3 => 'grid-cols-3 max-w-3xl mx-auto',
                     default         => 'grid-cols-2 md:grid-cols-4',
                 };
+                $shapeClass = ($data['image_shape'] ?? 'square') === 'circle' ? 'rounded-full' : 'rounded-2xl';
             @endphp
-            <div class="grid {{ $gridClass }} gap-6 sm:gap-8 justify-items-center">
+            <div class="grid {{ $gridClass }} gap-4 sm:gap-8 justify-items-center">
                 @foreach($productCategories as $index => $cat)
                     <a href="{{ route('product.category', $cat->slug) }}"
                        class="group block text-center animate-fade-in-up stagger-{{ min($index + 1, 6) }}">
-                        <div class="relative w-28 h-28 sm:w-36 sm:h-36 mx-auto rounded-2xl overflow-hidden mb-4 shadow-lg group-hover:shadow-2xl transition-all duration-500">
+                        <div class="relative w-28 h-28 sm:w-36 sm:h-36 mx-auto {{ $shapeClass }} overflow-hidden mb-4 shadow-lg group-hover:shadow-2xl transition-all duration-500">
                             @if($cat->image)
                                 <img src="{{ asset('storage/' . $cat->image) }}" alt="{{ $cat->name }}" loading="lazy" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
                             @else

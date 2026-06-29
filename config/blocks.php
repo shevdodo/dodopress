@@ -773,6 +773,16 @@ Impian Anda',
           'type' => 'text',
           'label' => 'Judul Kategori',
         ),
+        'image_shape' => 
+        array (
+          'type' => 'select',
+          'label' => 'Bentuk Gambar',
+          'options' => 
+          array (
+            'square' => 'Kotak (Rounded Square)',
+            'circle' => 'Lingkaran (Circle)',
+          ),
+        ),
         'category_ids' => 
         array (
           'type' => 'product_categories',
@@ -782,6 +792,7 @@ Impian Anda',
       'default' => 
       array (
         'title' => 'Jelajahi Kategori',
+        'image_shape' => 'square',
         'category_ids' => '',
       ),
     ),
