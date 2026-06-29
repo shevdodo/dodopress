@@ -111,6 +111,9 @@ Route::prefix('pranotoweb')
         Route::get('/settings/permalink', [SuperuserDashboardController::class, 'settingsPermalink'])->name('settings.permalink');
         Route::post('/settings/permalink', [SuperuserDashboardController::class, 'settingsPermalinkUpdate'])->name('settings.permalink.update');
 
+        Route::get('/settings/store', [SuperuserDashboardController::class, 'settingsStore'])->name('settings.store');
+        Route::post('/settings/store', [SuperuserDashboardController::class, 'settingsStoreUpdate'])->name('settings.store.update');
+
         // Media Library Routes
         Route::get('/media', [MediaController::class, 'index'])->name('media.index');
         Route::get('/media/api', [MediaController::class, 'api'])->name('media.api');
@@ -197,7 +200,8 @@ try {
         if ($search = $request->input('search')) {
             $query->where('name', 'like', "%{$search}%");
         }
-        $products = $query->paginate(12)->appends($request->all());
+        $perPage = \App\Models\Setting::where('key', 'store_products_per_page')->value('value') ?: 12;
+        $products = $query->paginate($perPage)->appends($request->all());
         $categories = \App\Models\Category::where('type', 'product')->get();
         return view('products', compact('products', 'categories'));
     })->name('product.index');
@@ -208,7 +212,8 @@ try {
         if ($search = $request->input('search')) {
             $query->where('name', 'like', "%{$search}%");
         }
-        $products = $query->paginate(12)->appends($request->all());
+        $perPage = \App\Models\Setting::where('key', 'store_products_per_page')->value('value') ?: 12;
+        $products = $query->paginate($perPage)->appends($request->all());
         $categories = \App\Models\Category::where('type', 'product')->get();
         return view('products', compact('products', 'category', 'categories'));
     })->name('product.category');

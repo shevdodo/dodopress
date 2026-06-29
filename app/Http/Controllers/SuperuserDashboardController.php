@@ -240,4 +240,36 @@ class SuperuserDashboardController extends Controller
 
         return redirect()->route('superuser.settings.api')->with('status', 'API settings saved successfully.');
     }
+
+    public function settingsStore()
+    {
+        $settings = \App\Models\Setting::pluck('value', 'key')->toArray();
+        return view('dashboard.settings.store', compact('settings'));
+    }
+
+    public function settingsStoreUpdate(Request $request)
+    {
+        $request->validate([
+            'store_page_title' => 'nullable|string|max:255',
+            'store_page_subtitle' => 'nullable|string',
+            'store_products_per_page' => 'nullable|integer|min:1|max:100',
+        ]);
+
+        $data = $request->only(['store_page_title', 'store_page_subtitle', 'store_products_per_page']);
+
+        if ($request->hasFile('store_banner_image')) {
+            $folder = 'media/' . date('Y/m');
+            $file = $request->file('store_banner_image');
+            $safeName = 'store-banner-' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $data['store_banner_image'] = $file->storeAs($folder, $safeName, 'public');
+        } else {
+            $data['store_banner_image'] = $request->input('store_banner_image_media_path');
+        }
+
+        foreach ($data as $key => $value) {
+            \App\Models\Setting::updateOrCreate(['key' => $key], ['value' => $value]);
+        }
+
+        return redirect()->route('superuser.settings.store')->with('status', 'Store settings saved successfully.');
+    }
 }

@@ -219,6 +219,17 @@
                         </div>
                         <span class="{{ request()->routeIs('superuser.settings.theme') ? 'font-medium' : '' }}">Theme Settings</span>
                     </a>
+                    
+                    <a href="{{ route('superuser.settings.store') }}"
+                        class="flex items-center space-x-3 px-4 py-3 rounded-xl {{ request()->routeIs('superuser.settings.store') ? 'text-white bg-gradient-to-r from-brand-600 to-brand-700 shadow-lg shadow-brand-900/30 font-medium' : 'text-brand-200 hover:text-white hover:bg-brand-800/60' }} transition-all duration-200">
+                        <div class="w-5 h-5 flex items-center justify-center">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                            </svg>
+                        </div>
+                        <span class="{{ request()->routeIs('superuser.settings.store') ? 'font-medium' : '' }}">Store Settings</span>
+                    </a>
+
                     <a href="{{ route('superuser.settings.api') }}"
                         class="flex items-center space-x-3 px-4 py-3 rounded-xl {{ request()->routeIs('superuser.settings.api') ? 'text-white bg-gradient-to-r from-brand-600 to-brand-700 shadow-lg shadow-brand-900/30 font-medium' : 'text-brand-200 hover:text-white hover:bg-brand-800/60' }} transition-all duration-200">
                         <div class="w-5 h-5 flex items-center justify-center">

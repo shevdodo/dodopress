@@ -4,13 +4,16 @@
 @php
     $siteTitle = \App\Models\Setting::where('key', 'site_title')->value('value') ?: config('app.name', 'Laravel');
     $favIcon = \App\Models\Setting::where('key', 'fav_icon')->value('value');
+    $storeTitle = \App\Models\Setting::where('key', 'store_page_title')->value('value') ?: 'Our Products';
+    $storeSubtitle = \App\Models\Setting::where('key', 'store_page_subtitle')->value('value');
+    $storeBanner = \App\Models\Setting::where('key', 'store_banner_image')->value('value');
 @endphp
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Store - {{ $siteTitle }}</title>
+    <title>{{ isset($category) ? $category->name . ' - ' : '' }}{{ $storeTitle }} - {{ $siteTitle }}</title>
     
     @if($favIcon)
         <link rel="icon" type="image/png" href="{{ asset('storage/' . $favIcon) }}">
@@ -23,6 +26,19 @@
 <body class="font-sans antialiased text-gray-900 bg-gray-50 min-h-screen flex flex-col">
     <x-frontend-navbar />
 
+    @if(!isset($category) && $storeBanner)
+        <div class="w-full h-64 md:h-80 lg:h-96 relative overflow-hidden">
+            <img src="{{ asset('storage/' . $storeBanner) }}" alt="{{ $storeTitle }}" class="absolute inset-0 w-full h-full object-cover">
+            <div class="absolute inset-0 bg-black/40"></div>
+            <div class="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
+                <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-4 drop-shadow-md">{{ $storeTitle }}</h1>
+                @if($storeSubtitle)
+                    <p class="text-lg md:text-xl text-gray-100 max-w-2xl drop-shadow">{{ $storeSubtitle }}</p>
+                @endif
+            </div>
+        </div>
+    @endif
+
     <main class="flex-grow pt-8 pb-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
@@ -30,7 +46,7 @@
                     @if(isset($category))
                         {{ $category->name }}
                     @else
-                        Our Products
+                        {{ (!$storeBanner) ? $storeTitle : 'Katalog' }}
                     @endif
                 </h1>
 
