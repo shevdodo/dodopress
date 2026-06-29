@@ -660,6 +660,19 @@ Impian Anda',
           'type' => 'image',
           'label' => 'Gambar Latar',
         ),
+        'bg_position' => 
+        array (
+          'type' => 'select',
+          'label' => 'Posisi Gambar',
+          'options' => 
+          array (
+            'center' => 'Tengah (Center)',
+            'top' => 'Atas (Top)',
+            'bottom' => 'Bawah (Bottom)',
+            'left' => 'Kiri (Left)',
+            'right' => 'Kanan (Right)',
+          ),
+        ),
         'badge' => 
         array (
           'type' => 'text',
@@ -719,6 +732,7 @@ Impian Anda',
       'default' => 
       array (
         'hero_bg' => '',
+        'bg_position' => 'center',
         'badge' => 'Selamat Datang',
         'title' => 'Bangun Website
 Impian Anda',

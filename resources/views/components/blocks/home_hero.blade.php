@@ -1,9 +1,19 @@
 <section class="relative min-h-screen flex items-center overflow-hidden">
     <div class="absolute inset-0">
+        @php
+            $pos = $data['bg_position'] ?? 'center';
+            $posClass = match($pos) {
+                'top' => 'object-top',
+                'bottom' => 'object-bottom',
+                'left' => 'object-left',
+                'right' => 'object-right',
+                default => 'object-center',
+            };
+        @endphp
         @if(!empty($data['hero_bg']))
-            <img src="{{ asset('storage/' . $data['hero_bg']) }}" alt="Hero" class="w-full h-full object-cover" />
+            <img src="{{ asset('storage/' . $data['hero_bg']) }}" alt="Hero" class="w-full h-full object-cover {{ $posClass }}" />
         @else
-            <img src="{{ asset('storage/slider_bg.jpg') }}" alt="Hero" class="w-full h-full object-cover" />
+            <img src="{{ asset('storage/slider_bg.jpg') }}" alt="Hero" class="w-full h-full object-cover {{ $posClass }}" />
         @endif
         <div class="absolute inset-0 bg-gradient-to-r from-gray-900/80 via-gray-900/50 to-gray-900/30"></div>
         <div class="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-transparent to-transparent"></div>
