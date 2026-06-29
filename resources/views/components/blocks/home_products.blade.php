@@ -20,8 +20,8 @@
             @foreach($featuredProducts as $index => $product)
                 <div class="product-card group bg-white rounded-2xl shadow-md hover:shadow-2xl transition-all duration-500 overflow-hidden flex flex-col border border-gray-100 hover:-translate-y-2 animate-fade-in-up stagger-{{ min($index + 1, 6) }}">
                     <div class="aspect-[4/5] overflow-hidden bg-gray-100 relative">
-                        @if($product->images && count($product->images) > 0)
-                            <img src="{{ asset('storage/' . $product->images[0]) }}" alt="{{ $product->name }}" loading="lazy" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                        @if($product->image)
+                            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" loading="lazy" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
                         @else
                             <div class="w-full h-full flex items-center justify-center text-gray-300">
                                 <svg class="w-20 h-20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
@@ -55,8 +55,8 @@
                 <a href="{{ route('product.show', ['category_slug' => $product->category ? $product->category->slug : 'uncategorized', 'slug' => $product->slug]) }}"
                    class="flex-shrink-0 w-64 bg-white rounded-2xl shadow-md overflow-hidden border border-gray-100 snap-start">
                     <div class="aspect-[4/5] bg-gray-100 relative">
-                        @if($product->images && count($product->images) > 0)
-                            <img src="{{ asset('storage/' . $product->images[0]) }}" alt="{{ $product->name }}" loading="lazy" class="w-full h-full object-cover">
+                        @if($product->image)
+                            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" loading="lazy" class="w-full h-full object-cover">
                         @else
                             <div class="w-full h-full flex items-center justify-center text-gray-300">
                                 <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
