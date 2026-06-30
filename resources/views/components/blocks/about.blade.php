@@ -44,7 +44,7 @@
             {!! nl2br(e($title)) !!}
         </h1>
         @if($subtitle)
-        <p class="text-lg sm:text-xl text-gray-300/90 max-w-3xl mx-auto leading-relaxed">{{ $subtitle }}</p>
+        <p class="text-lg sm:text-xl text-gray-300/90 max-w-3xl mx-auto leading-relaxed">{!! nl2br(e($subtitle)) !!}</p>
         @endif
     </div>
 </section>
@@ -74,7 +74,7 @@
                 </div>
                 <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-8 leading-tight">{{ $story_title }}</h2>
                 <div class="prose prose-lg prose-brand text-gray-600">
-                    {!! $story_content !!}
+                    {!! nl2br(e($story_content)) !!}
                 </div>
             </div>
         </div>
@@ -108,7 +108,7 @@
                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
                 </div>
                 <h3 class="text-2xl font-bold text-gray-900 mb-4">{{ $vision_title }}</h3>
-                <p class="text-gray-600 leading-relaxed text-lg">{{ $vision_text }}</p>
+                <p class="text-gray-600 leading-relaxed text-lg">{!! nl2br(e($vision_text)) !!}</p>
             </div>
 
             {{-- Mission Card --}}
@@ -118,7 +118,7 @@
                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                 </div>
                 <h3 class="text-2xl font-bold mb-4 relative z-10">{{ $mission_title }}</h3>
-                <p class="text-brand-100 leading-relaxed text-lg relative z-10">{{ $mission_text }}</p>
+                <p class="text-brand-100 leading-relaxed text-lg relative z-10">{!! nl2br(e($mission_text)) !!}</p>
             </div>
 
         </div>
