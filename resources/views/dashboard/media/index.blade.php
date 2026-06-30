@@ -23,7 +23,7 @@
 
     {{-- Upload Drop Zone (Hidden by default) --}}
     <div id="upload-zone" class="hidden mb-6">
-        <form action="{{ route('superuser.media.upload') }}" method="POST" enctype="multipart/form-data" id="upload-form">
+        <form action="{{ route('superuser.media.upload', [], false) }}" method="POST" enctype="multipart/form-data" id="upload-form">
             @csrf
             <div id="drop-area"
                 class="border-2 border-dashed border-brand-400 rounded-2xl p-10 text-center bg-brand-50/50 cursor-pointer hover:bg-brand-50 transition-all duration-200 relative">
@@ -341,7 +341,7 @@
             if (!currentPath) return;
             if (!confirm('Are you sure you want to permanently delete this file? This action cannot be undone.')) return;
 
-            fetch('{{ route("superuser.media.destroy") }}', {
+            fetch('{{ route("superuser.media.destroy", [], false) }}', {
                 method: 'POST', // Use POST with _method to bypass potential server blocks on DELETE
                 headers: {
                     'Content-Type': 'application/json',
