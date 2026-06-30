@@ -28,15 +28,17 @@
                             </div>
                         @endif
 
-                        @if($product->category)
-                            <span class="absolute top-3 left-3 px-3 py-1.5 bg-white/90 backdrop-blur-sm text-xs font-bold text-gray-700 rounded-full shadow-sm">{{ $product->category->name }}</span>
-                        @endif
                         <div class="absolute inset-0 bg-gradient-to-t from-gray-900/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                         <div class="absolute bottom-0 left-0 right-0 p-4 text-white opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-4 group-hover:translate-y-0">
                             <span class="text-sm font-bold inline-flex items-center gap-1">Lihat Detail <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg></span>
                         </div>
                     </a>
                     <div class="p-4 sm:p-5 flex flex-col flex-1">
+                        @if($product->category)
+                        <div class="mb-1">
+                            <span class="text-[9px] sm:text-[10px] font-bold text-gray-400 uppercase tracking-wider line-clamp-1">{{ $product->category->name }}</span>
+                        </div>
+                        @endif
                         <h3 class="font-bold text-gray-900 text-base sm:text-lg line-clamp-2 min-h-[3rem]">
                             <a href="{{ route('product.show', ['category_slug' => $product->category ? $product->category->slug : 'uncategorized', 'slug' => $product->slug]) }}" class="hover:text-brand-600 transition">{{ $product->name }}</a>
                         </h3>

@@ -40,7 +40,7 @@ Route::get('/', function () {
         }
         return view('page', compact('page'));
     }
-    return view('landing'); // Fallback just in case
+    abort(404, 'Halaman Beranda belum dikonfigurasi. Silakan atur halaman beranda di CMS.'); // Fallback since landing.blade.php is removed
 })->name('landing');
 
 /*
