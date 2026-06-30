@@ -423,7 +423,7 @@ Impian Anda',
         ),
         'info1_desc' => 
         array (
-          'type' => 'text',
+          'type' => 'textarea',
           'label' => 'Info 1 — Detail',
         ),
         'info2_title' => 
@@ -433,7 +433,7 @@ Impian Anda',
         ),
         'info2_desc' => 
         array (
-          'type' => 'text',
+          'type' => 'textarea',
           'label' => 'Info 2 — Detail',
         ),
         'info3_title' => 
@@ -443,7 +443,7 @@ Impian Anda',
         ),
         'info3_desc' => 
         array (
-          'type' => 'text',
+          'type' => 'textarea',
           'label' => 'Info 3 — Detail',
         ),
         'info4_title' => 
@@ -453,7 +453,7 @@ Impian Anda',
         ),
         'info4_desc' => 
         array (
-          'type' => 'text',
+          'type' => 'textarea',
           'label' => 'Info 4 — Detail',
         ),
         'form_title' => 

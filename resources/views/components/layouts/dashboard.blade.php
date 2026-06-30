@@ -195,6 +195,15 @@
                         </div>
                         <span class="{{ request()->routeIs('superuser.media.*') ? 'font-medium' : '' }}">Media</span>
                     </a>
+                    <a href="{{ route('superuser.contact-messages.index') }}"
+                        class="flex items-center space-x-3 px-4 py-3 rounded-xl {{ request()->routeIs('superuser.contact-messages.*') ? 'text-white bg-gradient-to-r from-brand-600 to-brand-700 shadow-lg shadow-brand-900/30 font-medium' : 'text-brand-200 hover:text-white hover:bg-brand-800/60' }} transition-all duration-200">
+                        <div class="w-5 h-5 flex items-center justify-center">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
+                        </div>
+                        <span class="{{ request()->routeIs('superuser.contact-messages.*') ? 'font-medium' : '' }}">Messages</span>
+                    </a>
                 </div>
 
                 <div class="pt-3 mt-3 border-t border-brand-800/50">

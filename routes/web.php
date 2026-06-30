@@ -120,6 +120,9 @@ Route::prefix('pranotoweb')
         Route::post('/media/upload', [MediaController::class, 'upload'])->name('media.upload');
         Route::delete('/media/delete', [MediaController::class, 'destroy'])->name('media.destroy');
 
+        // Contact Messages
+        Route::resource('contact-messages', \App\Http\Controllers\ContactMessageController::class)->only(['index', 'show', 'destroy']);
+
     });
 
 /*

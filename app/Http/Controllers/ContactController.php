@@ -23,6 +23,8 @@ class ContactController extends Controller
             'message.required' => 'Pesan wajib diisi.',
         ]);
 
+        \App\Models\ContactMessage::create($validated);
+
         // Kirim email ke admin jika dikonfigurasi
         $adminEmail = Setting::where('key', 'admin_email')->value('value')
                    ?: Setting::where('key', 'contact_email')->value('value')
