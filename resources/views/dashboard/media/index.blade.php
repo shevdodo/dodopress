@@ -23,7 +23,7 @@
 
     {{-- Upload Drop Zone (Hidden by default) --}}
     <div id="upload-zone" class="hidden mb-6">
-        <form action="{{ route('superuser.media.upload', [], false) }}" method="POST" enctype="multipart/form-data" id="upload-form">
+        <form action="{{ route('superuser.media.upload') }}" method="POST" enctype="multipart/form-data" id="upload-form">
             @csrf
             <div id="drop-area"
                 class="border-2 border-dashed border-brand-400 rounded-2xl p-10 text-center bg-brand-50/50 cursor-pointer hover:bg-brand-50 transition-all duration-200 relative">
@@ -258,7 +258,12 @@
             statusText.textContent = 'Uploading...';
             progressBar.style.width = '10%';
 
-            fetch(form.action, {
+            let actionUrl = form.action;
+            if (window.location.protocol === 'https:' && actionUrl.startsWith('http:')) {
+                actionUrl = actionUrl.replace('http:', 'https:');
+            }
+
+            fetch(actionUrl, {
                 method: 'POST',
                 headers: { 'X-CSRF-TOKEN': CSRF, 'Accept': 'application/json' },
                 body: formData
@@ -341,7 +346,12 @@
             if (!currentPath) return;
             if (!confirm('Are you sure you want to permanently delete this file? This action cannot be undone.')) return;
 
-            fetch('{{ route("superuser.media.destroy", [], false) }}', {
+            let destroyUrl = '{{ route("superuser.media.destroy") }}';
+            if (window.location.protocol === 'https:' && destroyUrl.startsWith('http:')) {
+                destroyUrl = destroyUrl.replace('http:', 'https:');
+            }
+
+            fetch(destroyUrl, {
                 method: 'POST', // Use POST with _method to bypass potential server blocks on DELETE
                 headers: {
                     'Content-Type': 'application/json',
