@@ -25,6 +25,13 @@
                             <input type="text" name="store_page_title" id="store_page_title" value="{{ old('store_page_title', $settings['store_page_title'] ?? 'Our Products') }}" class="mt-1 block w-full border-gray-300 focus:border-brand-500 focus:ring-brand-500 rounded-md shadow-sm">
                         </div>
 
+                        <!-- Catalog Title -->
+                        <div>
+                            <label for="store_catalog_title" class="block text-sm font-medium text-gray-700">Judul Katalog</label>
+                            <input type="text" name="store_catalog_title" id="store_catalog_title" value="{{ old('store_catalog_title', $settings['store_catalog_title'] ?? 'Katalog') }}" class="mt-1 block w-full border-gray-300 focus:border-brand-500 focus:ring-brand-500 rounded-md shadow-sm">
+                            <p class="mt-1 text-xs text-gray-500">Judul ini akan muncul di atas daftar produk (contoh: Katalog, Semua Produk).</p>
+                        </div>
+
                         <!-- Store Subtitle -->
                         <div>
                             <label for="store_page_subtitle" class="block text-sm font-medium text-gray-700">Subjudul / Deskripsi Singkat</label>

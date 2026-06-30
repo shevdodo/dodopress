@@ -7,6 +7,7 @@
     $storeTitle = \App\Models\Setting::where('key', 'store_page_title')->value('value') ?: 'Our Products';
     $storeSubtitle = \App\Models\Setting::where('key', 'store_page_subtitle')->value('value');
     $storeBanner = \App\Models\Setting::where('key', 'store_banner_image')->value('value');
+    $storeCatalogTitle = \App\Models\Setting::where('key', 'store_catalog_title')->value('value') ?: 'Katalog';
 @endphp
 
 <head>
@@ -46,7 +47,7 @@
                     @if(isset($category))
                         {{ $category->name }}
                     @else
-                        {{ (!$storeBanner) ? $storeTitle : 'Katalog' }}
+                        {{ (!$storeBanner) ? $storeTitle : $storeCatalogTitle }}
                     @endif
                 </h1>
 
