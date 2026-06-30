@@ -272,4 +272,20 @@ class SuperuserDashboardController extends Controller
 
         return redirect()->route('superuser.settings.store')->with('status', 'Store settings saved successfully.');
     }
+
+    public function clearCache()
+    {
+        return view('dashboard.system.clear-cache');
+    }
+
+    public function clearCacheExecute()
+    {
+        \Illuminate\Support\Facades\Artisan::call('optimize:clear');
+        \Illuminate\Support\Facades\Artisan::call('view:clear');
+        \Illuminate\Support\Facades\Artisan::call('route:clear');
+        \Illuminate\Support\Facades\Artisan::call('config:clear');
+        \Illuminate\Support\Facades\Artisan::call('cache:clear');
+        
+        return redirect()->route('superuser.clear-cache')->with('status', 'Semua cache (views, config, routes, application) berhasil dihapus!');
+    }
 }

@@ -266,6 +266,15 @@
                         </div>
                         <span>Audit Logs</span>
                     </a>
+                    <a href="{{ route('superuser.clear-cache') }}"
+                        class="flex items-center space-x-3 px-4 py-3 rounded-xl {{ request()->routeIs('superuser.clear-cache') ? 'text-white bg-gradient-to-r from-brand-600 to-brand-700 shadow-lg shadow-brand-900/30 font-medium' : 'text-brand-200 hover:text-white hover:bg-brand-800/60' }} transition-all duration-200">
+                        <div class="w-5 h-5 flex items-center justify-center">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                            </svg>
+                        </div>
+                        <span class="{{ request()->routeIs('superuser.clear-cache') ? 'font-medium' : '' }}">Clear Cache</span>
+                    </a>
                 </div>
             @else
                 <!-- Standard User Links -->
