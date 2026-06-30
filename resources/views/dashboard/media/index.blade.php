@@ -342,15 +342,29 @@
             if (!confirm('Are you sure you want to permanently delete this file? This action cannot be undone.')) return;
 
             fetch('{{ route("superuser.media.destroy") }}', {
-                method: 'DELETE',
+                method: 'POST', // Use POST with _method to bypass potential server blocks on DELETE
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
                     'X-CSRF-TOKEN': CSRF
                 },
-                body: JSON.stringify({ path: currentPath })
+                body: JSON.stringify({ 
+                    _method: 'DELETE',
+                    path: currentPath 
+                })
             })
-            .then(res => res.json())
+            .then(async res => {
+                if (!res.ok) {
+                    const text = await res.text();
+                    try {
+                        const errData = JSON.parse(text);
+                        throw new Error(errData.message || 'HTTP error ' + res.status);
+                    } catch (e) {
+                        throw new Error('HTTP error ' + res.status + ' - ' + text.substring(0, 50));
+                    }
+                }
+                return res.json();
+            })
             .then(data => {
                 if (data.success) {
                     closeModal();
@@ -358,6 +372,10 @@
                 } else {
                     alert('Failed to delete: ' + (data.message || 'Unknown error'));
                 }
+            })
+            .catch(err => {
+                alert('Error: ' + err.message);
+                console.error(err);
             });
         });
     });
