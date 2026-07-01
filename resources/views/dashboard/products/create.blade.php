@@ -74,12 +74,30 @@
                 </div>
 
                 <!-- Sizes -->
-                <div>
+                <div class="mb-5">
                     <label for="sizes" class="block text-sm font-semibold text-gray-800 mb-1">Pilihan Ukuran / Size (Pisahkan dengan koma)</label>
                     <input type="text" name="sizes" id="sizes" value="{{ old('sizes') }}"
                         class="w-full border-gray-300 rounded-xl shadow-sm focus:border-brand-500 focus:ring focus:ring-brand-500/20 px-4 py-2.5 transition"
                         placeholder="Contoh: S, M, L, XL, XXL">
                     <p class="text-xs text-gray-400 mt-1">Kosongkan jika produk tidak memiliki pilihan ukuran.</p>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <!-- Rating -->
+                    <div>
+                        <label for="rating" class="block text-sm font-semibold text-gray-800 mb-1">Rating (1-5)</label>
+                        <input type="number" name="rating" id="rating" value="{{ old('rating', 5.0) }}" min="0" max="5" step="0.1"
+                            class="w-full border-gray-300 rounded-xl shadow-sm focus:border-brand-500 focus:ring focus:ring-brand-500/20 px-4 py-2.5 transition"
+                            placeholder="5.0">
+                    </div>
+                    
+                    <!-- Review Count -->
+                    <div>
+                        <label for="review_count" class="block text-sm font-semibold text-gray-800 mb-1">Jml Ulasan</label>
+                        <input type="number" name="review_count" id="review_count" value="{{ old('review_count', 1) }}" min="0" step="1"
+                            class="w-full border-gray-300 rounded-xl shadow-sm focus:border-brand-500 focus:ring focus:ring-brand-500/20 px-4 py-2.5 transition"
+                            placeholder="0">
+                    </div>
                 </div>
             </div>
         </div>

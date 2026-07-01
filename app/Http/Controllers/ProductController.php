@@ -51,6 +51,8 @@ class ProductController extends Controller
             'meta_description' => 'nullable|string',
             'meta_keywords' => 'nullable|string|max:255',
             'meta_schema' => 'nullable|string',
+            'rating'      => 'nullable|numeric|min:0|max:5',
+            'review_count'=> 'nullable|integer|min:0',
         ]);
 
         $data = $request->except(['image']);
@@ -128,6 +130,8 @@ class ProductController extends Controller
             'meta_description' => 'nullable|string',
             'meta_keywords' => 'nullable|string|max:255',
             'meta_schema' => 'nullable|string',
+            'rating'      => 'nullable|numeric|min:0|max:5',
+            'review_count'=> 'nullable|integer|min:0',
         ]);
 
         $data = $request->except(['image']);
