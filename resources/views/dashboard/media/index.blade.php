@@ -167,9 +167,9 @@
 
             {{-- Details --}}
             <div class="md:w-1/2 flex flex-col p-6 overflow-y-auto">
-                <div class="flex items-start justify-between mb-5">
-                    <h3 class="text-lg font-bold text-gray-900" id="modal-filename">File Details</h3>
-                    <button id="modal-close" class="text-gray-400 hover:text-gray-700 p-1 transition">
+                <div class="flex items-start justify-between gap-4 mb-5">
+                    <h3 class="text-lg font-bold text-gray-900 break-all" id="modal-filename">File Details</h3>
+                    <button id="modal-close" class="shrink-0 p-2 bg-gray-100 text-gray-600 rounded-full hover:bg-red-50 hover:text-red-600 transition shadow-sm">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                     </button>
                 </div>
