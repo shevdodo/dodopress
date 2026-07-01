@@ -155,8 +155,13 @@
         <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" id="modal-backdrop"></div>
         <div class="relative bg-white rounded-3xl shadow-2xl w-full max-w-3xl overflow-hidden z-10 flex flex-col md:flex-row max-h-[90vh]">
 
+            {{-- Mobile Close Button --}}
+            <button id="modal-close-mobile" class="md:hidden absolute top-4 right-4 z-20 p-2 bg-white/90 backdrop-blur shadow-md rounded-full text-gray-700 hover:bg-gray-100 transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+
             {{-- Preview --}}
-            <div id="modal-preview" class="md:w-1/2 bg-gray-50 flex items-center justify-center p-6 min-h-64">
+            <div id="modal-preview" class="md:w-1/2 bg-gray-50 flex items-center justify-center p-6 min-h-64 relative">
                 {{-- Filled by JS --}}
             </div>
 
@@ -329,6 +334,7 @@
             currentPath = null;
         }
         document.getElementById('modal-close')?.addEventListener('click', closeModal);
+        document.getElementById('modal-close-mobile')?.addEventListener('click', closeModal);
         document.getElementById('modal-backdrop')?.addEventListener('click', closeModal);
 
         // Copy URL
