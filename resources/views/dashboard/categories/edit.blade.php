@@ -36,6 +36,17 @@
                     <input type="text" name="slug" id="slug" value="{{ old('slug', $category->slug) }}" class="w-full border-gray-300 rounded-xl shadow-sm focus:border-brand-500 focus:ring focus:ring-brand-500/20 px-4 py-2.5 transition">
                 </div>
 
+                <!-- Parent Category -->
+                <div>
+                    <label for="parent_id" class="block text-sm font-semibold text-gray-800 mb-1">Parent Category</label>
+                    <select name="parent_id" id="parent_id" class="w-full border-gray-300 rounded-xl shadow-sm focus:border-brand-500 focus:ring focus:ring-brand-500/20 px-4 py-2.5 transition">
+                        <option value="">None (Top Level)</option>
+                        @foreach($parentCategories as $parent)
+                            <option value="{{ $parent->id }}" {{ old('parent_id', $category->parent_id) == $parent->id ? 'selected' : '' }}>{{ $parent->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
                 <!-- Type -->
                 <div class="hidden">
                     <label for="type" class="block text-sm font-semibold text-gray-800 mb-1">Type</label>

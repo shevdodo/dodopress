@@ -10,7 +10,7 @@ class CategoryController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Category::latest();
+        $query = Category::with('parent')->latest();
         
         if ($request->has('type')) {
             $query->where('type', $request->type);
@@ -20,9 +20,12 @@ class CategoryController extends Controller
         return view('dashboard.categories.index', compact('categories'));
     }
 
-    public function create()
+    public function create(Request $request)
     {
-        return view('dashboard.categories.create');
+        $parentCategories = Category::when($request->has('type'), function($q) use ($request) {
+            $q->where('type', $request->type);
+        })->whereNull('parent_id')->orderBy('name')->get();
+        return view('dashboard.categories.create', compact('parentCategories'));
     }
 
     public function store(Request $request)
@@ -31,6 +34,7 @@ class CategoryController extends Controller
             'name' => 'required|string|max:255',
             'slug' => 'nullable|string|max:255|unique:categories,slug',
             'type' => 'nullable|string|max:255',
+            'parent_id' => 'nullable|exists:categories,id',
             'image' => 'nullable|image|max:2048',
         ]);
 
@@ -52,7 +56,10 @@ class CategoryController extends Controller
 
     public function edit(Category $category)
     {
-        return view('dashboard.categories.edit', compact('category'));
+        $parentCategories = Category::where('type', $category->type)
+            ->where('id', '!=', $category->id)
+            ->orderBy('name')->get();
+        return view('dashboard.categories.edit', compact('category', 'parentCategories'));
     }
 
     public function update(Request $request, Category $category)
@@ -61,6 +68,7 @@ class CategoryController extends Controller
             'name' => 'required|string|max:255',
             'slug' => 'nullable|string|max:255|unique:categories,slug,' . $category->id,
             'type' => 'nullable|string|max:255',
+            'parent_id' => 'nullable|exists:categories,id',
             'image' => 'nullable|image|max:2048',
         ]);
 
