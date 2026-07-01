@@ -24,6 +24,7 @@ class Product extends Model
         'meta_title',
         'meta_description',
         'meta_keywords',
+        'meta_schema',
     ];
 
     protected $casts = [

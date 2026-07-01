@@ -30,6 +30,19 @@
     if ($metaImage) {
         Artesaos\SEOTools\Facades\OpenGraph::addImage($metaImage);
     }
+
+    Artesaos\SEOTools\Facades\JsonLd::setTitle($product->meta_title ?: $product->name . ' - ' . $siteTitle);
+    Artesaos\SEOTools\Facades\JsonLd::setDescription($product->meta_description ?: $metaDesc);
+    Artesaos\SEOTools\Facades\JsonLd::setType('Product');
+    Artesaos\SEOTools\Facades\JsonLd::addValue('offers', [
+        '@type' => 'Offer',
+        'price' => $product->price,
+        'priceCurrency' => 'IDR',
+        'availability' => $product->status === 'available' ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock'
+    ]);
+    if ($metaImage) {
+        Artesaos\SEOTools\Facades\JsonLd::addImage($metaImage);
+    }
 @endphp
 
 <head>
@@ -37,6 +50,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     {!! Artesaos\SEOTools\Facades\SEOTools::generate() !!}
+    @if($product->meta_schema)
+        {!! $product->meta_schema !!}
+    @endif
 
     @if($favIcon)
         <link rel="icon" type="image/png" href="{{ asset('storage/' . $favIcon) }}">

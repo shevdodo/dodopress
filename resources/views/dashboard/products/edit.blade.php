@@ -133,6 +133,11 @@
                     <input type="text" name="meta_keywords" id="meta_keywords" value="{{ old('meta_keywords', $product->meta_keywords) }}" class="w-full border-gray-300 rounded-xl shadow-sm focus:border-brand-500 focus:ring focus:ring-brand-500/20 px-4 py-2.5 transition text-sm" placeholder="keyword1, keyword2, ...">
                 </div>
 
+                <div class="mb-5">
+                    <label for="meta_schema" class="block text-sm font-semibold text-gray-800 mb-1">Custom Schema Markup (JSON-LD)</label>
+                    <textarea name="meta_schema" id="meta_schema" rows="4" class="w-full border-gray-300 rounded-xl shadow-sm focus:border-brand-500 focus:ring focus:ring-brand-500/20 px-4 py-2.5 transition text-sm font-mono text-gray-700" placeholder='<script type="application/ld+json">...</script>'>{{ old('meta_schema', $product->meta_schema) }}</textarea>
+                </div>
+
                 <!-- Product Image -->
                 <div class="mb-5">
                     <x-media-picker name="image" label="Foto Utama (Thumbnail)" :current="old('image', $product->image)" preview-size="lg" />

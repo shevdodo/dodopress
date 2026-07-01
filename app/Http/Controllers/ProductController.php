@@ -50,6 +50,7 @@ class ProductController extends Controller
             'meta_title' => 'nullable|string|max:255',
             'meta_description' => 'nullable|string',
             'meta_keywords' => 'nullable|string|max:255',
+            'meta_schema' => 'nullable|string',
         ]);
 
         $data = $request->except(['image']);
@@ -126,6 +127,7 @@ class ProductController extends Controller
             'meta_title' => 'nullable|string|max:255',
             'meta_description' => 'nullable|string',
             'meta_keywords' => 'nullable|string|max:255',
+            'meta_schema' => 'nullable|string',
         ]);
 
         $data = $request->except(['image']);

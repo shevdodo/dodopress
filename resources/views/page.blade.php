@@ -33,6 +33,13 @@
     if ($metaImage) {
         Artesaos\SEOTools\Facades\OpenGraph::addImage($metaImage);
     }
+
+    Artesaos\SEOTools\Facades\JsonLd::setTitle($page->meta_title ?: $page->title . ' - ' . $siteTitle);
+    Artesaos\SEOTools\Facades\JsonLd::setDescription($page->meta_description ?: $metaDesc);
+    Artesaos\SEOTools\Facades\JsonLd::setType('WebPage');
+    if ($metaImage) {
+        Artesaos\SEOTools\Facades\JsonLd::addImage($metaImage);
+    }
 @endphp
 
 <head>
@@ -40,6 +47,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     {!! Artesaos\SEOTools\Facades\SEOTools::generate() !!}
+    @if($page->meta_schema)
+        {!! $page->meta_schema !!}
+    @endif
 
     @if($favIcon)
         <link rel="icon" type="image/png" href="{{ asset("storage/" . $favIcon) }}">

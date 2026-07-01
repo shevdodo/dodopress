@@ -20,6 +20,7 @@ class Post extends Model
         'meta_title',
         'meta_description',
         'meta_keywords',
+        'meta_schema',
     ];
 
     public function category()

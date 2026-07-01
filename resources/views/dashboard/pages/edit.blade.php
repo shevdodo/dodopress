@@ -115,6 +115,11 @@
                     <input type="text" id="meta_keywords" name="meta_keywords" value="{{ old('meta_keywords', $page->meta_keywords) }}" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-brand-500 focus:ring focus:ring-brand-500/20 px-4 py-2 text-sm" placeholder="keyword1, keyword2, ...">
                 </div>
 
+                <div class="mb-6">
+                    <label for="meta_schema" class="block text-sm font-semibold text-gray-800 mb-1">Custom Schema Markup (JSON-LD)</label>
+                    <textarea id="meta_schema" name="meta_schema" rows="4" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-brand-500 focus:ring focus:ring-brand-500/20 px-4 py-2 text-sm font-mono text-gray-700" placeholder='<script type="application/ld+json">...</script>'>{{ old('meta_schema', $page->meta_schema) }}</textarea>
+                </div>
+
                 <h3 class="font-semibold text-gray-900 mb-4 pb-2 border-b border-gray-100 mt-6">Publishing</h3>
                 
                 <div class="mb-4">
