@@ -64,6 +64,7 @@
                         <option value="default" {{ old('template') == 'default' ? 'selected' : '' }}>Default Template</option>
                         <option value="full-width" {{ old('template') == 'full-width' ? 'selected' : '' }}>Full Width</option>
                         <option value="blank" {{ old('template') == 'blank' ? 'selected' : '' }}>Blank (Raw HTML)</option>
+                        <option value="ux-builder" {{ old('template') == 'ux-builder' ? 'selected' : '' }}>UX Builder (GrapesJS)</option>
                         <option value="block" {{ old('template', 'block') == 'block' ? 'selected' : '' }}>Block Editor</option>
                     </select>
                 </div>

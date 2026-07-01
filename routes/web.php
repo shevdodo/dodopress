@@ -78,6 +78,8 @@ Route::prefix('pranotoweb')
         Route::delete('/users/{user}', [SuperuserDashboardController::class, 'usersDestroy'])->name('users.destroy');
 
         Route::resource('pages', PageController::class);
+        Route::get('/pages/{page}/builder', [PageController::class, 'builder'])->name('pages.builder');
+        Route::post('/pages/{page}/builder', [PageController::class, 'saveBuilder'])->name('pages.builder.save');
 
         // Bulk delete HARUS sebelum resource route agar tidak ditangkap sebagai {post} ID
         Route::delete('/posts/bulk-delete', [PostController::class, 'bulkDestroy'])->name('posts.bulk-destroy');

@@ -56,13 +56,18 @@
     @endif
     <script src="https://cdn.tailwindcss.com"></script>
     <x-theme-config />
+    @if($page->css)
+        <style>{!! $page->css !!}</style>
+    @endif
 </head>
 
 <body class="font-sans antialiased text-gray-900 bg-gray-50 min-h-screen flex flex-col">
     <x-frontend-navbar />
 
-    <main class="flex-grow {{ $page->template === 'blank' ? '' : ($page->template === 'block' ? 'pb-0' : 'pt-24 pb-12') }}">
-        @if($page->template === "block")
+    <main class="flex-grow {{ ($page->template === 'blank' || $page->template === 'ux-builder') ? '' : ($page->template === 'block' ? 'pb-0' : 'pt-24 pb-12') }}">
+        @if($page->template === "ux-builder")
+            {!! $page->content !!}
+        @elseif($page->template === "block")
             @php
                 $blocksData = [];
                 if (!empty($page->content)) {

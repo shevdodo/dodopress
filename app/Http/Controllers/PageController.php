@@ -184,7 +184,26 @@ class PageController extends Controller
 
     public function destroy(Page $page)
     {
+        if ($page->slug === '__homepage__') {
+            return redirect()->route('superuser.pages.index')->with('error', 'Cannot delete homepage.');
+        }
         $page->delete();
         return redirect()->route('superuser.pages.index')->with('status', 'Page deleted successfully.');
+    }
+
+    public function builder(Page $page)
+    {
+        return view('dashboard.pages.builder', compact('page'));
+    }
+
+    public function saveBuilder(Request $request, Page $page)
+    {
+        $page->update([
+            'content' => $request->input('html'),
+            'css' => $request->input('css'),
+            'builder_data' => $request->input('builder_data'),
+        ]);
+
+        return response()->json(['message' => 'Page successfully saved.']);
     }
 }

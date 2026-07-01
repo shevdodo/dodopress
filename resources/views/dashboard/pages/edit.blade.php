@@ -42,6 +42,34 @@
             </div>
             <x-block-editor :content="$page->content ?? ''" />
         </div>
+        @elseif($page->template === 'ux-builder')
+        {{-- ===== UX BUILDER EDITOR ===== --}}
+        <div class="flex-1 space-y-6">
+            <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
+                <div class="mb-6">
+                    <label for="title" class="block text-sm font-semibold text-gray-800 mb-1">Page Title <span class="text-red-500">*</span></label>
+                    <input type="text" id="title" name="title" value="{{ old('title', $page->title) }}" required class="w-full border-gray-300 rounded-lg shadow-sm focus:border-brand-500 focus:ring focus:ring-brand-500/20 px-4 py-2">
+                </div>
+
+                <div class="mb-6">
+                    <label for="slug" class="block text-sm font-semibold text-gray-800 mb-1">Slug</label>
+                    <div class="flex items-center">
+                        <span class="bg-gray-50 border border-r-0 border-gray-300 rounded-l-lg px-3 py-2 text-gray-500 text-sm">{{ url('/') }}/</span>
+                        <input type="text" id="slug" name="slug" value="{{ old('slug', $page->slug) }}" class="flex-1 border-gray-300 rounded-r-lg shadow-sm focus:border-brand-500 focus:ring focus:ring-brand-500/20 px-4 py-2">
+                    </div>
+                </div>
+
+                <div class="p-8 bg-gray-50 rounded-xl border-2 border-dashed border-gray-300 text-center">
+                    <svg class="w-12 h-12 text-gray-400 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" /></svg>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">Visual Page Builder</h3>
+                    <p class="text-gray-500 text-sm mb-6 max-w-sm mx-auto">This page is using the GrapesJS UX Builder. Click the button below to edit the page visually.</p>
+                    <a href="{{ route('superuser.pages.builder', $page->id) }}" class="inline-flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-xl font-bold shadow-lg transition-transform transform hover:-translate-y-0.5">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
+                        Open UX Builder
+                    </a>
+                </div>
+            </div>
+        </div>
         @else
         {{-- ===== REGULAR PAGE EDITOR ===== --}}
         <div class="flex-1 space-y-6">
@@ -89,6 +117,7 @@
                         <option value="full-width" {{ old('template', $page->template) == 'full-width' ? 'selected' : '' }}>Full Width</option>
                         <option value="blank" {{ old('template', $page->template) == 'blank' ? 'selected' : '' }}>Blank (Raw HTML)</option>
 
+                        <option value="ux-builder" {{ old('template', $page->template) == 'ux-builder' ? 'selected' : '' }}>UX Builder (GrapesJS)</option>
                         <option value="block" {{ old('template', $page->template) == 'block' ? 'selected' : '' }}>Block Editor</option>
                     </select>
                 </div>
