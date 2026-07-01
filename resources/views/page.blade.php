@@ -56,6 +56,10 @@
     @endif
     <script src="https://cdn.tailwindcss.com"></script>
     <x-theme-config />
+    @if($page->template === 'ux-builder')
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+        <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    @endif
     @if($page->css)
         <style>{!! $page->css !!}</style>
     @endif
@@ -315,6 +319,23 @@
         @endif
     </main>
     <x-frontend-footer />
+
+    @if($page->template === 'ux-builder')
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                if (typeof Swiper !== 'undefined') {
+                    const swipers = document.querySelectorAll('.swiper');
+                    swipers.forEach(function(el) {
+                        new Swiper(el, {
+                            navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+                            pagination: { el: '.swiper-pagination', clickable: true },
+                            loop: true
+                        });
+                    });
+                }
+            });
+        </script>
+    @endif
 </body>
 </html>
 
