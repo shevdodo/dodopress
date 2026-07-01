@@ -73,6 +73,23 @@
                     <input type="number" id="order" name="order" value="{{ old('order', 0) }}" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-brand-500 focus:ring focus:ring-brand-500/20 px-4 py-2">
                 </div>
 
+                <h3 class="font-semibold text-gray-900 mb-4 pb-2 border-b border-gray-100 mt-6">SEO Options</h3>
+                
+                <div class="mb-4">
+                    <label for="meta_title" class="block text-sm font-semibold text-gray-800 mb-1">Meta Title</label>
+                    <input type="text" id="meta_title" name="meta_title" value="{{ old('meta_title') }}" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-brand-500 focus:ring focus:ring-brand-500/20 px-4 py-2 text-sm" placeholder="Custom SEO title">
+                </div>
+
+                <div class="mb-4">
+                    <label for="meta_description" class="block text-sm font-semibold text-gray-800 mb-1">Meta Description</label>
+                    <textarea id="meta_description" name="meta_description" rows="3" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-brand-500 focus:ring focus:ring-brand-500/20 px-4 py-2 text-sm" placeholder="Brief description for search engines">{{ old('meta_description') }}</textarea>
+                </div>
+
+                <div class="mb-6">
+                    <label for="meta_keywords" class="block text-sm font-semibold text-gray-800 mb-1">Meta Keywords</label>
+                    <input type="text" id="meta_keywords" name="meta_keywords" value="{{ old('meta_keywords') }}" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-brand-500 focus:ring focus:ring-brand-500/20 px-4 py-2 text-sm" placeholder="keyword1, keyword2, ...">
+                </div>
+
                 <h3 class="font-semibold text-gray-900 mb-4 pb-2 border-b border-gray-100 mt-6">Publishing</h3>
                 
                 <div class="mb-4">

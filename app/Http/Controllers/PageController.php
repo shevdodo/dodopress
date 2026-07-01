@@ -119,6 +119,9 @@ class PageController extends Controller
             'parent_id' => 'nullable|exists:pages,id',
             'template' => 'nullable|string',
             'order' => 'nullable|integer',
+            'meta_title' => 'nullable|string|max:255',
+            'meta_description' => 'nullable|string',
+            'meta_keywords' => 'nullable|string|max:255',
         ]);
 
         $data = $request->all();
@@ -152,6 +155,9 @@ class PageController extends Controller
             'parent_id' => 'nullable|exists:pages,id',
             'template' => 'nullable|string',
             'order' => 'nullable|integer',
+            'meta_title' => 'nullable|string|max:255',
+            'meta_description' => 'nullable|string',
+            'meta_keywords' => 'nullable|string|max:255',
         ]);
 
         $data = $request->all();

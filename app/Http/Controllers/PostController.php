@@ -44,6 +44,9 @@ class PostController extends Controller
             'status' => 'required|in:published,draft',
             'category_id' => 'nullable|exists:categories,id',
             'image' => 'nullable|image|max:2048',
+            'meta_title' => 'nullable|string|max:255',
+            'meta_description' => 'nullable|string',
+            'meta_keywords' => 'nullable|string|max:255',
         ]);
 
         $data = $request->except(['image']);
@@ -81,6 +84,9 @@ class PostController extends Controller
             'status' => 'required|in:published,draft',
             'category_id' => 'nullable|exists:categories,id',
             'image' => 'nullable|image|max:2048',
+            'meta_title' => 'nullable|string|max:255',
+            'meta_description' => 'nullable|string',
+            'meta_keywords' => 'nullable|string|max:255',
         ]);
 
         $data = $request->except(['image']);

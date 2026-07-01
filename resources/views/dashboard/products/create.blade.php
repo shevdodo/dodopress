@@ -115,6 +115,23 @@
                     <input type="text" name="slug" id="slug" value="{{ old('slug') }}" class="w-full border-gray-300 rounded-xl shadow-sm focus:border-brand-500 focus:ring focus:ring-brand-500/20 px-4 py-2.5 transition text-sm" placeholder="auto-generated">
                 </div>
 
+                <h3 class="font-bold text-gray-900 mb-4 pb-3 border-b border-gray-100 mt-6">SEO Options</h3>
+                
+                <div class="mb-5">
+                    <label for="meta_title" class="block text-sm font-semibold text-gray-800 mb-1">Meta Title</label>
+                    <input type="text" name="meta_title" id="meta_title" value="{{ old('meta_title') }}" class="w-full border-gray-300 rounded-xl shadow-sm focus:border-brand-500 focus:ring focus:ring-brand-500/20 px-4 py-2.5 transition text-sm" placeholder="Custom SEO title">
+                </div>
+
+                <div class="mb-5">
+                    <label for="meta_description" class="block text-sm font-semibold text-gray-800 mb-1">Meta Description</label>
+                    <textarea name="meta_description" id="meta_description" rows="3" class="w-full border-gray-300 rounded-xl shadow-sm focus:border-brand-500 focus:ring focus:ring-brand-500/20 px-4 py-2.5 transition text-sm" placeholder="Brief description for search engines">{{ old('meta_description') }}</textarea>
+                </div>
+
+                <div class="mb-5">
+                    <label for="meta_keywords" class="block text-sm font-semibold text-gray-800 mb-1">Meta Keywords</label>
+                    <input type="text" name="meta_keywords" id="meta_keywords" value="{{ old('meta_keywords') }}" class="w-full border-gray-300 rounded-xl shadow-sm focus:border-brand-500 focus:ring focus:ring-brand-500/20 px-4 py-2.5 transition text-sm" placeholder="keyword1, keyword2, ...">
+                </div>
+
                 <!-- Product Image -->
                 <div class="mb-5">
                     <x-media-picker name="image" label="Foto Utama (Thumbnail)" preview-size="lg" />

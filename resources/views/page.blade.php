@@ -19,23 +19,27 @@
     
     // Determine Meta Image
     $metaImage = $siteLogo ? asset("storage/" . $siteLogo) : ($favIcon ? asset("storage/" . $favIcon) : '');
+
+    Artesaos\SEOTools\Facades\SEOMeta::setTitle($page->meta_title ?: $page->title . ' - ' . $siteTitle);
+    Artesaos\SEOTools\Facades\SEOMeta::setDescription($page->meta_description ?: $metaDesc);
+    if ($page->meta_keywords) {
+        Artesaos\SEOTools\Facades\SEOMeta::addMeta('keywords', $page->meta_keywords);
+    }
+    
+    Artesaos\SEOTools\Facades\OpenGraph::setTitle($page->meta_title ?: $page->title . ' - ' . $siteTitle);
+    Artesaos\SEOTools\Facades\OpenGraph::setDescription($page->meta_description ?: $metaDesc);
+    Artesaos\SEOTools\Facades\OpenGraph::setUrl(url()->current());
+    Artesaos\SEOTools\Facades\OpenGraph::addProperty('type', 'website');
+    if ($metaImage) {
+        Artesaos\SEOTools\Facades\OpenGraph::addImage($metaImage);
+    }
 @endphp
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="description" content="{{ $metaDesc }}">
-    <title>{{ $page->title }} - {{ $siteTitle }}</title>
-    
-    <!-- Open Graph / Facebook / WhatsApp -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="{{ url()->current() }}">
-    <meta property="og:title" content="{{ $page->title }} - {{ $siteTitle }}">
-    <meta property="og:description" content="{{ $metaDesc }}">
-    @if($metaImage)
-    <meta property="og:image" content="{{ $metaImage }}">
-    @endif
+    {!! Artesaos\SEOTools\Facades\SEOTools::generate() !!}
 
     @if($favIcon)
         <link rel="icon" type="image/png" href="{{ asset("storage/" . $favIcon) }}">

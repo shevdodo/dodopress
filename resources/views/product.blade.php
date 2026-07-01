@@ -14,25 +14,29 @@
     }
     
     $metaImage = $prodImg ? asset('storage/' . $prodImg) : ($siteLogo ? asset('storage/' . $siteLogo) : ($favIcon ? asset('storage/' . $favIcon) : ''));
+
+    Artesaos\SEOTools\Facades\SEOMeta::setTitle($product->meta_title ?: $product->name . ' - ' . $siteTitle);
+    Artesaos\SEOTools\Facades\SEOMeta::setDescription($product->meta_description ?: $metaDesc);
+    if ($product->meta_keywords) {
+        Artesaos\SEOTools\Facades\SEOMeta::addMeta('keywords', $product->meta_keywords);
+    }
+    
+    Artesaos\SEOTools\Facades\OpenGraph::setTitle($product->meta_title ?: $product->name . ' - ' . $siteTitle);
+    Artesaos\SEOTools\Facades\OpenGraph::setDescription($product->meta_description ?: $metaDesc);
+    Artesaos\SEOTools\Facades\OpenGraph::setUrl(url()->current());
+    Artesaos\SEOTools\Facades\OpenGraph::addProperty('type', 'product');
+    Artesaos\SEOTools\Facades\OpenGraph::addProperty('product:price:amount', $product->price);
+    Artesaos\SEOTools\Facades\OpenGraph::addProperty('product:price:currency', 'IDR');
+    if ($metaImage) {
+        Artesaos\SEOTools\Facades\OpenGraph::addImage($metaImage);
+    }
 @endphp
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="description" content="{{ $metaDesc }}">
-    <title>{{ $product->name }} - {{ $siteTitle }}</title>
-    
-    <!-- Open Graph / Facebook / WhatsApp -->
-    <meta property="og:type" content="product">
-    <meta property="og:url" content="{{ url()->current() }}">
-    <meta property="og:title" content="{{ $product->name }} - {{ $siteTitle }}">
-    <meta property="og:description" content="{{ $metaDesc }}">
-    @if($metaImage)
-    <meta property="og:image" content="{{ $metaImage }}">
-    @endif
-    <meta property="product:price:amount" content="{{ $product->price }}">
-    <meta property="product:price:currency" content="IDR">
+    {!! Artesaos\SEOTools\Facades\SEOTools::generate() !!}
 
     @if($favIcon)
         <link rel="icon" type="image/png" href="{{ asset('storage/' . $favIcon) }}">
