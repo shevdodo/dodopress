@@ -151,6 +151,8 @@ class MediaController extends Controller
         $files = [];
 
         foreach ($allFiles as $filePath) {
+            // Normalize path separators for Windows
+            $filePath = str_replace('\\', '/', $filePath);
             $fileName = basename($filePath);
 
             // Filter by search

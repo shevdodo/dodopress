@@ -211,7 +211,7 @@
                     this.loading = true;
                     this.selected = null;
                     const querySearch = this.search || '';
-                    fetch(`{{ route('superuser.media.api') }}?type=image&search=${encodeURIComponent(querySearch)}`)
+                    fetch(`{{ route('superuser.media.api', [], false) }}?type=image&search=${encodeURIComponent(querySearch)}`)
                         .then(r => r.json())
                         .then(data => {
                             this.files = data.files || [];
