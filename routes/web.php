@@ -123,6 +123,9 @@ Route::prefix('pranotoweb')
         // Contact Messages
         Route::resource('contact-messages', \App\Http\Controllers\ContactMessageController::class)->only(['index', 'show', 'destroy']);
 
+        // Audit Logs
+        Route::get('/audit-logs', [\App\Http\Controllers\AuditLogController::class, 'index'])->name('audit-logs.index');
+
         // System
         Route::get('/clear-cache', [SuperuserDashboardController::class, 'clearCache'])->name('clear-cache');
         Route::post('/clear-cache', [SuperuserDashboardController::class, 'clearCacheExecute'])->name('clear-cache.execute');

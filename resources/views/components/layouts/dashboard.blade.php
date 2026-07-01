@@ -257,14 +257,14 @@
                         </div>
                         <span class="{{ request()->routeIs('superuser.users.*') ? 'font-medium' : '' }}">User Management</span>
                     </a>
-                    <a href="#"
-                        class="flex items-center space-x-3 px-4 py-3 rounded-xl text-brand-200 hover:text-white hover:bg-brand-800/60 transition-all duration-200">
+                    <a href="{{ route('superuser.audit-logs.index') }}"
+                        class="flex items-center space-x-3 px-4 py-3 rounded-xl {{ request()->routeIs('superuser.audit-logs.*') ? 'text-white bg-gradient-to-r from-brand-600 to-brand-700 shadow-lg shadow-brand-900/30 font-medium' : 'text-brand-200 hover:text-white hover:bg-brand-800/60' }} transition-all duration-200">
                         <div class="w-5 h-5 flex items-center justify-center">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                             </svg>
                         </div>
-                        <span>Audit Logs</span>
+                        <span class="{{ request()->routeIs('superuser.audit-logs.*') ? 'font-medium' : '' }}">Audit Logs</span>
                     </a>
                     <a href="{{ route('superuser.clear-cache') }}"
                         class="flex items-center space-x-3 px-4 py-3 rounded-xl {{ request()->routeIs('superuser.clear-cache') ? 'text-white bg-gradient-to-r from-brand-600 to-brand-700 shadow-lg shadow-brand-900/30 font-medium' : 'text-brand-200 hover:text-white hover:bg-brand-800/60' }} transition-all duration-200">
