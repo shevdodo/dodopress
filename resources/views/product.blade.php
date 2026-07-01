@@ -90,8 +90,8 @@
 
     <main class="flex-grow pt-8 pb-12">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden flex flex-col md:flex-row">
-                <div class="w-full md:w-1/2 p-8 sm:p-12 flex items-center justify-center bg-gray-50">
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex flex-col md:flex-row">
+                <div class="w-full md:w-5/12 p-4 sm:p-6 lg:p-8 flex items-start justify-center bg-gray-50/50">
                     @php
                         $allImages = [];
                         if($product->image) $allImages[] = $product->image;
@@ -104,7 +104,7 @@
                     
                     @if(count($allImages) > 0)
                         <div x-data="{ mainImage: '{{ asset('storage/' . $allImages[0]) }}' }" class="w-full max-w-md flex flex-col gap-4">
-                            <div class="cursor-pointer group relative w-full aspect-[4/5]" @click="activeLightboxImage = mainImage; lightboxOpen = true">
+                            <div class="cursor-pointer group relative w-full aspect-square" @click="activeLightboxImage = mainImage; lightboxOpen = true">
                                 <img :src="mainImage" alt="{{ $product->name }}" class="w-full h-full rounded-2xl shadow-lg object-cover transition transform group-hover:scale-[1.02] duration-300">
                                 <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl flex items-center justify-center">
                                     <div class="bg-white/90 p-3 rounded-full text-gray-800 shadow-xl transform scale-90 group-hover:scale-100 transition-transform duration-300">
@@ -126,13 +126,13 @@
                             @endif
                         </div>
                     @else
-                        <div class="w-full max-w-md aspect-[4/5] bg-gray-200 rounded-2xl flex items-center justify-center">
+                        <div class="w-full max-w-md aspect-square bg-gray-200 rounded-2xl flex items-center justify-center">
                             <svg class="w-20 h-20 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
                         </div>
                     @endif
                 </div>
                 
-                <div class="w-full md:w-1/2 p-8 sm:p-12 flex flex-col justify-center">
+                <div class="w-full md:w-7/12 p-6 sm:p-8 lg:p-10 flex flex-col">
                     <!-- Breadcrumbs (Map Slug) -->
                     <nav class="flex items-center text-xs sm:text-sm text-gray-500 uppercase tracking-widest font-semibold mb-4 space-x-2">
                         <a href="{{ url('/') }}" class="hover:text-brand-600 transition">Home</a>
@@ -188,9 +188,7 @@
                         </div>
                     </div>
                     
-                    <div class="prose prose-sm text-gray-600 mb-8">
-                        {!! nl2br(e($product->description)) !!}
-                    </div>
+                    {{-- Removed description from here --}}
                     
                     <div>
                         <form action="{{ route('cart.add', $product->id) }}" method="POST">
@@ -204,14 +202,14 @@
                             @endphp
 
                             @if(!empty($sizeList))
-                                <div class="mb-6" x-data="{ selectedSize: '{{ reset($sizeList) }}' }">
-                                    <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">Pilih Ukuran:</label>
+                                <div class="mb-6 flex items-center gap-4" x-data="{ selectedSize: '{{ reset($sizeList) }}' }">
+                                    <label class="w-24 text-sm font-semibold text-gray-600">Ukuran</label>
                                     <div class="flex flex-wrap gap-2">
                                         <input type="hidden" name="size" :value="selectedSize">
                                         @foreach($sizeList as $size)
                                             <button type="button" @click="selectedSize = '{{ $size }}'"
-                                                :class="selectedSize === '{{ $size }}' ? 'bg-brand-600 text-white border-brand-600 shadow-sm' : 'bg-white text-gray-800 border-gray-200 hover:border-gray-300'"
-                                                class="px-4 py-2 text-sm font-semibold border rounded-xl transition duration-150">
+                                                :class="selectedSize === '{{ $size }}' ? 'bg-brand-50 text-brand-700 border-brand-500' : 'bg-white text-gray-700 border-gray-300 hover:border-gray-400 hover:bg-gray-50'"
+                                                class="min-w-[3rem] px-3 py-1.5 text-sm font-medium border rounded transition duration-150">
                                                 {{ $size }}
                                             </button>
                                         @endforeach
@@ -219,17 +217,50 @@
                                 </div>
                             @endif
 
-                            <button type="submit" 
-                                @if($product->stock <= 0) disabled @endif
-                                class="w-full sm:w-auto px-8 py-4 text-white font-bold rounded-xl shadow-lg transition transform hover:-translate-y-0.5 bg-brand-600 hover:bg-brand-700 shadow-brand-600/30 disabled:bg-gray-300 disabled:text-gray-400 disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none">
-                                @if($product->stock <= 0)
-                                    Stok Habis
-                                @else
-                                    Add to Cart
+                            <div class="mb-8 flex items-center gap-4" x-data="{ qty: 1 }">
+                                <label class="w-24 text-sm font-semibold text-gray-600">Kuantitas</label>
+                                <div class="flex items-center border border-gray-300 rounded overflow-hidden">
+                                    <button type="button" @click="if(qty > 1) qty--" class="px-3 py-1.5 bg-gray-50 hover:bg-gray-100 text-gray-600 border-r border-gray-300 transition focus:outline-none">&minus;</button>
+                                    <input type="number" name="quantity" x-model="qty" min="1" max="{{ $product->stock > 0 ? $product->stock : 1 }}" class="w-14 text-center py-1.5 border-0 focus:ring-0 text-sm font-medium text-gray-800" readonly>
+                                    <button type="button" @click="if(qty < {{ $product->stock > 0 ? $product->stock : 1 }}) qty++" class="px-3 py-1.5 bg-gray-50 hover:bg-gray-100 text-gray-600 border-l border-gray-300 transition focus:outline-none">&plus;</button>
+                                </div>
+                                @if($product->stock > 0)
+                                    <span class="text-sm text-gray-500 ml-2">Tersisa {{ $product->stock }} buah</span>
                                 @endif
-                            </button>
+                            </div>
+
+                            <div class="flex flex-col sm:flex-row gap-4">
+                                <button type="submit" 
+                                    @if($product->stock <= 0) disabled @endif
+                                    class="w-full sm:w-1/2 px-6 py-3.5 text-brand-600 font-bold rounded-lg border border-brand-600 bg-brand-50 hover:bg-brand-100 transition disabled:bg-gray-100 disabled:text-gray-400 disabled:border-gray-300 disabled:cursor-not-allowed">
+                                    @if($product->stock <= 0)
+                                        Stok Habis
+                                    @else
+                                        <span class="flex items-center justify-center gap-2">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                                            Masukkan Keranjang
+                                        </span>
+                                    @endif
+                                </button>
+                                
+                                <button type="button" 
+                                    @if($product->stock <= 0) disabled @endif
+                                    class="w-full sm:w-1/2 px-6 py-3.5 text-white font-bold rounded-lg bg-brand-600 hover:bg-brand-700 shadow-md transition disabled:bg-gray-300 disabled:text-gray-400 disabled:cursor-not-allowed disabled:shadow-none">
+                                    Beli Sekarang
+                                </button>
+                            </div>
                         </form>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Description Card -->
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 sm:p-10">
+                <h2 class="text-xl font-bold text-gray-800 mb-6 border-b border-gray-100 pb-4">Spesifikasi & Deskripsi Produk</h2>
+                <div class="prose max-w-none text-gray-600 leading-relaxed text-sm sm:text-base">
+                    {!! nl2br(e($product->description)) !!}
                 </div>
             </div>
         </div>
