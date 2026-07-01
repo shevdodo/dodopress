@@ -111,25 +111,32 @@
             const css = editor.getCss();
             const projectData = editor.getProjectData();
 
+            const formData = new FormData();
+            formData.append('html', html);
+            formData.append('css', css);
+            formData.append('builder_data', JSON.stringify(projectData));
+
             fetch("{{ route('superuser.pages.builder.save', $page->id) }}", {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                 },
-                body: JSON.stringify({
-                    html: html,
-                    css: css,
-                    builder_data: JSON.stringify(projectData)
-                })
+                body: formData
             })
-            .then(response => response.json())
+            .then(async response => {
+                if (!response.ok) {
+                    const text = await response.text();
+                    throw new Error(`HTTP ${response.status}: ${text.substring(0, 100)}...`);
+                }
+                return response.json();
+            })
             .then(data => {
                 showToast(data.message || 'Page successfully saved.');
             })
             .catch(error => {
-                console.error('Error:', error);
-                showToast('Failed to save. Check console.', true);
+                console.error('Error details:', error);
+                alert("Gagal menyimpan!\nDetail: " + error.message);
+                showToast('Failed to save. See alert.', true);
             })
             .finally(() => {
                 btn.innerHTML = originalText;
