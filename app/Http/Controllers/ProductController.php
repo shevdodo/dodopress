@@ -30,7 +30,7 @@ class ProductController extends Controller
 
     public function create()
     {
-        $categories = Category::all();
+        $categories = Category::where('type', 'product')->orderBy('name')->get();
         return view('dashboard.products.create', compact('categories'));
     }
 
@@ -103,7 +103,7 @@ class ProductController extends Controller
 
     public function edit(Product $product)
     {
-        $categories = Category::all();
+        $categories = Category::where('type', 'product')->orderBy('name')->get();
         return view('dashboard.products.edit', compact('product', 'categories'));
     }
 

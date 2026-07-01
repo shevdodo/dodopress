@@ -30,7 +30,7 @@ class PostController extends Controller
 
     public function create()
     {
-        $categories = Category::all();
+        $categories = Category::where('type', 'post')->orderBy('name')->get();
         return view('dashboard.posts.create', compact('categories'));
     }
 
@@ -67,7 +67,7 @@ class PostController extends Controller
 
     public function edit(Post $post)
     {
-        $categories = Category::all();
+        $categories = Category::where('type', 'post')->orderBy('name')->get();
         return view('dashboard.posts.edit', compact('post', 'categories'));
     }
 
