@@ -4,14 +4,36 @@
 @php
     $siteTitle = \App\Models\Setting::where('key', 'site_title')->value('value') ?: config('app.name', 'Laravel');
     $favIcon = \App\Models\Setting::where('key', 'fav_icon')->value('value');
+    $siteLogo = \App\Models\Setting::where('key', 'site_logo')->value('value');
+    $metaDesc = \Illuminate\Support\Str::limit(strip_tags($product->description), 150);
+    
+    // Determine the product image (handle single image or image array)
+    $prodImg = $product->image;
+    if (empty($prodImg) && !empty($product->images) && is_array($product->images) && count($product->images) > 0) {
+        $prodImg = $product->images[0];
+    }
+    
+    $metaImage = $prodImg ? asset('storage/' . $prodImg) : ($siteLogo ? asset('storage/' . $siteLogo) : ($favIcon ? asset('storage/' . $favIcon) : ''));
 @endphp
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="description" content="{{ $metaDesc }}">
     <title>{{ $product->name }} - {{ $siteTitle }}</title>
     
+    <!-- Open Graph / Facebook / WhatsApp -->
+    <meta property="og:type" content="product">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:title" content="{{ $product->name }} - {{ $siteTitle }}">
+    <meta property="og:description" content="{{ $metaDesc }}">
+    @if($metaImage)
+    <meta property="og:image" content="{{ $metaImage }}">
+    @endif
+    <meta property="product:price:amount" content="{{ $product->price }}">
+    <meta property="product:price:currency" content="IDR">
+
     @if($favIcon)
         <link rel="icon" type="image/png" href="{{ asset('storage/' . $favIcon) }}">
     @endif

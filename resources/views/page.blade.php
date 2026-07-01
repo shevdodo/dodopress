@@ -3,15 +3,40 @@
 
 @php
     $siteTitle = \App\Models\Setting::where("key", "site_title")->value("value") ?: config("app.name", "Laravel");
+    $tagline = \App\Models\Setting::where("key", "tagline")->value("value") ?: '';
     $favIcon = \App\Models\Setting::where("key", "fav_icon")->value("value");
+    $siteLogo = \App\Models\Setting::where("key", "site_logo")->value("value");
+    
+    // Determine Meta Description to prevent raw JSON showing on share
+    $metaDesc = $tagline ?: $siteTitle;
+    if (!empty($page->content)) {
+        json_decode($page->content);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            // Not JSON, use stripped text
+            $metaDesc = \Illuminate\Support\Str::limit(strip_tags($page->content), 150);
+        }
+    }
+    
+    // Determine Meta Image
+    $metaImage = $siteLogo ? asset("storage/" . $siteLogo) : ($favIcon ? asset("storage/" . $favIcon) : '');
 @endphp
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="description" content="{{ \Illuminate\Support\Str::limit(strip_tags($page->content ?? $siteTitle), 150) }}">
+    <meta name="description" content="{{ $metaDesc }}">
     <title>{{ $page->title }} - {{ $siteTitle }}</title>
+    
+    <!-- Open Graph / Facebook / WhatsApp -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:title" content="{{ $page->title }} - {{ $siteTitle }}">
+    <meta property="og:description" content="{{ $metaDesc }}">
+    @if($metaImage)
+    <meta property="og:image" content="{{ $metaImage }}">
+    @endif
+
     @if($favIcon)
         <link rel="icon" type="image/png" href="{{ asset("storage/" . $favIcon) }}">
     @endif

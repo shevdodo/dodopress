@@ -4,13 +4,26 @@
 @php
     $siteTitle = \App\Models\Setting::where('key', 'site_title')->value('value') ?: config('app.name', 'Laravel');
     $favIcon = \App\Models\Setting::where('key', 'fav_icon')->value('value');
+    $siteLogo = \App\Models\Setting::where('key', 'site_logo')->value('value');
+    $metaDesc = \Illuminate\Support\Str::limit(strip_tags($post->content), 150);
+    $metaImage = $post->image ? asset('storage/' . $post->image) : ($siteLogo ? asset('storage/' . $siteLogo) : ($favIcon ? asset('storage/' . $favIcon) : ''));
 @endphp
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="description" content="{{ $metaDesc }}">
     <title>{{ $post->title }} - {{ $siteTitle }}</title>
+    
+    <!-- Open Graph / Facebook / WhatsApp -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:title" content="{{ $post->title }} - {{ $siteTitle }}">
+    <meta property="og:description" content="{{ $metaDesc }}">
+    @if($metaImage)
+    <meta property="og:image" content="{{ $metaImage }}">
+    @endif
     
     @if($favIcon)
         <link rel="icon" type="image/png" href="{{ asset('storage/' . $favIcon) }}">
