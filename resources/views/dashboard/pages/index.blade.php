@@ -27,7 +27,8 @@
                 <thead>
                     <tr class="bg-gray-50 border-b border-gray-100 text-xs uppercase tracking-wider text-gray-500">
                         <th class="px-6 py-4 font-semibold">Title</th>
-                        <th class="px-6 py-4 font-semibold">Category</th>
+                        <th class="px-6 py-4 font-semibold">Parent Page</th>
+                        <th class="px-6 py-4 font-semibold">Template</th>
                         <th class="px-6 py-4 font-semibold">Status</th>
                         <th class="px-6 py-4 font-semibold">Last Updated</th>
                         <th class="px-6 py-4 font-semibold text-right">Actions</th>
@@ -51,6 +52,12 @@
                             <span class="text-gray-500 text-xs italic">—</span>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-700">
+                                <svg class="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" /></svg>
+                                {{ ucfirst($homePage->template ?? 'default') }}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
                             <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800">Published</span>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-gray-500">
@@ -70,7 +77,20 @@
                                 <p class="text-xs text-gray-500">/{{ $page->slug }}</p>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="text-gray-600">{{ $page->category ? $page->category->name : 'Uncategorized' }}</span>
+                                @if($page->parent)
+                                    <div class="flex items-center gap-1.5 text-gray-600">
+                                        <svg class="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" /></svg>
+                                        <span>{{ $page->parent->title }}</span>
+                                    </div>
+                                @else
+                                    <span class="text-gray-400 text-xs italic">—</span>
+                                @endif
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-700">
+                                    <svg class="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" /></svg>
+                                    {{ ucfirst($page->template ?? 'default') }}
+                                </span>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 @if($page->status === 'published')
@@ -94,7 +114,7 @@
                     @empty
                         @if(!isset($homePage) || !$homePage)
                         <tr>
-                            <td colspan="5" class="px-6 py-8 text-center">
+                            <td colspan="6" class="px-6 py-8 text-center">
                                 <div class="w-16 h-16 bg-gray-50 rounded-2xl border border-gray-100 flex items-center justify-center mx-auto mb-4 text-gray-400">
                                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
                                 </div>
