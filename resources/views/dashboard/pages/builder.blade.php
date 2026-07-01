@@ -116,7 +116,7 @@
             formData.append('css', css);
             formData.append('builder_data', JSON.stringify(projectData));
 
-            fetch("{{ route('superuser.pages.builder.save', $page->id) }}", {
+            fetch(window.location.href, {
                 method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
