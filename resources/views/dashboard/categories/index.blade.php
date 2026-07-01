@@ -1,11 +1,11 @@
-<x-layouts.dashboard title="Categories Management">
+<x-layouts.dashboard title="{{ ucfirst(request('type', '')) }} Categories Management">
     <div class="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between">
         <div>
-            <h2 class="text-2xl sm:text-3xl font-bold text-gray-900">Categories</h2>
-            <p class="text-sm text-gray-500 mt-1">Manage categories for your pages and posts.</p>
+            <h2 class="text-2xl sm:text-3xl font-bold text-gray-900">{{ ucfirst(request('type', '')) }} Categories</h2>
+            <p class="text-sm text-gray-500 mt-1">Manage categories for your {{ request('type', 'content') }}s.</p>
         </div>
         <div class="mt-4 sm:mt-0">
-            <a href="{{ route('superuser.categories.create') }}" class="bg-brand-600 text-white px-5 py-2.5 rounded-xl font-medium shadow-lg shadow-brand-600/30 hover:bg-brand-700 transition flex items-center space-x-2 inline-flex">
+            <a href="{{ route('superuser.categories.create', ['type' => request('type')]) }}" class="bg-brand-600 text-white px-5 py-2.5 rounded-xl font-medium shadow-lg shadow-brand-600/30 hover:bg-brand-700 transition flex items-center space-x-2 inline-flex">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
                 <span>Add Category</span>
             </a>

@@ -8,9 +8,15 @@ use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $categories = Category::latest()->paginate(10);
+        $query = Category::latest();
+        
+        if ($request->has('type')) {
+            $query->where('type', $request->type);
+        }
+
+        $categories = $query->paginate(10)->appends($request->query());
         return view('dashboard.categories.index', compact('categories'));
     }
 
@@ -41,7 +47,7 @@ class CategoryController extends Controller
 
         Category::create($data);
 
-        return redirect()->route('superuser.categories.index')->with('status', 'Category created successfully.');
+        return redirect()->route('superuser.categories.index', ['type' => $data['type'] ?? 'post'])->with('status', 'Category created successfully.');
     }
 
     public function edit(Category $category)
@@ -71,12 +77,12 @@ class CategoryController extends Controller
 
         $category->update($data);
 
-        return redirect()->route('superuser.categories.index')->with('status', 'Category updated successfully.');
+        return redirect()->route('superuser.categories.index', ['type' => $data['type'] ?? 'post'])->with('status', 'Category updated successfully.');
     }
 
     public function destroy(Category $category)
     {
         $category->delete();
-        return redirect()->route('superuser.categories.index')->with('status', 'Category deleted successfully.');
+        return redirect()->route('superuser.categories.index', ['type' => $category->type ?? 'post'])->with('status', 'Category deleted successfully.');
     }
 }

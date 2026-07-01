@@ -1,11 +1,11 @@
-<x-layouts.dashboard title="Create Category">
+<x-layouts.dashboard title="Create {{ ucfirst(request('type', '')) }} Category">
     <div class="mb-8">
         <div class="flex items-center space-x-2 text-sm text-gray-500 mb-2">
-            <a href="{{ route('superuser.categories.index') }}" class="hover:text-brand-600 transition">Categories</a>
+            <a href="{{ route('superuser.categories.index', ['type' => request('type')]) }}" class="hover:text-brand-600 transition">{{ ucfirst(request('type', '')) }} Categories</a>
             <span>/</span>
             <span class="text-gray-900 font-medium">Create Category</span>
         </div>
-        <h2 class="text-2xl sm:text-3xl font-bold text-gray-900">Create New Category</h2>
+        <h2 class="text-2xl sm:text-3xl font-bold text-gray-900">Create New {{ ucfirst(request('type', '')) }} Category</h2>
     </div>
 
     @if ($errors->any())
@@ -37,11 +37,11 @@
                 </div>
 
                 <!-- Type -->
-                <div>
+                <div class="{{ request()->has('type') ? 'hidden' : '' }}">
                     <label for="type" class="block text-sm font-semibold text-gray-800 mb-1">Type</label>
                     <select name="type" id="type" class="w-full border-gray-300 rounded-xl shadow-sm focus:border-brand-500 focus:ring focus:ring-brand-500/20 px-4 py-2.5 transition">
-                        <option value="post" {{ old('type') == 'post' ? 'selected' : '' }}>Post</option>
-                        <option value="product" {{ old('type') == 'product' ? 'selected' : '' }}>Produk</option>
+                        <option value="post" {{ old('type', request('type')) == 'post' ? 'selected' : '' }}>Post</option>
+                        <option value="product" {{ old('type', request('type')) == 'product' ? 'selected' : '' }}>Produk</option>
                     </select>
                 </div>
 
@@ -52,7 +52,7 @@
             </div>
 
             <div class="mt-8 pt-6 border-t border-gray-100 flex items-center justify-end space-x-3">
-                <a href="{{ route('superuser.categories.index') }}" class="px-5 py-2.5 text-gray-600 hover:text-gray-900 font-medium text-sm transition">Cancel</a>
+                <a href="{{ route('superuser.categories.index', ['type' => request('type')]) }}" class="px-5 py-2.5 text-gray-600 hover:text-gray-900 font-medium text-sm transition">Cancel</a>
                 <button type="submit" class="px-5 py-2.5 bg-brand-600 text-white font-medium rounded-xl hover:bg-brand-700 shadow-lg shadow-brand-600/30 transition text-sm">Create Category</button>
             </div>
         </form>
