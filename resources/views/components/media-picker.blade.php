@@ -128,7 +128,7 @@
                     <input x-model="search" @input.debounce.400ms="loadMedia()"
                         type="text" placeholder="Cari gambar..."
                         class="text-sm border-gray-300 rounded-lg px-3 py-1.5 focus:border-brand-500 focus:ring focus:ring-brand-500/20">
-                    <button @click="open = false" class="text-gray-400 hover:text-gray-600 transition">
+                    <button type="button" @click="open = false" class="text-gray-400 hover:text-gray-600 transition">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                         </svg>
