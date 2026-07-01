@@ -15,33 +15,33 @@
     
     $metaImage = $prodImg ? asset('storage/' . $prodImg) : ($siteLogo ? asset('storage/' . $siteLogo) : ($favIcon ? asset('storage/' . $favIcon) : ''));
 
-    Artesaos\SEOTools\Facades\SEOMeta::setTitle($product->meta_title ?: $product->name . ' - ' . $siteTitle);
-    Artesaos\SEOTools\Facades\SEOMeta::setDescription($product->meta_description ?: $metaDesc);
+    \Artesaos\SEOTools\Facades\SEOMeta::setTitle($product->meta_title ?: $product->name . ' - ' . $siteTitle);
+    \Artesaos\SEOTools\Facades\SEOMeta::setDescription($product->meta_description ?: $metaDesc);
     if ($product->meta_keywords) {
-        Artesaos\SEOTools\Facades\SEOMeta::addMeta('keywords', $product->meta_keywords);
+        \Artesaos\SEOTools\Facades\SEOMeta::addMeta('keywords', $product->meta_keywords);
     }
     
-    Artesaos\SEOTools\Facades\OpenGraph::setTitle($product->meta_title ?: $product->name . ' - ' . $siteTitle);
-    Artesaos\SEOTools\Facades\OpenGraph::setDescription($product->meta_description ?: $metaDesc);
-    Artesaos\SEOTools\Facades\OpenGraph::setUrl(url()->current());
-    Artesaos\SEOTools\Facades\OpenGraph::addProperty('type', 'product');
-    Artesaos\SEOTools\Facades\OpenGraph::addProperty('product:price:amount', $product->price);
-    Artesaos\SEOTools\Facades\OpenGraph::addProperty('product:price:currency', 'IDR');
+    \Artesaos\SEOTools\Facades\OpenGraph::setTitle($product->meta_title ?: $product->name . ' - ' . $siteTitle);
+    \Artesaos\SEOTools\Facades\OpenGraph::setDescription($product->meta_description ?: $metaDesc);
+    \Artesaos\SEOTools\Facades\OpenGraph::setUrl(url()->current());
+    \Artesaos\SEOTools\Facades\OpenGraph::addProperty('type', 'product');
+    \Artesaos\SEOTools\Facades\OpenGraph::addProperty('product:price:amount', $product->price);
+    \Artesaos\SEOTools\Facades\OpenGraph::addProperty('product:price:currency', 'IDR');
     if ($metaImage) {
-        Artesaos\SEOTools\Facades\OpenGraph::addImage($metaImage);
+        \Artesaos\SEOTools\Facades\OpenGraph::addImage($metaImage);
     }
 
-    Artesaos\SEOTools\Facades\JsonLd::setTitle($product->meta_title ?: $product->name . ' - ' . $siteTitle);
-    Artesaos\SEOTools\Facades\JsonLd::setDescription($product->meta_description ?: $metaDesc);
-    Artesaos\SEOTools\Facades\JsonLd::setType('Product');
-    Artesaos\SEOTools\Facades\JsonLd::addValue('offers', [
+    \Artesaos\SEOTools\Facades\JsonLd::setTitle($product->meta_title ?: $product->name . ' - ' . $siteTitle);
+    \Artesaos\SEOTools\Facades\JsonLd::setDescription($product->meta_description ?: $metaDesc);
+    \Artesaos\SEOTools\Facades\JsonLd::setType('Product');
+    \Artesaos\SEOTools\Facades\JsonLd::addValue('offers', [
         '@type' => 'Offer',
         'price' => $product->price,
         'priceCurrency' => 'IDR',
         'availability' => $product->status === 'available' ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock'
     ]);
     if ($metaImage) {
-        Artesaos\SEOTools\Facades\JsonLd::addImage($metaImage);
+        \Artesaos\SEOTools\Facades\JsonLd::addImage($metaImage);
     }
 @endphp
 
@@ -49,7 +49,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    {!! Artesaos\SEOTools\Facades\SEOTools::generate() !!}
+    {!! \Artesaos\SEOTools\Facades\SEOTools::generate() !!}
     @if($product->meta_schema)
         {!! $product->meta_schema !!}
     @endif

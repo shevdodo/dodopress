@@ -8,25 +8,25 @@
     $metaDesc = \Illuminate\Support\Str::limit(strip_tags($post->content), 150);
     $metaImage = $post->image ? asset('storage/' . $post->image) : ($siteLogo ? asset('storage/' . $siteLogo) : ($favIcon ? asset('storage/' . $favIcon) : ''));
 
-    Artesaos\SEOTools\Facades\SEOMeta::setTitle($post->meta_title ?: $post->title . ' - ' . $siteTitle);
-    Artesaos\SEOTools\Facades\SEOMeta::setDescription($post->meta_description ?: $metaDesc);
+    \Artesaos\SEOTools\Facades\SEOMeta::setTitle($post->meta_title ?: $post->title . ' - ' . $siteTitle);
+    \Artesaos\SEOTools\Facades\SEOMeta::setDescription($post->meta_description ?: $metaDesc);
     if ($post->meta_keywords) {
-        Artesaos\SEOTools\Facades\SEOMeta::addMeta('keywords', $post->meta_keywords);
+        \Artesaos\SEOTools\Facades\SEOMeta::addMeta('keywords', $post->meta_keywords);
     }
     
-    Artesaos\SEOTools\Facades\OpenGraph::setTitle($post->meta_title ?: $post->title . ' - ' . $siteTitle);
-    Artesaos\SEOTools\Facades\OpenGraph::setDescription($post->meta_description ?: $metaDesc);
-    Artesaos\SEOTools\Facades\OpenGraph::setUrl(url()->current());
-    Artesaos\SEOTools\Facades\OpenGraph::addProperty('type', 'article');
+    \Artesaos\SEOTools\Facades\OpenGraph::setTitle($post->meta_title ?: $post->title . ' - ' . $siteTitle);
+    \Artesaos\SEOTools\Facades\OpenGraph::setDescription($post->meta_description ?: $metaDesc);
+    \Artesaos\SEOTools\Facades\OpenGraph::setUrl(url()->current());
+    \Artesaos\SEOTools\Facades\OpenGraph::addProperty('type', 'article');
     if ($metaImage) {
-        Artesaos\SEOTools\Facades\OpenGraph::addImage($metaImage);
+        \Artesaos\SEOTools\Facades\OpenGraph::addImage($metaImage);
     }
 
-    Artesaos\SEOTools\Facades\JsonLd::setTitle($post->meta_title ?: $post->title . ' - ' . $siteTitle);
-    Artesaos\SEOTools\Facades\JsonLd::setDescription($post->meta_description ?: $metaDesc);
-    Artesaos\SEOTools\Facades\JsonLd::setType('Article');
+    \Artesaos\SEOTools\Facades\JsonLd::setTitle($post->meta_title ?: $post->title . ' - ' . $siteTitle);
+    \Artesaos\SEOTools\Facades\JsonLd::setDescription($post->meta_description ?: $metaDesc);
+    \Artesaos\SEOTools\Facades\JsonLd::setType('Article');
     if ($metaImage) {
-        Artesaos\SEOTools\Facades\JsonLd::addImage($metaImage);
+        \Artesaos\SEOTools\Facades\JsonLd::addImage($metaImage);
     }
 @endphp
 
@@ -34,7 +34,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    {!! Artesaos\SEOTools\Facades\SEOTools::generate() !!}
+    {!! \Artesaos\SEOTools\Facades\SEOTools::generate() !!}
     @if($post->meta_schema)
         {!! $post->meta_schema !!}
     @endif

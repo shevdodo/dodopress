@@ -20,25 +20,25 @@
     // Determine Meta Image
     $metaImage = $siteLogo ? asset("storage/" . $siteLogo) : ($favIcon ? asset("storage/" . $favIcon) : '');
 
-    Artesaos\SEOTools\Facades\SEOMeta::setTitle($page->meta_title ?: $page->title . ' - ' . $siteTitle);
-    Artesaos\SEOTools\Facades\SEOMeta::setDescription($page->meta_description ?: $metaDesc);
+    \Artesaos\SEOTools\Facades\SEOMeta::setTitle($page->meta_title ?: $page->title . ' - ' . $siteTitle);
+    \Artesaos\SEOTools\Facades\SEOMeta::setDescription($page->meta_description ?: $metaDesc);
     if ($page->meta_keywords) {
-        Artesaos\SEOTools\Facades\SEOMeta::addMeta('keywords', $page->meta_keywords);
+        \Artesaos\SEOTools\Facades\SEOMeta::addMeta('keywords', $page->meta_keywords);
     }
     
-    Artesaos\SEOTools\Facades\OpenGraph::setTitle($page->meta_title ?: $page->title . ' - ' . $siteTitle);
-    Artesaos\SEOTools\Facades\OpenGraph::setDescription($page->meta_description ?: $metaDesc);
-    Artesaos\SEOTools\Facades\OpenGraph::setUrl(url()->current());
-    Artesaos\SEOTools\Facades\OpenGraph::addProperty('type', 'website');
+    \Artesaos\SEOTools\Facades\OpenGraph::setTitle($page->meta_title ?: $page->title . ' - ' . $siteTitle);
+    \Artesaos\SEOTools\Facades\OpenGraph::setDescription($page->meta_description ?: $metaDesc);
+    \Artesaos\SEOTools\Facades\OpenGraph::setUrl(url()->current());
+    \Artesaos\SEOTools\Facades\OpenGraph::addProperty('type', 'website');
     if ($metaImage) {
-        Artesaos\SEOTools\Facades\OpenGraph::addImage($metaImage);
+        \Artesaos\SEOTools\Facades\OpenGraph::addImage($metaImage);
     }
 
-    Artesaos\SEOTools\Facades\JsonLd::setTitle($page->meta_title ?: $page->title . ' - ' . $siteTitle);
-    Artesaos\SEOTools\Facades\JsonLd::setDescription($page->meta_description ?: $metaDesc);
-    Artesaos\SEOTools\Facades\JsonLd::setType('WebPage');
+    \Artesaos\SEOTools\Facades\JsonLd::setTitle($page->meta_title ?: $page->title . ' - ' . $siteTitle);
+    \Artesaos\SEOTools\Facades\JsonLd::setDescription($page->meta_description ?: $metaDesc);
+    \Artesaos\SEOTools\Facades\JsonLd::setType('WebPage');
     if ($metaImage) {
-        Artesaos\SEOTools\Facades\JsonLd::addImage($metaImage);
+        \Artesaos\SEOTools\Facades\JsonLd::addImage($metaImage);
     }
 @endphp
 
@@ -46,7 +46,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    {!! Artesaos\SEOTools\Facades\SEOTools::generate() !!}
+    {!! \Artesaos\SEOTools\Facades\SEOTools::generate() !!}
     @if($page->meta_schema)
         {!! $page->meta_schema !!}
     @endif
