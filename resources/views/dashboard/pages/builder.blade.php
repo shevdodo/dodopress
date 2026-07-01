@@ -18,21 +18,85 @@
     <style>
         body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; }
         #gjs { height: calc(100vh - 50px); overflow: hidden; }
-        /* Panel customization */
+        /* Layout Customization (Left Sidebar) */
         .gjs-cv-canvas {
-            top: 0;
-            width: 100%;
-            height: 100%;
+            width: calc(100% - 280px) !important;
+            left: 280px !important;
+            right: auto !important;
+            background: #f0f0f0;
+        }
+        .gjs-pn-views-container {
+            left: 40px !important;
+            right: auto !important;
+            width: 240px !important;
+            background: #f9f9f9 !important;
+            border-right: 1px solid #ddd;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.02);
+        }
+        .gjs-pn-views {
+            left: 0 !important;
+            right: auto !important;
+            background: #1e1e1e !important;
+            border-right: none !important;
+        }
+        
+        /* Light Theme for Panels */
+        .gjs-block {
+            background: #fff !important;
+            border: 1px solid #e5e5e5 !important;
+            color: #555 !important;
+            border-radius: 4px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+            transition: all 0.2s;
+        }
+        .gjs-block:hover {
+            border-color: #00a0d2 !important;
+            color: #00a0d2 !important;
+            box-shadow: 0 2px 4px rgba(0,160,210,0.1);
+        }
+        .gjs-block-category .gjs-title, 
+        .gjs-sm-sector .gjs-sm-title,
+        .gjs-layer-title {
+            background: #fff !important;
+            color: #333 !important;
+            border-bottom: 1px solid #eee !important;
+            border-top: 1px solid #eee !important;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.5px;
+        }
+        .gjs-blocks-c, .gjs-sm-properties, .gjs-clm-tags, .gjs-sm-sectors {
+            background: #f9f9f9 !important;
+        }
+        .gjs-sm-property, .gjs-clm-tag {
+            color: #444 !important;
+        }
+        .gjs-field {
+            background-color: #fff !important;
+            color: #333 !important;
+            border: 1px solid #ccc !important;
+        }
+        .gjs-pn-btn {
+            color: #a0a0a0 !important;
+        }
+        .gjs-pn-btn.gjs-pn-active {
+            color: #fff !important;
+            background: #00a0d2 !important;
+        }
+        .gjs-trait {
+            color: #333 !important;
         }
         .builder-topbar {
             height: 50px;
-            background: #2b2b2b;
+            background: #1e1e1e;
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 0 1rem;
             color: white;
             box-sizing: border-box;
+            border-bottom: 1px solid #333;
         }
     </style>
 </head>
