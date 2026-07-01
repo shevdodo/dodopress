@@ -34,11 +34,11 @@
         \Artesaos\SEOTools\Facades\OpenGraph::addImage($metaImage);
     }
 
-    \Artesaos\SEOTools\Facades\JsonLd::setTitle($page->meta_title ?: $page->title . ' - ' . $siteTitle);
-    \Artesaos\SEOTools\Facades\JsonLd::setDescription($page->meta_description ?: $metaDesc);
-    \Artesaos\SEOTools\Facades\JsonLd::setType('WebPage');
+    \Artesaos\SEOTools\Facades\JsonLdMulti::setTitle($page->meta_title ?: $page->title . ' - ' . $siteTitle);
+    \Artesaos\SEOTools\Facades\JsonLdMulti::setDescription($page->meta_description ?: $metaDesc);
+    \Artesaos\SEOTools\Facades\JsonLdMulti::setType('WebPage');
     if ($metaImage) {
-        \Artesaos\SEOTools\Facades\JsonLd::addImage($metaImage);
+        \Artesaos\SEOTools\Facades\JsonLdMulti::addImage($metaImage);
     }
 @endphp
 

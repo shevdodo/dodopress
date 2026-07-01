@@ -22,11 +22,11 @@
         \Artesaos\SEOTools\Facades\OpenGraph::addImage($metaImage);
     }
 
-    \Artesaos\SEOTools\Facades\JsonLd::setTitle($post->meta_title ?: $post->title . ' - ' . $siteTitle);
-    \Artesaos\SEOTools\Facades\JsonLd::setDescription($post->meta_description ?: $metaDesc);
-    \Artesaos\SEOTools\Facades\JsonLd::setType('Article');
+    \Artesaos\SEOTools\Facades\JsonLdMulti::setTitle($post->meta_title ?: $post->title . ' - ' . $siteTitle);
+    \Artesaos\SEOTools\Facades\JsonLdMulti::setDescription($post->meta_description ?: $metaDesc);
+    \Artesaos\SEOTools\Facades\JsonLdMulti::setType('Article');
     if ($metaImage) {
-        \Artesaos\SEOTools\Facades\JsonLd::addImage($metaImage);
+        \Artesaos\SEOTools\Facades\JsonLdMulti::addImage($metaImage);
     }
 @endphp
 

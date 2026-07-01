@@ -31,17 +31,17 @@
         \Artesaos\SEOTools\Facades\OpenGraph::addImage($metaImage);
     }
 
-    \Artesaos\SEOTools\Facades\JsonLd::setTitle($product->meta_title ?: $product->name . ' - ' . $siteTitle);
-    \Artesaos\SEOTools\Facades\JsonLd::setDescription($product->meta_description ?: $metaDesc);
-    \Artesaos\SEOTools\Facades\JsonLd::setType('Product');
-    \Artesaos\SEOTools\Facades\JsonLd::addValue('offers', [
+    \Artesaos\SEOTools\Facades\JsonLdMulti::setTitle($product->meta_title ?: $product->name . ' - ' . $siteTitle);
+    \Artesaos\SEOTools\Facades\JsonLdMulti::setDescription($product->meta_description ?: $metaDesc);
+    \Artesaos\SEOTools\Facades\JsonLdMulti::setType('Product');
+    \Artesaos\SEOTools\Facades\JsonLdMulti::addValue('offers', [
         '@type' => 'Offer',
         'price' => $product->price,
         'priceCurrency' => 'IDR',
         'availability' => $product->status === 'available' ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock'
     ]);
     if ($metaImage) {
-        \Artesaos\SEOTools\Facades\JsonLd::addImage($metaImage);
+        \Artesaos\SEOTools\Facades\JsonLdMulti::addImage($metaImage);
     }
 @endphp
 
