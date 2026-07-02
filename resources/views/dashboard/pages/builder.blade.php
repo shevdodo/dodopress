@@ -247,7 +247,13 @@
                     const am = editor.AssetManager;
                     btn.innerText = '...';
                     
-                    fetch("{!! route('superuser.media.api') !!}?type=image")
+                    let apiUrl = "{!! route('superuser.media.api') !!}?type=image";
+                    // Jika halaman dimuat dengan HTTPS, pastikan URL API juga HTTPS (mengatasi masalah Mixed Content / Failed to fetch di cPanel/Cloudflare)
+                    if (window.location.protocol === 'https:' && apiUrl.startsWith('http:')) {
+                        apiUrl = apiUrl.replace('http:', 'https:');
+                    }
+                    
+                    fetch(apiUrl)
                         .then(r => {
                             if(!r.ok) throw new Error('HTTP ' + r.status);
                             return r.json();
