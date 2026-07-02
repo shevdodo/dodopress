@@ -53,7 +53,7 @@
                                 <td class="py-4 px-6 text-gray-500 text-sm">{{ $category->slug }}</td>
                                 <td class="py-4 px-6 text-gray-500 text-sm">{{ $category->type ?? '-' }}</td>
                                 <td class="py-4 px-6 text-right space-x-3">
-                                    <a href="{{ route('superuser.categories.edit', $category) }}" class="text-brand-600 hover:text-brand-800 font-medium text-sm inline-flex items-center">Edit</a>
+                                    <a href="{{ route('superuser.categories.edit', ['category' => $category, 'type' => $category->type]) }}" class="text-brand-600 hover:text-brand-800 font-medium text-sm inline-flex items-center">Edit</a>
                                     <form action="{{ route('superuser.categories.destroy', $category) }}" method="POST" class="inline-block" onsubmit="return confirm('Are you sure you want to delete this category?');">
                                         @csrf
                                         @method('DELETE')
