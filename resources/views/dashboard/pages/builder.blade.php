@@ -227,6 +227,59 @@
             media: boxRightSvg
         });
 
+        // CUSTOM TRAITS
+        editor.TraitManager.addType('media-picker-trait', {
+            createInput({ trait }) {
+                const el = document.createElement('div');
+                el.innerHTML = `
+                    <div style="display: flex; gap: 5px; align-items: stretch; width: 100%;">
+                        <input class="gjs-field gjs-sm-property" style="flex:1" type="text" placeholder="URL">
+                        <button class="gjs-btn-prim" type="button" style="padding: 0 10px; cursor: pointer; white-space: nowrap; border: 1px solid rgba(0,0,0,0.2); background: rgba(0,0,0,0.1);">Pilih</button>
+                    </div>
+                `;
+                const input = el.querySelector('input');
+                const btn = el.querySelector('button');
+                input.value = trait.get('value') || '';
+
+                input.addEventListener('change', ev => trait.set('value', ev.target.value));
+
+                btn.addEventListener('click', () => {
+                    const am = editor.AssetManager;
+                    btn.innerText = '...';
+                    
+                    fetch("{!! route('superuser.media.api') !!}?type=image")
+                        .then(r => {
+                            if(!r.ok) throw new Error('HTTP ' + r.status);
+                            return r.json();
+                        })
+                        .then(data => {
+                            btn.innerText = 'Pilih';
+                            if(data.files) {
+                                try {
+                                    am.add(data.files.map(f => f.url));
+                                } catch(e) {
+                                    console.error('Asset Manager Add Error:', e);
+                                }
+                            }
+                            am.open({
+                                select(asset, complete) {
+                                    input.value = asset.getSrc();
+                                    trait.set('value', asset.getSrc());
+                                    if (complete) am.close();
+                                }
+                            });
+                        })
+                        .catch((err) => {
+                            btn.innerText = 'Pilih';
+                            console.error('Fetch Media Error:', err);
+                            alert('Gagal memuat media: ' + err.message);
+                        });
+                });
+
+                return el;
+            }
+        });
+
         // SWIPER SLIDER COMPONENT
         editor.Components.addType('swiper-slider', {
             model: {
@@ -258,7 +311,7 @@
                 defaults: {
                     traits: [
                         { type: 'text', name: 'data-height', label: 'Height', placeholder: '400px' },
-                        { type: 'text', name: 'data-bg-image', label: 'Image URL' },
+                        { type: 'media-picker-trait', name: 'data-bg-image', label: 'Image URL' },
                         { type: 'color', name: 'data-overlay', label: 'Overlay Color' }
                     ]
                 },
