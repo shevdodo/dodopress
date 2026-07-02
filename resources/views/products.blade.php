@@ -65,12 +65,14 @@
             $itemList[] = [
                 '@type' => 'ListItem',
                 'position' => $position++,
+                'name' => $prod->name,
                 'url' => route('product.show', ['category_slug' => $category->slug, 'slug' => $prod->slug])
             ];
         }
         
         \Artesaos\SEOTools\Facades\JsonLdMulti::newJsonLd();
         \Artesaos\SEOTools\Facades\JsonLdMulti::setType('ItemList');
+        \Artesaos\SEOTools\Facades\JsonLdMulti::addValue('name', 'Daftar Produk ' . $category->name);
         \Artesaos\SEOTools\Facades\JsonLdMulti::addValue('itemListElement', $itemList);
     } else {
         // Fallback for main store page
