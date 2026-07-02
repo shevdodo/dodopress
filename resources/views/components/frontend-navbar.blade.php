@@ -160,7 +160,12 @@
                                 <a href="{{ route('dashboard') }}" class="block text-center bg-gray-50 text-gray-800 px-4 py-3.5 rounded-xl text-base font-bold transition border border-gray-200">Dashboard</a>
                             @endif
                         @else
-                            <a href="{{ route('login') }}" class="block text-center text-brand-600 border-2 border-brand-100 hover:bg-brand-50 px-4 py-3.5 rounded-xl text-base font-bold transition">Log in</a>
+                            <div class="flex flex-col gap-3">
+                                <a href="{{ route('login') }}" class="block text-center text-brand-600 border-2 border-brand-100 hover:bg-brand-50 px-4 py-3.5 rounded-xl text-base font-bold transition">Log in</a>
+                                @if (Route::has('register'))
+                                    <a href="{{ route('register') }}" class="block text-center bg-brand-600 text-white px-4 py-3.5 rounded-xl text-base font-bold hover:bg-brand-700 shadow-sm transition-all duration-300">Register</a>
+                                @endif
+                            </div>
                         @endauth
                     @endif
                 </div>
