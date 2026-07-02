@@ -28,10 +28,10 @@
         }
 
         // Prepare ItemList
-        $itemList = [];
+        $listItems = [];
         $position = 1;
         foreach ($products as $prod) {
-            $itemList[] = [
+            $listItems[] = [
                 '@type' => 'ListItem',
                 'position' => $position++,
                 'url' => route('product.show', ['category_slug' => $category->slug, 'slug' => $prod->slug]),
@@ -39,28 +39,37 @@
             ];
         }
 
-        // Schema.org - @graph Structure
-        $schemaGraph = [
+        $schemaItemList = [
             '@context' => 'https://schema.org',
-            '@graph' => [
+            '@type' => 'ItemList',
+            'name' => 'Koleksi ' . ($category->meta_title ?: $category->name),
+            'itemListElement' => $listItems
+        ];
+
+        $schemaBreadcrumb = [
+            '@context' => 'https://schema.org',
+            '@type' => 'BreadcrumbList',
+            'itemListElement' => [
                 [
-                    '@type' => 'ItemList',
-                    '@id' => url()->current() . '#itemlist',
-                    'name' => 'Koleksi ' . ($category->meta_title ?: $category->name),
-                    'numberOfItems' => count($itemList),
-                    'itemListElement' => $itemList
+                    '@type' => 'ListItem',
+                    'position' => 1,
+                    'name' => 'Home',
+                    'item' => url('/')
                 ],
                 [
-                    '@type' => 'CollectionPage',
-                    '@id' => url()->current() . '#webpage',
-                    'url' => url()->current(),
-                    'name' => $category->meta_title ?: $category->name,
-                    'description' => $metaDesc,
-                    'mainEntity' => ['@id' => url()->current() . '#itemlist']
+                    '@type' => 'ListItem',
+                    'position' => 2,
+                    'name' => 'Store',
+                    'item' => route('product.index')
                 ],
                 [
-                    '@type' => 'BreadcrumbList',
-                    '@id' => url()->current() . '#breadcrumb',
+                    '@type' => 'ListItem',
+                    'position' => 3,
+                    'name' => $category->name,
+                    'item' => url()->current()
+                ]
+            ]
+        ];
                     'itemListElement' => [
                         [
                             '@type' => 'ListItem',
@@ -103,8 +112,11 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     {!! \Artesaos\SEOTools\Facades\SEOTools::generate() !!}
     
-    @if(isset($schemaGraph))
-        <script type="application/ld+json">{!! json_encode($schemaGraph, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}</script>
+    @if(isset($schemaBreadcrumb))
+        <script type="application/ld+json">{!! json_encode($schemaBreadcrumb, JSON_UNESCAPED_SLASHES) !!}</script>
+    @endif
+    @if(isset($schemaItemList))
+        <script type="application/ld+json">{!! json_encode($schemaItemList, JSON_UNESCAPED_SLASHES) !!}</script>
     @endif
     
     @if(isset($category) && $category->meta_schema)
