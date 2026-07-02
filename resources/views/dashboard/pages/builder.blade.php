@@ -631,6 +631,33 @@
             });
         });
 
+        // INJECT HEADER & FOOTER AS VIEW-ONLY PREVIEW
+        editor.on('load', function() {
+            const body = editor.Canvas.getBody();
+            
+            const headerStr = {!! json_encode(view('components.frontend-navbar')->render()) !!};
+            const footerStr = {!! json_encode(view('components.frontend-footer')->render()) !!};
+            
+            // Insert header before the GrapesJS wrapper
+            body.insertAdjacentHTML('afterbegin', `<div id="preview-header" style="pointer-events: none; user-select: none;">${headerStr}</div>`);
+            
+            // Insert footer after the GrapesJS wrapper
+            body.insertAdjacentHTML('beforeend', `<div id="preview-footer" style="pointer-events: none; user-select: none;">${footerStr}</div>`);
+            
+            // Ensure the iframe body can scroll properly to reach the footer
+            body.style.overflow = 'auto';
+            body.style.minHeight = '100vh';
+            body.style.display = 'flex';
+            body.style.flexDirection = 'column';
+            
+            // Ensure the GrapesJS wrapper expands to fill space
+            const wrapper = body.querySelector('[data-gjs-type="wrapper"]');
+            if (wrapper) {
+                wrapper.style.flex = '1';
+                wrapper.style.width = '100%';
+            }
+        });
+
         function showToast(message, isError = false) {
             const toast = document.getElementById('toast');
             document.getElementById('toast-msg').innerText = message;
