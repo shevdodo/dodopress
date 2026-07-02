@@ -20,9 +20,9 @@
 
     // Safely grab SVGs from our bundled config (works online/production)
     function getFlatsomeSvg($filename) {
-        $svg = config("builder_svgs.{$filename}");
-        if ($svg) {
-            return $svg;
+        $svgs = config("builder_svgs");
+        if (is_array($svgs) && isset($svgs[$filename])) {
+            return $svgs[$filename];
         }
         return '<svg viewBox="0 0 24 24" fill="currentColor"><rect width="24" height="24" rx="4" fill="#00a0d2"/></svg>';
     }
