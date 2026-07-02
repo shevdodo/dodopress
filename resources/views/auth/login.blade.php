@@ -2,6 +2,11 @@
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
+    <!-- Registration Prompt for New Users -->
+    <div class="mb-6 p-4 bg-brand-50 border border-brand-200 text-brand-700 rounded-lg text-sm text-center">
+        Belum punya akun? Silakan <a href="{{ route('register') }}" class="font-bold underline hover:text-brand-900 transition-colors">mendaftar terlebih dahulu</a> untuk dapat berbelanja.
+    </div>
+
     <form method="POST" action="{{ route('login') }}">
         @csrf
 
