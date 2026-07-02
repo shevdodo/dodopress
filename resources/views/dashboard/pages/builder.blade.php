@@ -441,6 +441,91 @@
                     this.addStyle(style);
                 }
             }
+        // UX BUTTON COMPONENT
+        editor.Components.addType('ux-button', {
+            extend: 'link',
+            isComponent: el => el.tagName === 'A' && el.getAttribute && el.getAttribute('data-gjs-type') === 'ux-button',
+            model: {
+                defaults: {
+                    name: 'Button',
+                    traits: [
+                        { type: 'text', name: 'text', label: 'Text' },
+                        { type: 'text', name: 'href', label: 'Link' },
+                        {
+                            type: 'select',
+                            name: 'target',
+                            label: 'Target',
+                            options: [
+                                { id: '', name: 'Same Window' },
+                                { id: '_blank', name: 'New Window' }
+                            ]
+                        },
+                        {
+                            type: 'class_select',
+                            name: 'btn_size',
+                            label: 'Size',
+                            options: [
+                                { value: 'text-xs', name: 'X-Small' },
+                                { value: 'text-sm', name: 'Small' },
+                                { value: '', name: 'Normal' },
+                                { value: 'text-lg', name: 'Large' },
+                                { value: 'text-xl', name: 'X-Large' }
+                            ]
+                        },
+                        {
+                            type: 'class_select',
+                            name: 'btn_radius',
+                            label: 'Radius',
+                            options: [
+                                { value: 'rounded-none', name: 'Square (0)' },
+                                { value: 'rounded-sm', name: 'Small' },
+                                { value: '', name: 'Default' },
+                                { value: 'rounded-md', name: 'Medium' },
+                                { value: 'rounded-lg', name: 'Large' },
+                                { value: 'rounded-full', name: 'Pill (Full)' }
+                            ]
+                        },
+                        {
+                            type: 'class_select',
+                            name: 'btn_depth',
+                            label: 'Depth',
+                            options: [
+                                { value: 'shadow-none', name: 'None' },
+                                { value: 'shadow-sm', name: 'Small' },
+                                { value: '', name: 'Normal' },
+                                { value: 'shadow-md', name: 'Medium' },
+                                { value: 'shadow-lg', name: 'Large' },
+                                { value: 'shadow-xl', name: 'X-Large' }
+                            ]
+                        },
+                        {
+                            type: 'class_select',
+                            name: 'btn_expand',
+                            label: 'Expand',
+                            options: [
+                                { value: 'inline-block', name: 'No' },
+                                { value: 'block w-full text-center', name: 'Yes (Full Width)' }
+                            ]
+                        }
+                    ]
+                },
+                init() {
+                    this.on('change:attributes:text', this.handleTextChange);
+                    
+                    // Initialize text trait if empty
+                    const attrs = this.getAttributes();
+                    if (!attrs.text && this.components().length > 0) {
+                        attrs.text = this.components().models[0].get('content');
+                        this.setAttributes(attrs);
+                    }
+                },
+                handleTextChange() {
+                    const text = this.getAttributes().text || '';
+                    if (text) {
+                        this.components(text);
+                    }
+                }
+            }
         });
 
         // SWIPER SLIDER COMPONENT
@@ -666,52 +751,52 @@
         
         bm.add('btn-simple', {
             label: 'Simple', category: 'BUTTON',
-            content: '<a href="#" class="inline-block bg-brand-600 text-white font-semibold px-6 py-3 hover:bg-brand-700 transition">Button</a>',
+            content: '<a data-gjs-type="ux-button" href="#" class="inline-block bg-brand-600 text-white font-semibold px-6 py-3 hover:bg-brand-700 transition">Button</a>',
             media: btnSvgBase
         });
         bm.add('btn-round', {
             label: 'Round', category: 'BUTTON',
-            content: '<a href="#" class="inline-block bg-brand-600 text-white font-semibold px-6 py-3 rounded-md hover:bg-brand-700 transition">Button</a>',
+            content: '<a data-gjs-type="ux-button" href="#" class="inline-block bg-brand-600 text-white font-semibold px-6 py-3 rounded-md hover:bg-brand-700 transition">Button</a>',
             media: btnSvgBase
         });
         bm.add('btn-circle', {
             label: 'Circle', category: 'BUTTON',
-            content: '<a href="#" class="inline-block bg-brand-600 text-white font-semibold px-6 py-3 rounded-full hover:bg-brand-700 transition">Button</a>',
+            content: '<a data-gjs-type="ux-button" href="#" class="inline-block bg-brand-600 text-white font-semibold px-6 py-3 rounded-full hover:bg-brand-700 transition">Button</a>',
             media: btnSvgBase
         });
         bm.add('btn-outline', {
             label: 'Outline', category: 'BUTTON',
-            content: '<a href="#" class="inline-block border-2 border-brand-600 text-brand-600 font-semibold px-6 py-3 hover:bg-brand-50 transition">Button</a>',
+            content: '<a data-gjs-type="ux-button" href="#" class="inline-block border-2 border-brand-600 text-brand-600 font-semibold px-6 py-3 hover:bg-brand-50 transition">Button</a>',
             media: btnSvgOutline
         });
         bm.add('btn-outline-round', {
             label: 'Outline Round', category: 'BUTTON',
-            content: '<a href="#" class="inline-block border-2 border-brand-600 text-brand-600 font-semibold px-6 py-3 rounded-md hover:bg-brand-50 transition">Button</a>',
+            content: '<a data-gjs-type="ux-button" href="#" class="inline-block border-2 border-brand-600 text-brand-600 font-semibold px-6 py-3 rounded-md hover:bg-brand-50 transition">Button</a>',
             media: btnSvgOutline
         });
         bm.add('btn-outline-circle', {
             label: 'Outline Circle', category: 'BUTTON',
-            content: '<a href="#" class="inline-block border-2 border-brand-600 text-brand-600 font-semibold px-6 py-3 rounded-full hover:bg-brand-50 transition">Button</a>',
+            content: '<a data-gjs-type="ux-button" href="#" class="inline-block border-2 border-brand-600 text-brand-600 font-semibold px-6 py-3 rounded-full hover:bg-brand-50 transition">Button</a>',
             media: btnSvgOutline
         });
         bm.add('btn-simple-link', {
             label: 'Simple Link', category: 'BUTTON',
-            content: '<a href="#" class="inline-block text-brand-600 font-semibold hover:text-brand-800 transition">Button</a>',
+            content: '<a data-gjs-type="ux-button" href="#" class="inline-block text-brand-600 font-semibold hover:text-brand-800 transition">Button</a>',
             media: '<svg viewBox="0 0 24 24" fill="currentColor"><text x="4" y="16" font-family="sans-serif" font-size="12" font-weight="bold" fill="#00a0d2">LINK</text></svg>'
         });
         bm.add('btn-underline', {
             label: 'Underline', category: 'BUTTON',
-            content: '<a href="#" class="inline-block text-brand-600 font-semibold border-b-2 border-brand-600 hover:text-brand-800 transition pb-1">Button</a>',
+            content: '<a data-gjs-type="ux-button" href="#" class="inline-block text-brand-600 font-semibold border-b-2 border-brand-600 hover:text-brand-800 transition pb-1">Button</a>',
             media: '<svg viewBox="0 0 24 24" fill="currentColor"><text x="4" y="14" font-family="sans-serif" font-size="10" font-weight="bold" fill="#00a0d2">LINK</text><rect x="4" y="16" width="24" height="2" fill="#00a0d2"/></svg>'
         });
         bm.add('btn-cta-small', {
             label: 'CTA - Small', category: 'BUTTON',
-            content: '<a href="#" class="inline-block bg-brand-600 text-white font-semibold px-4 py-2 rounded shadow-md hover:shadow-lg hover:bg-brand-700 transition text-sm">Button</a>',
+            content: '<a data-gjs-type="ux-button" href="#" class="inline-block bg-brand-600 text-white font-semibold px-4 py-2 rounded shadow-md hover:shadow-lg hover:bg-brand-700 transition text-sm">Button</a>',
             media: btnSvgBase
         });
         bm.add('btn-cta-large', {
             label: 'CTA - Large', category: 'BUTTON',
-            content: '<a href="#" class="inline-block bg-brand-600 text-white font-bold px-8 py-4 rounded shadow-lg hover:shadow-xl hover:bg-brand-700 transition text-lg">Button</a>',
+            content: '<a data-gjs-type="ux-button" href="#" class="inline-block bg-brand-600 text-white font-bold px-8 py-4 rounded shadow-lg hover:shadow-xl hover:bg-brand-700 transition text-lg">Button</a>',
             media: btnSvgBase
         });
 
