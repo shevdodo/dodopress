@@ -1,3 +1,23 @@
+@php
+    $themeColor = \App\Models\Setting::where('key', 'theme_color')->value('value') ?: 'brown';
+    $themeFont = \App\Models\Setting::where('key', 'theme_font')->value('value') ?: 'figtree';
+
+    $palettes = [
+        'indigo' => "{ 50: '#eef2ff', 100: '#e0e7ff', 200: '#c7d2fe', 300: '#a5b4fc', 400: '#818cf8', 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca', 800: '#3730a3', 900: '#312e81', 950: '#1e1b4b' }",
+        'brown' => "{ 50: '#fbf8f5', 100: '#f4ede6', 200: '#ebd8c9', 300: '#dfbc9f', 400: '#d29b71', 500: '#c87f4c', 600: '#ba663e', 700: '#9b4e33', 800: '#7d412e', 900: '#653628', 950: '#361912' }",
+        'emerald' => "{ 50: '#ecfdf5', 100: '#d1fae5', 200: '#a7f3d0', 300: '#6ee7b7', 400: '#34d399', 500: '#10b981', 600: '#059669', 700: '#047857', 800: '#065f46', 900: '#064e3b', 950: '#022c22' }",
+        'rose' => "{ 50: '#fff1f2', 100: '#ffe4e6', 200: '#fecdd3', 300: '#fda4af', 400: '#fb7185', 500: '#f43f5e', 600: '#e11d48', 700: '#be123c', 800: '#9f1239', 900: '#881337', 950: '#4c0519' }",
+    ];
+    $activePalette = $palettes[$themeColor] ?? $palettes['brown'];
+
+    $fonts = [
+        'figtree' => ['name' => 'Figtree', 'css' => "'Figtree', sans-serif"],
+        'inter' => ['name' => 'Inter', 'css' => "'Inter', sans-serif"],
+        'merriweather' => ['name' => 'Merriweather', 'css' => "'Merriweather', serif"],
+        'poppins' => ['name' => 'Poppins', 'css' => "'Poppins', sans-serif"],
+    ];
+    $activeFont = $fonts[$themeFont] ?? $fonts['figtree'];
+@endphp
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -141,6 +161,8 @@
             },
             canvas: {
                 scripts: [
+                    'data:text/javascript;charset=utf-8,' + encodeURIComponent(`window.tailwind = window.tailwind || {}; window.tailwind.config = { darkMode: "class", theme: { extend: { colors: { brand: {!! $activePalette !!} } } } };`),
+                    'https://cdn.tailwindcss.com',
                     'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js'
                 ],
                 styles: [
@@ -691,17 +713,10 @@
 
         // INJECT HEADER & FOOTER AS VIEW-ONLY PREVIEW
         editor.on('load', function() {
-            const body = editor.Canvas.getBody();
-            const head = editor.Canvas.getDocument().head;
-            
-            // 1. Inject theme config into GrapesJS canvas head
-            const themeConfigHtml = {!! json_encode(view('components.theme-config')->render()) !!};
-            head.insertAdjacentHTML('beforeend', themeConfigHtml);
-
-            // 2. Inject Tailwind CDN script AFTER theme config so it picks up dynamic colors
-            const tailwindScript = document.createElement('script');
-            tailwindScript.src = 'https://cdn.tailwindcss.com';
-            head.appendChild(tailwindScript);
+            const iframeWindow = editor.Canvas.getWindow();
+            const iframeDocument = editor.Canvas.getDocument();
+            const body = iframeDocument.body;
+            const head = iframeDocument.head;
 
             const headerStr = {!! json_encode(view('components.frontend-navbar')->render()) !!};
             const footerStr = {!! json_encode(view('components.frontend-footer')->render()) !!};
