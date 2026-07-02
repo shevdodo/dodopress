@@ -17,6 +17,15 @@
         'poppins' => ['name' => 'Poppins', 'css' => "'Poppins', sans-serif"],
     ];
     $activeFont = $fonts[$themeFont] ?? $fonts['figtree'];
+
+    // Safely grab Flatsome SVGs if available locally
+    function getFlatsomeSvg($filename) {
+        $path = 'c:/xampp/htdocs/flatsome/inc/builder/shortcodes/thumbnails/' . $filename;
+        if (file_exists($path)) {
+            return file_get_contents($path);
+        }
+        return '<svg viewBox="0 0 24 24" fill="currentColor"><rect width="24" height="24" rx="4" fill="#00a0d2"/></svg>';
+    }
 @endphp
 <!DOCTYPE html>
 <html lang="en">
@@ -756,52 +765,52 @@
         bm.add('btn-simple', {
             label: 'Simple', category: 'BUTTON',
             content: '<a data-gjs-type="ux-button" href="#" class="inline-block bg-brand-600 text-white font-semibold px-6 py-3 hover:bg-brand-700 transition">Button</a>',
-            media: btnSvgBase
+            media: {!! json_encode(getFlatsomeSvg('button-simple.svg')) !!}
         });
         bm.add('btn-round', {
             label: 'Round', category: 'BUTTON',
             content: '<a data-gjs-type="ux-button" href="#" class="inline-block bg-brand-600 text-white font-semibold px-6 py-3 rounded-md hover:bg-brand-700 transition">Button</a>',
-            media: btnSvgBase
+            media: {!! json_encode(getFlatsomeSvg('button-round.svg')) !!}
         });
         bm.add('btn-circle', {
             label: 'Circle', category: 'BUTTON',
             content: '<a data-gjs-type="ux-button" href="#" class="inline-block bg-brand-600 text-white font-semibold px-6 py-3 rounded-full hover:bg-brand-700 transition">Button</a>',
-            media: btnSvgBase
+            media: {!! json_encode(getFlatsomeSvg('button-circle.svg')) !!}
         });
         bm.add('btn-outline', {
             label: 'Outline', category: 'BUTTON',
             content: '<a data-gjs-type="ux-button" href="#" class="inline-block border-2 border-brand-600 text-brand-600 font-semibold px-6 py-3 hover:bg-brand-50 transition">Button</a>',
-            media: btnSvgOutline
+            media: {!! json_encode(getFlatsomeSvg('button-outline.svg')) !!}
         });
         bm.add('btn-outline-round', {
             label: 'Outline Round', category: 'BUTTON',
             content: '<a data-gjs-type="ux-button" href="#" class="inline-block border-2 border-brand-600 text-brand-600 font-semibold px-6 py-3 rounded-md hover:bg-brand-50 transition">Button</a>',
-            media: btnSvgOutline
+            media: {!! json_encode(getFlatsomeSvg('button-outline-round.svg')) !!}
         });
         bm.add('btn-outline-circle', {
             label: 'Outline Circle', category: 'BUTTON',
             content: '<a data-gjs-type="ux-button" href="#" class="inline-block border-2 border-brand-600 text-brand-600 font-semibold px-6 py-3 rounded-full hover:bg-brand-50 transition">Button</a>',
-            media: btnSvgOutline
+            media: {!! json_encode(getFlatsomeSvg('button-outline-circle.svg')) !!}
         });
         bm.add('btn-simple-link', {
             label: 'Simple Link', category: 'BUTTON',
             content: '<a data-gjs-type="ux-button" href="#" class="inline-block text-brand-600 font-semibold hover:text-brand-800 transition">Button</a>',
-            media: '<svg viewBox="0 0 24 24" fill="currentColor"><text x="4" y="16" font-family="sans-serif" font-size="12" font-weight="bold" fill="#00a0d2">LINK</text></svg>'
+            media: {!! json_encode(getFlatsomeSvg('button-link.svg')) !!}
         });
         bm.add('btn-underline', {
             label: 'Underline', category: 'BUTTON',
             content: '<a data-gjs-type="ux-button" href="#" class="inline-block text-brand-600 font-semibold border-b-2 border-brand-600 hover:text-brand-800 transition pb-1">Button</a>',
-            media: '<svg viewBox="0 0 24 24" fill="currentColor"><text x="4" y="14" font-family="sans-serif" font-size="10" font-weight="bold" fill="#00a0d2">LINK</text><rect x="4" y="16" width="24" height="2" fill="#00a0d2"/></svg>'
+            media: {!! json_encode(getFlatsomeSvg('button-underline.svg')) !!}
         });
         bm.add('btn-cta-small', {
             label: 'CTA - Small', category: 'BUTTON',
             content: '<a data-gjs-type="ux-button" href="#" class="inline-block bg-brand-600 text-white font-semibold px-4 py-2 rounded shadow-md hover:shadow-lg hover:bg-brand-700 transition text-sm">Button</a>',
-            media: btnSvgBase
+            media: {!! json_encode(getFlatsomeSvg('button-call-to-action.svg')) !!}
         });
         bm.add('btn-cta-large', {
             label: 'CTA - Large', category: 'BUTTON',
             content: '<a data-gjs-type="ux-button" href="#" class="inline-block bg-brand-600 text-white font-bold px-8 py-4 rounded shadow-lg hover:shadow-xl hover:bg-brand-700 transition text-lg">Button</a>',
-            media: btnSvgBase
+            media: {!! json_encode(getFlatsomeSvg('button-call-to-action-large.svg')) !!}
         });
 
 
