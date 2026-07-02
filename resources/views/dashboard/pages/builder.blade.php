@@ -659,6 +659,63 @@
             media: tabsSvg
         });
 
+        // BUTTON BLOCKS
+        const btnSvgBase = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M2 6h20v12H2z" fill="#00a0d2" opacity="0.2"/><path d="M4 8h16v8H4z" fill="#00a0d2"/></svg>';
+        const btnSvgOutline = '<svg viewBox="0 0 24 24" fill="none" stroke="#00a0d2" stroke-width="2"><rect x="3" y="7" width="18" height="10"/></svg>';
+        const btnSvgRound = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 8h16v8H4z" fill="#00a0d2" rx="2" ry="2"/></svg>'; // simplified representation
+        
+        bm.add('btn-simple', {
+            label: 'Simple', category: 'BUTTON',
+            content: '<a href="#" class="inline-block bg-brand-600 text-white font-semibold px-6 py-3 hover:bg-brand-700 transition">Button</a>',
+            media: btnSvgBase
+        });
+        bm.add('btn-round', {
+            label: 'Round', category: 'BUTTON',
+            content: '<a href="#" class="inline-block bg-brand-600 text-white font-semibold px-6 py-3 rounded-md hover:bg-brand-700 transition">Button</a>',
+            media: btnSvgBase
+        });
+        bm.add('btn-circle', {
+            label: 'Circle', category: 'BUTTON',
+            content: '<a href="#" class="inline-block bg-brand-600 text-white font-semibold px-6 py-3 rounded-full hover:bg-brand-700 transition">Button</a>',
+            media: btnSvgBase
+        });
+        bm.add('btn-outline', {
+            label: 'Outline', category: 'BUTTON',
+            content: '<a href="#" class="inline-block border-2 border-brand-600 text-brand-600 font-semibold px-6 py-3 hover:bg-brand-50 transition">Button</a>',
+            media: btnSvgOutline
+        });
+        bm.add('btn-outline-round', {
+            label: 'Outline Round', category: 'BUTTON',
+            content: '<a href="#" class="inline-block border-2 border-brand-600 text-brand-600 font-semibold px-6 py-3 rounded-md hover:bg-brand-50 transition">Button</a>',
+            media: btnSvgOutline
+        });
+        bm.add('btn-outline-circle', {
+            label: 'Outline Circle', category: 'BUTTON',
+            content: '<a href="#" class="inline-block border-2 border-brand-600 text-brand-600 font-semibold px-6 py-3 rounded-full hover:bg-brand-50 transition">Button</a>',
+            media: btnSvgOutline
+        });
+        bm.add('btn-simple-link', {
+            label: 'Simple Link', category: 'BUTTON',
+            content: '<a href="#" class="inline-block text-brand-600 font-semibold hover:text-brand-800 transition">Button</a>',
+            media: '<svg viewBox="0 0 24 24" fill="currentColor"><text x="4" y="16" font-family="sans-serif" font-size="12" font-weight="bold" fill="#00a0d2">LINK</text></svg>'
+        });
+        bm.add('btn-underline', {
+            label: 'Underline', category: 'BUTTON',
+            content: '<a href="#" class="inline-block text-brand-600 font-semibold border-b-2 border-brand-600 hover:text-brand-800 transition pb-1">Button</a>',
+            media: '<svg viewBox="0 0 24 24" fill="currentColor"><text x="4" y="14" font-family="sans-serif" font-size="10" font-weight="bold" fill="#00a0d2">LINK</text><rect x="4" y="16" width="24" height="2" fill="#00a0d2"/></svg>'
+        });
+        bm.add('btn-cta-small', {
+            label: 'CTA - Small', category: 'BUTTON',
+            content: '<a href="#" class="inline-block bg-brand-600 text-white font-semibold px-4 py-2 rounded shadow-md hover:shadow-lg hover:bg-brand-700 transition text-sm">Button</a>',
+            media: btnSvgBase
+        });
+        bm.add('btn-cta-large', {
+            label: 'CTA - Large', category: 'BUTTON',
+            content: '<a href="#" class="inline-block bg-brand-600 text-white font-bold px-8 py-4 rounded shadow-lg hover:shadow-xl hover:bg-brand-700 transition text-lg">Button</a>',
+            media: btnSvgBase
+        });
+
+
         // Load project data if exists
         if (savedData) {
             try {
