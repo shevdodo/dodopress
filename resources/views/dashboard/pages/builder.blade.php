@@ -33,15 +33,16 @@
             right: auto !important;
         }
         .gjs-pn-views-container {
-            left: 40px !important;
+            left: 0 !important;
             right: auto !important;
-            width: 240px !important;
+            width: 280px !important;
             border-right: 1px solid #333;
-            box-shadow: 2px 0 5px rgba(0,0,0,0.2);
         }
         .gjs-pn-views {
             left: 0 !important;
             right: auto !important;
+            width: 280px !important;
+            border-right: 1px solid #333;
         }
         
         /* Fix Top Panels Position (Undo/Redo & Devices) */
