@@ -23,8 +23,8 @@
     <!-- Tailwind CSS (for the top bar) -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- TinyMCE (for Rich Text Editor Modal) -->
-    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <!-- TinyMCE (for Rich Text Editor Modal) via cdnjs (No API Key Required) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.3/tinymce.min.js" referrerpolicy="origin"></script>
 
     <style>
         body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; }
