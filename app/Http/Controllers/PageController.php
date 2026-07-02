@@ -193,7 +193,8 @@ class PageController extends Controller
 
     public function builder(Page $page)
     {
-        return view('dashboard.pages.builder', compact('page'));
+        $products = \App\Models\Product::latest()->take(8)->get();
+        return view('dashboard.pages.builder', compact('page', 'products'));
     }
 
     public function saveBuilder(Request $request, Page $page)
