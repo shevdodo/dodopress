@@ -29,22 +29,21 @@
 
 <!-- Dynamic Tailwind Configuration -->
 <script>
-    if (typeof tailwind !== 'undefined') {
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['{!! $activeFont["name"] !!}', 'sans-serif'],
-                        serif: ['{!! $activeFont["name"] !!}', 'serif']
-                    },
-                    colors: {
-                        brand: {!! $activePalette !!}
-                    },
-                }
+    window.tailwind = window.tailwind || {};
+    window.tailwind.config = {
+        darkMode: 'class',
+        theme: {
+            extend: {
+                fontFamily: {
+                    sans: ['{!! $activeFont["name"] !!}', 'sans-serif'],
+                    serif: ['{!! $activeFont["name"] !!}', 'serif']
+                },
+                colors: {
+                    brand: {!! $activePalette !!}
+                },
             }
         }
-    }
+    };
 </script>
 
 <!-- Global Style Overrides -->

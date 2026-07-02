@@ -141,7 +141,6 @@
             },
             canvas: {
                 scripts: [
-                    'https://cdn.tailwindcss.com',
                     'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js'
                 ],
                 styles: [
@@ -695,9 +694,14 @@
             const body = editor.Canvas.getBody();
             const head = editor.Canvas.getDocument().head;
             
-            // Inject theme config into GrapesJS canvas head
+            // 1. Inject theme config into GrapesJS canvas head
             const themeConfigHtml = {!! json_encode(view('components.theme-config')->render()) !!};
             head.insertAdjacentHTML('beforeend', themeConfigHtml);
+
+            // 2. Inject Tailwind CDN script AFTER theme config so it picks up dynamic colors
+            const tailwindScript = document.createElement('script');
+            tailwindScript.src = 'https://cdn.tailwindcss.com';
+            head.appendChild(tailwindScript);
 
             const headerStr = {!! json_encode(view('components.frontend-navbar')->render()) !!};
             const footerStr = {!! json_encode(view('components.frontend-footer')->render()) !!};
