@@ -84,7 +84,7 @@
 </head>
 <body>
     
-    <div class="builder-topbar border-b border-gray-700">
+    <div class="builder-topbar border-b border-gray-700 w-full relative">
         <div class="flex items-center gap-4">
             <a href="{{ route('superuser.pages.edit', $page->id) }}" class="text-gray-300 hover:text-white transition flex items-center gap-1 text-sm">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
@@ -92,7 +92,7 @@
             </a>
             <h1 class="font-semibold text-sm border-l border-gray-600 pl-4">UX Builder: <span class="text-brand-400">{{ $page->title }}</span></h1>
         </div>
-        <div>
+        <div class="absolute right-4 top-1/2 transform -translate-y-1/2 z-[99999]">
             <button id="save-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-1.5 rounded text-sm font-semibold transition shadow flex items-center gap-2">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
                 Save Design
