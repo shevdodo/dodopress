@@ -8,13 +8,92 @@
     $storeSubtitle = \App\Models\Setting::where('key', 'store_page_subtitle')->value('value');
     $storeBanner = \App\Models\Setting::where('key', 'store_banner_image')->value('value');
     $storeCatalogTitle = \App\Models\Setting::where('key', 'store_catalog_title')->value('value') ?: 'Katalog';
+
+    if (isset($category)) {
+        $metaDesc = $category->meta_description ?: 'Kategori produk ' . $category->name . ' di ' . $siteTitle;
+        $metaImage = $category->image ? asset('storage/' . $category->image) : ($storeBanner ? asset('storage/' . $storeBanner) : null);
+        
+        \Artesaos\SEOTools\Facades\SEOMeta::setTitle($category->meta_title ?: $category->name . ' - ' . $siteTitle);
+        \Artesaos\SEOTools\Facades\SEOMeta::setDescription($metaDesc);
+        if ($category->meta_keywords) {
+            \Artesaos\SEOTools\Facades\SEOMeta::addMeta('keywords', $category->meta_keywords);
+        }
+
+        \Artesaos\SEOTools\Facades\OpenGraph::setTitle($category->meta_title ?: $category->name . ' - ' . $siteTitle);
+        \Artesaos\SEOTools\Facades\OpenGraph::setDescription($metaDesc);
+        \Artesaos\SEOTools\Facades\OpenGraph::setUrl(url()->current());
+        \Artesaos\SEOTools\Facades\OpenGraph::addProperty('type', 'website');
+        if ($metaImage) {
+            \Artesaos\SEOTools\Facades\OpenGraph::addImage($metaImage);
+        }
+
+        // Schema.org - BreadcrumbList
+        \Artesaos\SEOTools\Facades\JsonLdMulti::newJsonLd();
+        \Artesaos\SEOTools\Facades\JsonLdMulti::setType('BreadcrumbList');
+        \Artesaos\SEOTools\Facades\JsonLdMulti::addValue('itemListElement', [
+            [
+                '@type' => 'ListItem',
+                'position' => 1,
+                'name' => 'Home',
+                'item' => url('/')
+            ],
+            [
+                '@type' => 'ListItem',
+                'position' => 2,
+                'name' => 'Store',
+                'item' => route('product.index')
+            ],
+            [
+                '@type' => 'ListItem',
+                'position' => 3,
+                'name' => $category->name,
+                'item' => url()->current()
+            ]
+        ]);
+
+        // Schema.org - CollectionPage & ItemList
+        \Artesaos\SEOTools\Facades\JsonLdMulti::newJsonLd();
+        \Artesaos\SEOTools\Facades\JsonLdMulti::setType('CollectionPage');
+        \Artesaos\SEOTools\Facades\JsonLdMulti::setTitle($category->meta_title ?: $category->name);
+        \Artesaos\SEOTools\Facades\JsonLdMulti::setDescription($metaDesc);
+        \Artesaos\SEOTools\Facades\JsonLdMulti::setUrl(url()->current());
+        
+        $itemList = [];
+        $position = 1;
+        foreach ($products as $prod) {
+            $itemList[] = [
+                '@type' => 'ListItem',
+                'position' => $position++,
+                'url' => route('product.show', ['category_slug' => $category->slug, 'slug' => $prod->slug])
+            ];
+        }
+        
+        \Artesaos\SEOTools\Facades\JsonLdMulti::addValue('mainEntity', [
+            '@type' => 'ItemList',
+            'itemListElement' => $itemList
+        ]);
+    } else {
+        // Fallback for main store page
+        \Artesaos\SEOTools\Facades\SEOMeta::setTitle($storeTitle . ' - ' . $siteTitle);
+        \Artesaos\SEOTools\Facades\SEOMeta::setDescription($storeSubtitle ?: 'Katalog produk dari ' . $siteTitle);
+        \Artesaos\SEOTools\Facades\OpenGraph::setTitle($storeTitle . ' - ' . $siteTitle);
+        \Artesaos\SEOTools\Facades\OpenGraph::setUrl(url()->current());
+        \Artesaos\SEOTools\Facades\OpenGraph::addProperty('type', 'website');
+        if ($storeBanner) {
+            \Artesaos\SEOTools\Facades\OpenGraph::addImage(asset('storage/' . $storeBanner));
+        }
+    }
 @endphp
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ isset($category) ? $category->name . ' - ' : '' }}{{ $storeTitle }} - {{ $siteTitle }}</title>
+    {!! \Artesaos\SEOTools\Facades\SEOTools::generate() !!}
+    
+    @if(isset($category) && $category->meta_schema)
+        {!! $category->meta_schema !!}
+    @endif
     
     @if($favIcon)
         <link rel="icon" type="image/png" href="{{ asset('storage/' . $favIcon) }}">

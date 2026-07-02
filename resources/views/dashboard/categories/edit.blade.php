@@ -60,6 +60,28 @@
                 <div>
                     <x-media-picker name="image" label="Feature Image" :current="old('image', $category->image)" preview-size="lg" />
                 </div>
+
+                <h3 class="font-bold text-gray-900 mb-4 pb-3 border-b border-gray-100 mt-6">SEO Options</h3>
+                
+                <div>
+                    <label for="meta_title" class="block text-sm font-semibold text-gray-800 mb-1">Meta Title</label>
+                    <input type="text" name="meta_title" id="meta_title" value="{{ old('meta_title', $category->meta_title) }}" class="w-full border-gray-300 rounded-xl shadow-sm focus:border-brand-500 focus:ring focus:ring-brand-500/20 px-4 py-2.5 transition text-sm" placeholder="Custom SEO title">
+                </div>
+
+                <div>
+                    <label for="meta_description" class="block text-sm font-semibold text-gray-800 mb-1">Meta Description</label>
+                    <textarea name="meta_description" id="meta_description" rows="3" class="w-full border-gray-300 rounded-xl shadow-sm focus:border-brand-500 focus:ring focus:ring-brand-500/20 px-4 py-2.5 transition text-sm" placeholder="Brief description for search engines">{{ old('meta_description', $category->meta_description) }}</textarea>
+                </div>
+
+                <div>
+                    <label for="meta_keywords" class="block text-sm font-semibold text-gray-800 mb-1">Meta Keywords</label>
+                    <input type="text" name="meta_keywords" id="meta_keywords" value="{{ old('meta_keywords', $category->meta_keywords) }}" class="w-full border-gray-300 rounded-xl shadow-sm focus:border-brand-500 focus:ring focus:ring-brand-500/20 px-4 py-2.5 transition text-sm" placeholder="keyword1, keyword2, ...">
+                </div>
+
+                <div>
+                    <label for="meta_schema" class="block text-sm font-semibold text-gray-800 mb-1">Custom Schema Markup (JSON-LD)</label>
+                    <textarea name="meta_schema" id="meta_schema" rows="4" class="w-full border-gray-300 rounded-xl shadow-sm focus:border-brand-500 focus:ring focus:ring-brand-500/20 px-4 py-2.5 transition text-sm font-mono text-gray-700" placeholder='<script type="application/ld+json">...</script>'>{{ old('meta_schema', $category->meta_schema) }}</textarea>
+                </div>
             </div>
 
             <div class="mt-8 pt-6 border-t border-gray-100 flex items-center justify-end space-x-3">
