@@ -441,6 +441,8 @@
                     this.addStyle(style);
                 }
             }
+        });
+
         // UX BUTTON COMPONENT
         editor.Components.addType('ux-button', {
             extend: 'link',
@@ -880,6 +882,18 @@
             if (wrapper) {
                 wrapper.style.flex = '1';
                 wrapper.style.width = '100%';
+            }
+
+            // Open the Layer Manager by default
+            const openLayersBtn = editor.Panels.getButton('views', 'open-layers');
+            if (openLayersBtn) {
+                openLayersBtn.set('active', true);
+            }
+            
+            // Expand the root wrapper (Body) in the Layer Manager
+            const wrapperModel = editor.getWrapper();
+            if (wrapperModel) {
+                wrapperModel.set('open', true);
             }
         });
 
