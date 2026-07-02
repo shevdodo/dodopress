@@ -296,6 +296,48 @@
             }
         });
 
+        editor.TraitManager.addType('content-editor', {
+            createInput({ trait }) {
+                const el = document.createElement('div');
+                el.innerHTML = `
+                    <textarea class="gjs-field gjs-sm-property" rows="6" style="width: 100%; min-height: 120px; resize: vertical; padding: 8px; color: #fff; background: rgba(0,0,0,0.2); border: 1px solid rgba(0,0,0,0.3); font-family: monospace; font-size: 12px; border-radius: 3px;"></textarea>
+                    <button type="button" class="gjs-btn-prim" style="width: 100%; margin-top: 5px; padding: 5px; cursor: pointer; border-radius: 3px;">Update HTML</button>
+                `;
+                const input = el.querySelector('textarea');
+                const btn = el.querySelector('button');
+                const comp = trait.target;
+                
+                // Set initial value
+                input.value = comp.components().models.length > 0 ? comp.getInnerHTML() : (comp.get('content') || '');
+
+                const updateContent = () => {
+                    comp.components(input.value);
+                };
+                
+                input.addEventListener('change', updateContent);
+                btn.addEventListener('click', updateContent);
+
+                // Listen to inline edits to update textarea
+                comp.on('change:content', () => {
+                    input.value = comp.components().models.length > 0 ? comp.getInnerHTML() : (comp.get('content') || '');
+                });
+
+                return el;
+            }
+        });
+
+        // UX TEXT COMPONENT
+        editor.Components.addType('ux-text', {
+            extend: 'text',
+            model: {
+                defaults: {
+                    traits: [
+                        { type: 'content-editor', name: 'content', label: 'HTML Editor' }
+                    ]
+                }
+            }
+        });
+
         // SWIPER SLIDER COMPONENT
         editor.Components.addType('swiper-slider', {
             model: {
@@ -422,6 +464,13 @@
             category: 'CONTENT',
             content: '<div class="bg-gray-50 p-8 rounded-xl text-center"><div class="text-yellow-400 mb-4 flex justify-center space-x-1"><svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg><svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg><svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg><svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg><svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg></div><p class="text-xl text-gray-700 italic mb-6">"Desain dan pelayanannya sangat memuaskan, sangat direkomendasikan!"</p><div class="flex flex-col items-center"><img src="https://ui-avatars.com/api/?name=John+Doe&background=random" alt="Avatar" class="w-14 h-14 rounded-full mb-2"><h4 class="font-bold text-gray-900">John Doe</h4><span class="text-sm text-gray-500">Customer</span></div></div>',
             media: testimonialSvg
+        });
+
+        bm.add('ux-text', {
+            label: 'UX Text Editor',
+            category: 'CONTENT',
+            content: '<div data-gjs-type="ux-text" class="text-gray-900 leading-relaxed"><h3 class="uppercase text-2xl mb-2"><strong>This is a simple banner</strong></h3><p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p></div>',
+            media: '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M2.5 4v3h5v12h3V7h5V4h-13z"/></svg>'
         });
 
         bm.add('woo-products', {
