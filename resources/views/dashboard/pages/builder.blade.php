@@ -401,46 +401,48 @@
             }
         });
 
-        // UX TEXT COMPONENT
-        editor.Components.addType('ux-text', {
-            extend: 'text',
-            model: {
-                defaults: {
-                    traits: [
-                        { type: 'content-editor', name: 'content', label: 'HTML Editor' },
-                        { type: 'number', name: 'style-font-size', label: 'Font size (rem)', step: 0.1 },
-                        { type: 'number', name: 'style-line-height', label: 'Line height', step: 0.1 },
-                        { 
-                            type: 'select', 
-                            name: 'style-text-align', 
-                            label: 'Text align',
-                            options: [
-                                { id: '', name: 'Default' },
-                                { id: 'left', name: 'Left' },
-                                { id: 'center', name: 'Center' },
-                                { id: 'right', name: 'Right' },
-                                { id: 'justify', name: 'Justify' }
-                            ]
-                        },
-                        { type: 'color', name: 'style-text-color', label: 'Text color' }
-                    ]
-                },
-                init() {
-                    this.on('change:attributes:style-font-size', this.handleStyleChange);
-                    this.on('change:attributes:style-line-height', this.handleStyleChange);
-                    this.on('change:attributes:style-text-align', this.handleStyleChange);
-                    this.on('change:attributes:style-text-color', this.handleStyleChange);
-                },
-                handleStyleChange() {
-                    const attrs = this.getAttributes();
-                    const style = {};
-                    if (attrs['style-font-size']) style['font-size'] = attrs['style-font-size'] + 'rem';
-                    if (attrs['style-line-height']) style['line-height'] = attrs['style-line-height'];
-                    if (attrs['style-text-align']) style['text-align'] = attrs['style-text-align'];
-                    if (attrs['style-text-color']) style['color'] = attrs['style-text-color'];
-                    this.addStyle(style);
+        // OVERRIDE ALL TEXT-LIKE COMPONENTS
+        const textComponents = ['text', 'header', 'paragraph', 'label'];
+        textComponents.forEach(type => {
+            editor.Components.addType(type, {
+                model: {
+                    defaults: {
+                        traits: [
+                            { type: 'content-editor', name: 'content', label: 'HTML Editor' },
+                            { type: 'number', name: 'style-font-size', label: 'Font size (rem)', step: 0.1 },
+                            { type: 'number', name: 'style-line-height', label: 'Line height', step: 0.1 },
+                            { 
+                                type: 'select', 
+                                name: 'style-text-align', 
+                                label: 'Text align',
+                                options: [
+                                    { id: '', name: 'Default' },
+                                    { id: 'left', name: 'Left' },
+                                    { id: 'center', name: 'Center' },
+                                    { id: 'right', name: 'Right' },
+                                    { id: 'justify', name: 'Justify' }
+                                ]
+                            },
+                            { type: 'color', name: 'style-text-color', label: 'Text color' }
+                        ]
+                    },
+                    init() {
+                        this.on('change:attributes:style-font-size', this.handleStyleChange);
+                        this.on('change:attributes:style-line-height', this.handleStyleChange);
+                        this.on('change:attributes:style-text-align', this.handleStyleChange);
+                        this.on('change:attributes:style-text-color', this.handleStyleChange);
+                    },
+                    handleStyleChange() {
+                        const attrs = this.getAttributes();
+                        const style = {};
+                        if (attrs['style-font-size']) style['font-size'] = attrs['style-font-size'] + 'rem';
+                        if (attrs['style-line-height']) style['line-height'] = attrs['style-line-height'];
+                        if (attrs['style-text-align']) style['text-align'] = attrs['style-text-align'];
+                        if (attrs['style-text-color']) style['color'] = attrs['style-text-color'];
+                        this.addStyle(style);
+                    }
                 }
-            }
+            });
         });
 
         // UX BUTTON COMPONENT
