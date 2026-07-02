@@ -6,6 +6,13 @@
     <title>UX Builder - {{ $page->title }}</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    @php
+        $favIcon = \App\Models\Setting::where('key', 'fav_icon')->value('value');
+    @endphp
+    @if($favIcon)
+        <link rel="icon" type="image/png" href="{{ asset('storage/' . $favIcon) }}">
+    @endif
+
     <!-- GrapesJS -->
     <link href="https://unpkg.com/grapesjs/dist/css/grapes.min.css" rel="stylesheet">
     <script src="https://unpkg.com/grapesjs"></script>
