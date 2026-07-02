@@ -27,53 +27,60 @@
             \Artesaos\SEOTools\Facades\OpenGraph::addImage($metaImage);
         }
 
-        // Schema.org - BreadcrumbList
-        \Artesaos\SEOTools\Facades\JsonLdMulti::newJsonLd();
-        \Artesaos\SEOTools\Facades\JsonLdMulti::setType('BreadcrumbList');
-        \Artesaos\SEOTools\Facades\JsonLdMulti::addValue('itemListElement', [
-            [
-                '@type' => 'ListItem',
-                'position' => 1,
-                'name' => 'Home',
-                'item' => url('/')
-            ],
-            [
-                '@type' => 'ListItem',
-                'position' => 2,
-                'name' => 'Store',
-                'item' => route('product.index')
-            ],
-            [
-                '@type' => 'ListItem',
-                'position' => 3,
-                'name' => $category->name,
-                'item' => url()->current()
-            ]
-        ]);
-
-        // Schema.org - CollectionPage
-        \Artesaos\SEOTools\Facades\JsonLdMulti::newJsonLd();
-        \Artesaos\SEOTools\Facades\JsonLdMulti::setType('CollectionPage');
-        \Artesaos\SEOTools\Facades\JsonLdMulti::setTitle($category->meta_title ?: $category->name);
-        \Artesaos\SEOTools\Facades\JsonLdMulti::setDescription($metaDesc);
-        \Artesaos\SEOTools\Facades\JsonLdMulti::setUrl(url()->current());
-        
-        // Schema.org - ItemList (Top-level for Rich Results)
+        // Prepare ItemList
         $itemList = [];
         $position = 1;
         foreach ($products as $prod) {
             $itemList[] = [
                 '@type' => 'ListItem',
                 'position' => $position++,
-                'name' => $prod->name,
-                'url' => route('product.show', ['category_slug' => $category->slug, 'slug' => $prod->slug])
+                'url' => route('product.show', ['category_slug' => $category->slug, 'slug' => $prod->slug]),
+                'name' => $prod->name
             ];
         }
-        
-        \Artesaos\SEOTools\Facades\JsonLdMulti::newJsonLd();
-        \Artesaos\SEOTools\Facades\JsonLdMulti::setType('ItemList');
-        \Artesaos\SEOTools\Facades\JsonLdMulti::addValue('name', 'Daftar Produk ' . $category->name);
-        \Artesaos\SEOTools\Facades\JsonLdMulti::addValue('itemListElement', $itemList);
+
+        // Schema.org - @graph Structure
+        $schemaGraph = [
+            '@context' => 'https://schema.org',
+            '@graph' => [
+                [
+                    '@type' => 'CollectionPage',
+                    '@id' => url()->current() . '#webpage',
+                    'url' => url()->current(),
+                    'name' => $category->meta_title ?: $category->name,
+                    'description' => $metaDesc,
+                    'mainEntity' => [
+                        '@type' => 'ItemList',
+                        'numberOfItems' => count($itemList),
+                        'itemListElement' => $itemList
+                    ]
+                ],
+                [
+                    '@type' => 'BreadcrumbList',
+                    '@id' => url()->current() . '#breadcrumb',
+                    'itemListElement' => [
+                        [
+                            '@type' => 'ListItem',
+                            'position' => 1,
+                            'name' => 'Home',
+                            'item' => url('/')
+                        ],
+                        [
+                            '@type' => 'ListItem',
+                            'position' => 2,
+                            'name' => 'Store',
+                            'item' => route('product.index')
+                        ],
+                        [
+                            '@type' => 'ListItem',
+                            'position' => 3,
+                            'name' => $category->name,
+                            'item' => url()->current()
+                        ]
+                    ]
+                ]
+            ]
+        ];
     } else {
         // Fallback for main store page
         \Artesaos\SEOTools\Facades\SEOMeta::setTitle($storeTitle . ' - ' . $siteTitle);
@@ -92,6 +99,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     {!! \Artesaos\SEOTools\Facades\SEOTools::generate() !!}
+    
+    @if(isset($schemaGraph))
+        <script type="application/ld+json">{!! json_encode($schemaGraph, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}</script>
+    @endif
     
     @if(isset($category) && $category->meta_schema)
         {!! $category->meta_schema !!}
