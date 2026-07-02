@@ -18,11 +18,11 @@
     ];
     $activeFont = $fonts[$themeFont] ?? $fonts['figtree'];
 
-    // Safely grab Flatsome SVGs if available locally
+    // Safely grab SVGs from our bundled config (works online/production)
     function getFlatsomeSvg($filename) {
-        $path = 'c:/xampp/htdocs/flatsome/inc/builder/shortcodes/thumbnails/' . $filename;
-        if (file_exists($path)) {
-            return file_get_contents($path);
+        $svg = config("builder_svgs.{$filename}");
+        if ($svg) {
+            return $svg;
         }
         return '<svg viewBox="0 0 24 24" fill="currentColor"><rect width="24" height="24" rx="4" fill="#00a0d2"/></svg>';
     }
