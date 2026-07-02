@@ -58,7 +58,7 @@
 
                 <!-- Image -->
                 <div>
-                    <x-media-picker name="image" label="Feature Image" :value="$category->image" preview-size="lg" />
+                    <x-media-picker name="image" label="Feature Image" :current="old('image', $category->image)" preview-size="lg" />
                 </div>
             </div>
 
