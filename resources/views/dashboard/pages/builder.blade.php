@@ -40,6 +40,7 @@
             right: auto !important;
             width: 280px !important;
             border-right: 1px solid #333;
+            padding-bottom: 60px !important; /* Make room for the save button */
         }
         .gjs-pn-views {
             left: 0 !important;
@@ -92,12 +93,13 @@
             </a>
             <h1 class="font-semibold text-sm border-l border-gray-600 pl-4">UX Builder: <span class="text-brand-400">{{ $page->title }}</span></h1>
         </div>
-        <div class="absolute right-4 top-1/2 transform -translate-y-1/2 z-[99999]">
-            <button id="save-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-1.5 rounded text-sm font-semibold transition shadow flex items-center gap-2">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
-                Save Design
-            </button>
-        </div>
+    </div>
+
+    <!-- Bottom Left Save Button (Flatsome Style) -->
+    <div class="fixed bottom-0 left-0 w-[280px] bg-[#1e1e1e] border-t border-gray-700 p-3 z-[1001] flex justify-center items-center shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
+        <button id="save-btn" class="w-full bg-[#00a0d2] hover:bg-[#008ab5] text-white py-2 rounded text-[15px] font-medium transition shadow-md flex items-center justify-center gap-2">
+            Update
+        </button>
     </div>
 
     <div id="gjs">
@@ -218,25 +220,25 @@
         bm.add('sec-media-left', {
             label: 'Media Left',
             category: 'SECTION',
-            content: '<section class="py-16 bg-gray-50"><div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center gap-12"><div class="w-full md:w-1/2"><img src="https://via.placeholder.com/600x400" alt="Placeholder" class="w-full h-auto rounded-lg shadow-lg"></div><div class="w-full md:w-1/2"><h2 class="text-3xl font-bold text-gray-900 mb-4">Engaging Title Here</h2><p class="text-lg text-gray-600 mb-6">Describe the feature or product here. This layout is perfect for showcasing images alongside descriptive text.</p><a href="#" class="inline-block bg-blue-600 text-white font-semibold px-6 py-3 rounded-md hover:bg-blue-700">Learn More</a></div></div></section>',
+            content: '<section class="py-16 bg-gray-50"><div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center gap-12"><div class="w-full md:w-1/2"><img src="https://via.placeholder.com/600x400" alt="Placeholder" class="w-full h-auto rounded-lg shadow-lg"></div><div class="w-full md:w-1/2"><h2 class="text-3xl font-bold text-gray-900 mb-4">Engaging Title Here</h2><p class="text-lg text-gray-600 mb-6">Describe the feature or product here. This layout is perfect for showcasing images alongside descriptive text.</p><a href="#" class="inline-block bg-brand-600 text-white font-semibold px-6 py-3 rounded-md hover:bg-brand-700">Learn More</a></div></div></section>',
             media: mediaLeftSvg
         });
         bm.add('sec-media-right', {
             label: 'Media Right',
             category: 'SECTION',
-            content: '<section class="py-16 bg-white"><div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col-reverse md:flex-row items-center gap-12"><div class="w-full md:w-1/2"><h2 class="text-3xl font-bold text-gray-900 mb-4">Engaging Title Here</h2><p class="text-lg text-gray-600 mb-6">Describe the feature or product here. This layout is perfect for showcasing images alongside descriptive text.</p><a href="#" class="inline-block bg-blue-600 text-white font-semibold px-6 py-3 rounded-md hover:bg-blue-700">Learn More</a></div><div class="w-full md:w-1/2"><img src="https://via.placeholder.com/600x400" alt="Placeholder" class="w-full h-auto rounded-lg shadow-lg"></div></div></section>',
+            content: '<section class="py-16 bg-white"><div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col-reverse md:flex-row items-center gap-12"><div class="w-full md:w-1/2"><h2 class="text-3xl font-bold text-gray-900 mb-4">Engaging Title Here</h2><p class="text-lg text-gray-600 mb-6">Describe the feature or product here. This layout is perfect for showcasing images alongside descriptive text.</p><a href="#" class="inline-block bg-brand-600 text-white font-semibold px-6 py-3 rounded-md hover:bg-brand-700">Learn More</a></div><div class="w-full md:w-1/2"><img src="https://via.placeholder.com/600x400" alt="Placeholder" class="w-full h-auto rounded-lg shadow-lg"></div></div></section>',
             media: mediaRightSvg
         });
         bm.add('sec-box-left', {
             label: 'Box Left',
             category: 'SECTION',
-            content: '<section class="relative py-24 bg-gray-200" style="background-image: url(\'https://via.placeholder.com/1200x600\'); background-size: cover; background-position: center;"><div class="absolute inset-0 bg-black bg-opacity-40"></div><div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex"><div class="bg-white p-8 md:p-12 rounded-lg shadow-xl max-w-lg w-full"><h2 class="text-3xl font-bold text-gray-900 mb-4">Box Content Left</h2><p class="text-gray-600 mb-6">This section features a background image with a solid content box on the left side.</p><button class="bg-blue-600 text-white px-6 py-2 rounded">Action</button></div></div></section>',
+            content: '<section class="relative py-24 bg-gray-200" style="background-image: url(\'https://via.placeholder.com/1200x600\'); background-size: cover; background-position: center;"><div class="absolute inset-0 bg-black bg-opacity-40"></div><div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex"><div class="bg-white p-8 md:p-12 rounded-lg shadow-xl max-w-lg w-full"><h2 class="text-3xl font-bold text-gray-900 mb-4">Box Content Left</h2><p class="text-gray-600 mb-6">This section features a background image with a solid content box on the left side.</p><button class="bg-brand-600 text-white px-6 py-2 rounded hover:bg-brand-700">Action</button></div></div></section>',
             media: boxLeftSvg
         });
         bm.add('sec-box-right', {
             label: 'Box Right',
             category: 'SECTION',
-            content: '<section class="relative py-24 bg-gray-200" style="background-image: url(\'https://via.placeholder.com/1200x600\'); background-size: cover; background-position: center;"><div class="absolute inset-0 bg-black bg-opacity-40"></div><div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-end"><div class="bg-white p-8 md:p-12 rounded-lg shadow-xl max-w-lg w-full"><h2 class="text-3xl font-bold text-gray-900 mb-4">Box Content Right</h2><p class="text-gray-600 mb-6">This section features a background image with a solid content box on the right side.</p><button class="bg-blue-600 text-white px-6 py-2 rounded">Action</button></div></div></section>',
+            content: '<section class="relative py-24 bg-gray-200" style="background-image: url(\'https://via.placeholder.com/1200x600\'); background-size: cover; background-position: center;"><div class="absolute inset-0 bg-black bg-opacity-40"></div><div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-end"><div class="bg-white p-8 md:p-12 rounded-lg shadow-xl max-w-lg w-full"><h2 class="text-3xl font-bold text-gray-900 mb-4">Box Content Right</h2><p class="text-gray-600 mb-6">This section features a background image with a solid content box on the right side.</p><button class="bg-brand-600 text-white px-6 py-2 rounded hover:bg-brand-700">Action</button></div></div></section>',
             media: boxRightSvg
         });
 
@@ -632,7 +634,7 @@
         bm.add('tabs', {
             label: 'Tabs',
             category: 'CONTENT',
-            content: '<div class="w-full"><div class="flex border-b border-gray-200"><button class="px-6 py-3 font-semibold text-blue-600 border-b-2 border-blue-600">Tab 1</button><button class="px-6 py-3 font-medium text-gray-500 hover:text-gray-700">Tab 2</button><button class="px-6 py-3 font-medium text-gray-500 hover:text-gray-700">Tab 3</button></div><div class="p-6 bg-white border border-t-0 border-gray-200"><p class="text-gray-600">Content for the first tab. Edit this text and add elements here.</p></div></div>',
+            content: '<div class="w-full"><div class="flex border-b border-gray-200"><button class="px-6 py-3 font-semibold text-brand-600 border-b-2 border-brand-600">Tab 1</button><button class="px-6 py-3 font-medium text-gray-500 hover:text-gray-700">Tab 2</button><button class="px-6 py-3 font-medium text-gray-500 hover:text-gray-700">Tab 3</button></div><div class="p-6 bg-white border border-t-0 border-gray-200"><p class="text-gray-600">Content for the first tab. Edit this text and add elements here.</p></div></div>',
             media: tabsSvg
         });
 
@@ -691,7 +693,12 @@
         // INJECT HEADER & FOOTER AS VIEW-ONLY PREVIEW
         editor.on('load', function() {
             const body = editor.Canvas.getBody();
+            const head = editor.Canvas.getDocument().head;
             
+            // Inject theme config into GrapesJS canvas head
+            const themeConfigHtml = {!! json_encode(view('components.theme-config')->render()) !!};
+            head.insertAdjacentHTML('beforeend', themeConfigHtml);
+
             const headerStr = {!! json_encode(view('components.frontend-navbar')->render()) !!};
             const footerStr = {!! json_encode(view('components.frontend-footer')->render()) !!};
             
