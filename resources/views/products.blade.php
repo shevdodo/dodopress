@@ -44,16 +44,19 @@
             '@context' => 'https://schema.org',
             '@graph' => [
                 [
+                    '@type' => 'ItemList',
+                    '@id' => url()->current() . '#itemlist',
+                    'name' => 'Koleksi ' . ($category->meta_title ?: $category->name),
+                    'numberOfItems' => count($itemList),
+                    'itemListElement' => $itemList
+                ],
+                [
                     '@type' => 'CollectionPage',
                     '@id' => url()->current() . '#webpage',
                     'url' => url()->current(),
                     'name' => $category->meta_title ?: $category->name,
                     'description' => $metaDesc,
-                    'mainEntity' => [
-                        '@type' => 'ItemList',
-                        'numberOfItems' => count($itemList),
-                        'itemListElement' => $itemList
-                    ]
+                    'mainEntity' => ['@id' => url()->current() . '#itemlist']
                 ],
                 [
                     '@type' => 'BreadcrumbList',
