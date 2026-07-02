@@ -23,6 +23,9 @@
     <!-- Tailwind CSS (for the top bar) -->
     <script src="https://cdn.tailwindcss.com"></script>
 
+    <!-- TinyMCE (for Rich Text Editor Modal) -->
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+
     <style>
         body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; }
         #gjs { height: calc(100vh - 50px); overflow: hidden; position: relative; }
@@ -300,11 +303,13 @@
             createInput({ trait }) {
                 const el = document.createElement('div');
                 el.innerHTML = `
+                    <button type="button" class="gjs-btn-prim" style="width: 100%; margin-bottom: 5px; padding: 6px; cursor: pointer; border-radius: 3px; background-color: #00A0D2; border: none; color: white;">Open Text Editor</button>
                     <textarea class="gjs-field gjs-sm-property" rows="6" style="width: 100%; min-height: 120px; resize: vertical; padding: 8px; color: #fff; background: rgba(0,0,0,0.2); border: 1px solid rgba(0,0,0,0.3); font-family: monospace; font-size: 12px; border-radius: 3px;"></textarea>
                     <button type="button" class="gjs-btn-prim" style="width: 100%; margin-top: 5px; padding: 5px; cursor: pointer; border-radius: 3px;">Update HTML</button>
                 `;
+                const btnOpen = el.querySelectorAll('button')[0];
                 const input = el.querySelector('textarea');
-                const btn = el.querySelector('button');
+                const btnUpdate = el.querySelectorAll('button')[1];
                 const comp = trait.target;
                 
                 // Set initial value
@@ -315,7 +320,54 @@
                 };
                 
                 input.addEventListener('change', updateContent);
-                btn.addEventListener('click', updateContent);
+                btnUpdate.addEventListener('click', updateContent);
+
+                // Open TinyMCE Modal
+                btnOpen.addEventListener('click', () => {
+                    const modal = editor.Modal;
+                    const contentHtml = comp.components().models.length > 0 ? comp.getInnerHTML() : (comp.get('content') || '');
+                    
+                    const container = document.createElement('div');
+                    container.innerHTML = `
+                        <textarea id="tinymce-ux-editor">${contentHtml}</textarea>
+                        <div style="margin-top: 15px; text-align: right;">
+                            <button id="tinymce-save-btn" class="gjs-btn-prim" style="padding: 8px 16px; border-radius: 3px; cursor: pointer; background: #00A0D2; border: none; color: white; font-weight: bold;">&#10003; OK</button>
+                        </div>
+                    `;
+
+                    modal.setTitle('Text Editor');
+                    modal.setContent(container);
+                    modal.open();
+
+                    // Initialize TinyMCE
+                    if (typeof tinymce !== 'undefined') {
+                        tinymce.remove('#tinymce-ux-editor');
+                        tinymce.init({
+                            selector: '#tinymce-ux-editor',
+                            height: 350,
+                            menubar: false,
+                            plugins: 'lists link image preview',
+                            toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link',
+                            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+                            promotion: false
+                        });
+                    }
+
+                    // Save Event
+                    setTimeout(() => {
+                        const saveBtn = container.querySelector('#tinymce-save-btn');
+                        if(saveBtn) {
+                            saveBtn.addEventListener('click', () => {
+                                if (typeof tinymce !== 'undefined') {
+                                    const newHtml = tinymce.get('tinymce-ux-editor').getContent();
+                                    input.value = newHtml;
+                                    updateContent();
+                                }
+                                modal.close();
+                            });
+                        }
+                    }, 100);
+                });
 
                 // Listen to inline edits to update textarea
                 comp.on('change:content', () => {
