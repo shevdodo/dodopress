@@ -25,7 +25,7 @@
 
     <style>
         body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; }
-        #gjs { height: calc(100vh - 50px); overflow: hidden; }
+        #gjs { height: calc(100vh - 50px); overflow: hidden; position: relative; }
         /* Layout Customization (Left Sidebar) */
         .gjs-cv-canvas {
             width: calc(100% - 280px) !important;
@@ -73,6 +73,8 @@
             color: white;
             box-sizing: border-box;
             border-bottom: 1px solid #333;
+            position: relative;
+            z-index: 1000;
         }
     </style>
 </head>
