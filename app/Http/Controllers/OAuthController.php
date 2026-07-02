@@ -15,6 +15,11 @@ class OAuthController extends Controller
      */
     public function redirectToGoogle()
     {
+        // Cek apakah konfigurasi Google OAuth sudah diisi
+        if (!config('services.google.client_id') || !config('services.google.client_secret')) {
+            return redirect()->back()->withErrors(['email' => 'Fitur Google OAuth belum berfungsi secara penuh. Admin perlu mengatur Client ID dan Secret terlebih dahulu.']);
+        }
+
         return Socialite::driver('google')->redirect();
     }
 
