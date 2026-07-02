@@ -109,6 +109,7 @@
         
         const editor = grapesjs.init({
             container: '#gjs',
+            fromElement: true,
             height: '100%',
             width: 'auto',
             storageManager: false, // We will handle storage manually
