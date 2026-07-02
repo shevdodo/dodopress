@@ -1,0 +1,68 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Str;
+
+class OAuthController extends Controller
+{
+    /**
+     * Redirect the user to the Google authentication page.
+     */
+    public function redirectToGoogle()
+    {
+        return Socialite::driver('google')->redirect();
+    }
+
+    /**
+     * Obtain the user information from Google.
+     */
+    public function handleGoogleCallback()
+    {
+        try {
+            $googleUser = Socialite::driver('google')->user();
+            
+            // Check if user exists with this google_id
+            $user = User::where('google_id', $googleUser->id)->first();
+            
+            if ($user) {
+                // User exists, log them in
+                Auth::login($user);
+            } else {
+                // Check if user exists with this email
+                $existingUser = User::where('email', $googleUser->email)->first();
+                
+                if ($existingUser) {
+                    // Update existing user with google_id
+                    $existingUser->update([
+                        'google_id' => $googleUser->id,
+                        'avatar' => $existingUser->avatar ?? $googleUser->avatar,
+                    ]);
+                    Auth::login($existingUser);
+                } else {
+                    // Create a new user
+                    $newUser = User::create([
+                        'name' => $googleUser->name,
+                        'email' => $googleUser->email,
+                        'google_id' => $googleUser->id,
+                        'avatar' => $googleUser->avatar,
+                        'password' => bcrypt(Str::random(16)), // Random password
+                        'role' => 'user', // Default role
+                    ]);
+                    
+                    Auth::login($newUser);
+                }
+            }
+            
+            // Redirect to intended page or dashboard
+            return redirect()->intended(route('dashboard', absolute: false));
+            
+        } catch (\Exception $e) {
+            return redirect()->route('login')->withErrors(['email' => 'Gagal login menggunakan Google. Pastikan kredensial OAuth sudah diatur dengan benar di Settings.']);
+        }
+    }
+}

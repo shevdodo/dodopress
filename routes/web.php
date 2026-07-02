@@ -254,6 +254,10 @@ try {
     // DB might not be ready yet
 }
 
+// OAuth Routes
+Route::get('/auth/google', [\App\Http\Controllers\OAuthController::class, 'redirectToGoogle'])->name('oauth.google');
+Route::get('/auth/google/callback', [\App\Http\Controllers\OAuthController::class, 'handleGoogleCallback'])->name('oauth.google.callback');
+
 // Redirect direct access to __homepage__ slug to root
 Route::get('/{slug}', function ($slug) {
     if ($slug === '__homepage__') {
