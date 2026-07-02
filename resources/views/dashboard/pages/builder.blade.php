@@ -475,6 +475,63 @@
             }
         });
 
+        // SECTION COMPONENT (Overriding default section to add Flatsome-like traits)
+        editor.Components.addType('section', {
+            isComponent: el => el.tagName === 'SECTION',
+            model: {
+                defaults: {
+                    traits: [
+                        { type: 'text', name: 'id', label: 'Id' },
+                        { type: 'text', name: 'title', label: 'Title' },
+                        { 
+                            type: 'select', 
+                            name: 'data-color', 
+                            label: 'Color Theme',
+                            options: [
+                                { id: '', name: 'Default' },
+                                { id: 'light', name: 'Light' },
+                                { id: 'dark', name: 'Dark' }
+                            ]
+                        },
+                        { type: 'color', name: 'data-bg-color', label: 'Bg Color' },
+                        { type: 'media-picker-trait', name: 'data-bg-image', label: 'Bg Image' },
+                        { type: 'number', name: 'data-padding-top', label: 'Padding Top (px)' },
+                        { type: 'number', name: 'data-padding-bottom', label: 'Padding Bottom (px)' },
+                        { type: 'number', name: 'data-min-height', label: 'Min Height (px)' }
+                    ]
+                },
+                init() {
+                    this.on('change:attributes:data-bg-color', this.handleStyleChange);
+                    this.on('change:attributes:data-bg-image', this.handleStyleChange);
+                    this.on('change:attributes:data-padding-top', this.handleStyleChange);
+                    this.on('change:attributes:data-padding-bottom', this.handleStyleChange);
+                    this.on('change:attributes:data-min-height', this.handleStyleChange);
+                    this.on('change:attributes:data-color', this.handleStyleChange);
+                },
+                handleStyleChange() {
+                    const attrs = this.getAttributes();
+                    const style = {};
+                    if (attrs['data-bg-color']) style['background-color'] = attrs['data-bg-color'];
+                    if (attrs['data-bg-image']) {
+                        style['background-image'] = `url('${attrs['data-bg-image']}')`;
+                        style['background-size'] = 'cover';
+                        style['background-position'] = 'center';
+                    }
+                    if (attrs['data-padding-top']) style['padding-top'] = attrs['data-padding-top'] + 'px';
+                    if (attrs['data-padding-bottom']) style['padding-bottom'] = attrs['data-padding-bottom'] + 'px';
+                    if (attrs['data-min-height']) style['min-height'] = attrs['data-min-height'] + 'px';
+                    
+                    if (attrs['data-color'] === 'dark') {
+                        style['color'] = '#ffffff';
+                    } else if (attrs['data-color'] === 'light') {
+                        style['color'] = '#1b1b18';
+                    }
+                    
+                    this.addStyle(style);
+                }
+            }
+        });
+
         const sliderSvg = '<svg width="100px" height="68px" viewBox="0 0 100 68" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"> <title>slider</title> <defs> <rect id="path-1" x="0" y="0" width="100" height="68"></rect> <linearGradient x1="0%" y1="0%" x2="106.265625%" y2="109.895844%" id="linearGradient-3"> <stop stop-color="#C8EAF4" stop-opacity="0.208021966" offset="0%"></stop> <stop stop-color="#3DD0FF" offset="100%"></stop> </linearGradient> <rect id="path-4" x="8" y="5" width="83" height="57"></rect> <mask id="mask-5" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="83" height="57" fill="white"> <use xlink:href="#path-4"></use> </mask> <mask id="mask-7" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="83" height="57" fill="white"> <use xlink:href="#path-4"></use> </mask> </defs> <g id="Elements" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="slider"> <mask id="mask-2" fill="white"> <use xlink:href="#path-1"></use> </mask> <use id="BG" fill="#FFFFFF" xlink:href="#path-1"></use> <mask id="mask-6" fill="white"> <use xlink:href="#path-4"></use> </mask> <g id="Rectangle-486-Copy-4" stroke="#00A0D2" mask="url(#mask-5)" stroke-width="2" fill-opacity="0.15" fill="url(#linearGradient-3)"> <use mask="url(#mask-7)" xlink:href="#path-4"></use> </g> <path d="M65.9329807,39.4451119 C65.9329807,39.4451119 70.8917905,34.7681073 71.9718991,28.4782481 C74.8787877,28.4782481 76.6742188,21.7913364 73.7673303,19.4391426 C73.8898756,16.9637257 77.5035371,0 59.1986888,0 C40.8938406,0 44.5075021,16.9637257 44.6300474,19.4391426 C41.7231588,21.7913364 43.51859,28.4782481 46.4254786,28.4782481 C47.5055872,34.7681073 52.4672469,39.4451119 52.4672469,39.4451119 C52.4672469,39.4451119 52.4273485,43.8674552 50.7402131,44.1221165 C45.3026216,44.9463427 25,53.4761256 25,62.8301348 L93.3973777,62.8301348 C93.3973777,53.4761256 73.0947561,44.9463427 67.6600144,44.1221165 C65.9728791,43.8674552 65.9329807,39.4451119 65.9329807,39.4451119 Z" id="Shape-Copy-6" fill="#00A0D2" opacity="0.141965951" mask="url(#mask-6)"></path> <circle id="Oval-1" fill="#00A0D2" mask="url(#mask-6)" cx="40.5" cy="34.5" r="3.5"></circle> <circle id="Oval-1" fill-opacity="0.532382246" fill="#00A0D2" opacity="0.333430504" mask="url(#mask-6)" cx="50.5" cy="34.5" r="3.5"></circle> <circle id="Oval-1" fill-opacity="0.532382246" fill="#00A0D2" opacity="0.333430504" mask="url(#mask-6)" cx="60.5" cy="34.5" r="3.5"></circle> </g> </g> </svg>';
 
         bm.add('custom-slider', {
