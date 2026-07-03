@@ -44,20 +44,34 @@
                         <th class="px-6 py-4 font-semibold">User</th>
                         <th class="px-6 py-4 font-semibold">Role</th>
                         <th class="px-6 py-4 font-semibold">Joined Date</th>
-                        <th class="px-6 py-4 font-semibold text-right">Actions</th>
+                        <th class="px-6 py-4 font-semibold text-right hidden sm:table-cell">Actions</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-100 text-sm">
                     @forelse($users as $user)
                         <tr class="hover:bg-gray-50/50 transition">
-                            <td class="px-6 py-4 whitespace-nowrap">
+                            <td class="px-6 py-4">
                                 <div class="flex items-center space-x-4">
                                     <div class="w-10 h-10 rounded-full bg-gradient-to-br from-brand-100 to-brand-200 flex items-center justify-center text-brand-700 font-bold uppercase shrink-0">
                                         {{ substr($user->name, 0, 2) }}
                                     </div>
                                     <div>
                                         <p class="font-semibold text-gray-900">{{ $user->name }}</p>
-                                        <p class="text-gray-500 text-xs">{{ $user->email }}</p>
+                                        <p class="text-gray-500 text-xs truncate max-w-[150px] sm:max-w-none">{{ $user->email }}</p>
+
+                                        <!-- Mobile Actions -->
+                                        <div class="mt-2 sm:hidden flex items-center space-x-4 text-xs font-medium">
+                                            <a href="{{ route('superuser.users.edit', $user) }}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                                            @if($user->id !== Auth::id())
+                                                <form action="{{ route('superuser.users.destroy', $user) }}" method="POST" class="inline-block" onsubmit="return confirm('Are you sure you want to delete this user?');">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="text-red-600 hover:text-red-900">Delete</button>
+                                                </form>
+                                            @else
+                                                <span class="text-gray-400">Delete</span>
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
                             </td>
@@ -75,7 +89,7 @@
                             <td class="px-6 py-4 whitespace-nowrap text-gray-500">
                                 {{ $user->created_at->format('M d, Y') }}
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium hidden sm:table-cell">
                                 <a href="{{ route('superuser.users.edit', $user) }}" class="text-indigo-600 hover:text-indigo-900 mr-3 inline-block">Edit</a>
                                 @if($user->id !== Auth::id())
                                     <form action="{{ route('superuser.users.destroy', $user) }}" method="POST" class="inline-block" onsubmit="return confirm('Are you sure you want to delete this user?');">
