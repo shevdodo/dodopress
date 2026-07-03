@@ -251,11 +251,12 @@ class SuperuserDashboardController extends Controller
     {
         $request->validate([
             'store_page_title' => 'nullable|string|max:255',
+            'store_catalog_title' => 'nullable|string|max:255',
             'store_page_subtitle' => 'nullable|string',
             'store_products_per_page' => 'nullable|integer|min:1|max:100',
         ]);
 
-        $data = $request->only(['store_page_title', 'store_page_subtitle', 'store_products_per_page']);
+        $data = $request->only(['store_page_title', 'store_catalog_title', 'store_page_subtitle', 'store_products_per_page']);
 
         if ($request->hasFile('store_banner_image')) {
             $folder = 'media/' . date('Y/m');
