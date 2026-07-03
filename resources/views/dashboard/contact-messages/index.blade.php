@@ -23,8 +23,8 @@
                 <thead>
                     <tr class="bg-gray-50 border-b border-gray-100 text-xs uppercase tracking-wider text-gray-500">
                         <th class="px-6 py-4 font-semibold">Sender</th>
-                        <th class="px-6 py-4 font-semibold">Subject</th>
-                        <th class="px-6 py-4 font-semibold">Date</th>
+                        <th class="px-6 py-4 font-semibold hidden sm:table-cell">Subject</th>
+                        <th class="px-6 py-4 font-semibold hidden sm:table-cell">Date</th>
                         <th class="px-6 py-4 font-semibold text-right hidden sm:table-cell">Actions</th>
                     </tr>
                 </thead>
@@ -33,11 +33,23 @@
                         <tr class="hover:bg-gray-50/50 transition {{ $message->is_read ? 'bg-white' : 'bg-brand-50/30 font-semibold' }}">
                             <td class="px-6 py-4">
                                 <div>
-                                    <p class="text-gray-900 font-medium">{{ $message->name }}</p>
-                                    <p class="text-gray-500 text-xs truncate max-w-[150px] sm:max-w-none">{{ $message->email }}</p>
+                                    <div class="flex justify-between items-start sm:block">
+                                        <div>
+                                            <p class="text-gray-900 font-medium">{{ $message->name }}</p>
+                                            <p class="text-gray-500 text-xs truncate max-w-[150px] sm:max-w-none">{{ $message->email }}</p>
+                                        </div>
+                                        <div class="sm:hidden text-right">
+                                            <span class="text-[10px] text-gray-400">{{ $message->created_at->format('M d, Y') }}</span>
+                                        </div>
+                                    </div>
                                     
+                                    <p class="text-sm mt-2 text-gray-700 sm:hidden">
+                                        <span class="font-semibold text-xs text-gray-400 uppercase tracking-wider block mb-0.5">Subject</span>
+                                        {{ $message->subject ?? '(No Subject)' }}
+                                    </p>
+
                                     <!-- Mobile Actions -->
-                                    <div class="mt-3 sm:hidden flex items-center space-x-4 text-xs font-medium">
+                                    <div class="mt-3 sm:hidden flex items-center space-x-4 text-xs font-medium pt-2 border-t border-gray-100">
                                         <a href="{{ route('superuser.contact-messages.show', $message) }}" class="text-brand-600 hover:text-brand-800">View</a>
                                         <form action="{{ route('superuser.contact-messages.destroy', $message) }}" method="POST" class="inline-block" onsubmit="return confirm('Are you sure you want to delete this message?');">
                                             @csrf
@@ -47,10 +59,10 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
+                            <td class="px-6 py-4 whitespace-nowrap hidden sm:table-cell">
                                 <span class="text-gray-800">{{ $message->subject ?? '(No Subject)' }}</span>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-gray-500">
+                            <td class="px-6 py-4 whitespace-nowrap text-gray-500 hidden sm:table-cell">
                                 {{ $message->created_at->format('M d, Y H:i') }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium hidden sm:table-cell">

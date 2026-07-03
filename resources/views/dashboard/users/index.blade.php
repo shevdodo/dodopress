@@ -42,8 +42,8 @@
                 <thead>
                     <tr class="bg-gray-50 border-b border-gray-100 text-xs uppercase tracking-wider text-gray-500">
                         <th class="px-6 py-4 font-semibold">User</th>
-                        <th class="px-6 py-4 font-semibold">Role</th>
-                        <th class="px-6 py-4 font-semibold">Joined Date</th>
+                        <th class="px-6 py-4 font-semibold hidden sm:table-cell">Role</th>
+                        <th class="px-6 py-4 font-semibold hidden sm:table-cell">Joined Date</th>
                         <th class="px-6 py-4 font-semibold text-right hidden sm:table-cell">Actions</th>
                     </tr>
                 </thead>
@@ -52,15 +52,31 @@
                         <tr class="hover:bg-gray-50/50 transition">
                             <td class="px-6 py-4">
                                 <div class="flex items-center space-x-4">
-                                    <div class="w-10 h-10 rounded-full bg-gradient-to-br from-brand-100 to-brand-200 flex items-center justify-center text-brand-700 font-bold uppercase shrink-0">
+                                    <div class="w-10 h-10 rounded-full bg-gradient-to-br from-brand-100 to-brand-200 flex items-center justify-center text-brand-700 font-bold uppercase shrink-0 hidden sm:flex">
                                         {{ substr($user->name, 0, 2) }}
                                     </div>
-                                    <div>
-                                        <p class="font-semibold text-gray-900">{{ $user->name }}</p>
-                                        <p class="text-gray-500 text-xs truncate max-w-[150px] sm:max-w-none">{{ $user->email }}</p>
+                                    <div class="w-full">
+                                        <div class="flex justify-between items-start sm:block">
+                                            <div>
+                                                <div class="flex items-center space-x-2">
+                                                    <p class="font-semibold text-gray-900">{{ $user->name }}</p>
+                                                    <div class="sm:hidden">
+                                                        @if($user->role === 'superuser')
+                                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-purple-100 text-purple-800">Superuser</span>
+                                                        @else
+                                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-gray-100 text-gray-800">User</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                                <p class="text-gray-500 text-xs truncate max-w-[150px] sm:max-w-none">{{ $user->email }}</p>
+                                            </div>
+                                            <div class="sm:hidden text-right">
+                                                <span class="text-[10px] text-gray-400">{{ $user->created_at->format('M d, Y') }}</span>
+                                            </div>
+                                        </div>
 
                                         <!-- Mobile Actions -->
-                                        <div class="mt-2 sm:hidden flex items-center space-x-4 text-xs font-medium">
+                                        <div class="mt-3 sm:hidden flex items-center space-x-4 text-xs font-medium pt-2 border-t border-gray-100">
                                             <a href="{{ route('superuser.users.edit', $user) }}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
                                             @if($user->id !== Auth::id())
                                                 <form action="{{ route('superuser.users.destroy', $user) }}" method="POST" class="inline-block" onsubmit="return confirm('Are you sure you want to delete this user?');">
@@ -75,7 +91,7 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
+                            <td class="px-6 py-4 whitespace-nowrap hidden sm:table-cell">
                                 @if($user->role === 'superuser')
                                     <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
                                         Superuser
@@ -86,7 +102,7 @@
                                     </span>
                                 @endif
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-gray-500">
+                            <td class="px-6 py-4 whitespace-nowrap text-gray-500 hidden sm:table-cell">
                                 {{ $user->created_at->format('M d, Y') }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium hidden sm:table-cell">
