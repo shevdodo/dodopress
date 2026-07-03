@@ -175,16 +175,16 @@
             <table class="w-full text-sm">
                 <thead>
                     <tr class="bg-gray-50 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                        <th class="px-6 py-3.5">
+                        <th class="px-6 py-3.5 w-10">
                             <label class="flex items-center space-x-2">
                                 <input type="checkbox" class="rounded border-gray-300 text-brand-600 focus:ring-brand-500">
                             </label>
                         </th>
                         <th class="px-6 py-3.5">User</th>
-                        <th class="px-6 py-3.5">Email</th>
-                        <th class="px-6 py-3.5">Role</th>
-                        <th class="px-6 py-3.5">Joined</th>
-                        <th class="px-6 py-3.5 text-right">Actions</th>
+                        <th class="px-6 py-3.5 hidden md:table-cell">Email</th>
+                        <th class="px-6 py-3.5 hidden sm:table-cell">Role</th>
+                        <th class="px-6 py-3.5 hidden sm:table-cell">Joined</th>
+                        <th class="px-6 py-3.5 text-right hidden sm:table-cell">Actions</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-50">
@@ -195,20 +195,40 @@
                         </td>
                         <td class="px-6 py-4">
                             <div class="flex items-center space-x-3">
-                                <div class="w-9 h-9 rounded-full bg-gradient-to-br from-brand-400 to-brand-600 flex items-center justify-center text-white text-xs font-bold shrink-0 shadow-sm">
+                                <div class="w-9 h-9 rounded-full bg-gradient-to-br from-brand-400 to-brand-600 flex items-center justify-center text-white text-xs font-bold shrink-0 shadow-sm hidden sm:flex">
                                     {{ substr($user->name, 0, 2) }}
                                 </div>
-                                <span class="font-semibold text-gray-800">{{ $user->name }}</span>
+                                <div class="w-full">
+                                    <div class="flex items-center space-x-2">
+                                        <span class="font-semibold text-gray-800">{{ $user->name }}</span>
+                                        <div class="sm:hidden">
+                                            <span class="inline-flex px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider {{ $user->role === 'superuser' ? 'bg-rose-100 text-rose-700' : 'bg-emerald-100 text-emerald-700' }}">
+                                                {{ $user->role }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <p class="text-xs text-gray-500 truncate max-w-[150px] md:hidden">{{ $user->email }}</p>
+                                    
+                                    <!-- Mobile Actions -->
+                                    <div class="mt-3 sm:hidden flex items-center space-x-4 pt-2 border-t border-gray-100">
+                                        <button class="text-gray-400 hover:text-brand-600 transition" title="Edit">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
+                                        </button>
+                                        <button class="text-gray-400 hover:text-rose-600 transition" title="Delete">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </td>
-                        <td class="px-6 py-4 text-gray-500">{{ $user->email }}</td>
-                        <td class="px-6 py-4">
+                        <td class="px-6 py-4 text-gray-500 hidden md:table-cell">{{ $user->email }}</td>
+                        <td class="px-6 py-4 hidden sm:table-cell">
                             <span class="inline-flex px-2.5 py-1 rounded-full text-[10px] font-semibold uppercase tracking-wider {{ $user->role === 'superuser' ? 'bg-rose-100 text-rose-700' : 'bg-emerald-100 text-emerald-700' }}">
                                 {{ $user->role }}
                             </span>
                         </td>
-                        <td class="px-6 py-4 text-gray-500 text-xs">{{ $user->created_at->format('M d, Y') }}</td>
-                        <td class="px-6 py-4 text-right">
+                        <td class="px-6 py-4 text-gray-500 text-xs hidden sm:table-cell">{{ $user->created_at->format('M d, Y') }}</td>
+                        <td class="px-6 py-4 text-right hidden sm:table-cell">
                             <button class="text-gray-400 hover:text-brand-600 p-1.5 rounded-lg hover:bg-gray-100 transition" title="Edit">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -225,14 +245,14 @@
                 </tbody>
             </table>
         </div>
-        <div class="px-6 py-4 border-t border-gray-100 flex items-center justify-between text-sm text-gray-500">
+        <div class="px-6 py-4 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between text-sm text-gray-500 space-y-4 sm:space-y-0">
             <span>Showing {{ count($users) }} user(s)</span>
-            <div class="flex items-center space-x-2">
+            <div class="flex flex-wrap justify-center gap-2 items-center">
                 <button class="px-3 py-1.5 border border-gray-200 rounded-lg hover:bg-gray-50 transition">&larr; Prev</button>
                 <button class="px-3 py-1.5 border border-gray-200 rounded-lg bg-brand-600 text-white hover:bg-brand-700 transition">1</button>
                 <button class="px-3 py-1.5 border border-gray-200 rounded-lg hover:bg-gray-50 transition">2</button>
-                <button class="px-3 py-1.5 border border-gray-200 rounded-lg hover:bg-gray-50 transition">3</button>
-                <span class="text-gray-300">...</span>
+                <button class="px-3 py-1.5 border border-gray-200 rounded-lg hover:bg-gray-50 transition hidden sm:inline-block">3</button>
+                <span class="text-gray-300 hidden sm:inline-block">...</span>
                 <button class="px-3 py-1.5 border border-gray-200 rounded-lg hover:bg-gray-50 transition">Next &rarr;</button>
             </div>
         </div>
