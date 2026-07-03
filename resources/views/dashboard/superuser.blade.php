@@ -1,4 +1,4 @@
-<![CDATA[<x-layouts.dashboard title="Superuser Dashboard">
+<x-layouts.dashboard title="Superuser Dashboard">
     {{-- Page Header --}}
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
         <div>
@@ -258,4 +258,3 @@
         </div>
     </div>
 </x-layouts.dashboard>
-]]>
