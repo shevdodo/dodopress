@@ -7,13 +7,21 @@
                 <p class="text-sm text-gray-500 mt-1">Manage your catalog and inventory.</p>
             </div>
             <div class="mt-4 sm:mt-0 flex gap-2">
-                <a href="{{ route('superuser.products.export', ['search' => request('search'), 'category_id' => request('category_id')]) }}" class="bg-emerald-600 text-white px-5 py-2.5 rounded-xl font-medium shadow-lg shadow-emerald-600/30 hover:bg-emerald-700 transition flex items-center space-x-2 inline-flex">
+                <form action="{{ route('superuser.products.import') }}" method="POST" enctype="multipart/form-data" class="hidden" id="importForm">
+                    @csrf
+                    <input type="file" name="import_file" id="importFileInput" accept=".xlsx,.csv" onchange="if(this.files.length) { document.getElementById('importForm').submit(); }">
+                </form>
+                <button type="button" onclick="document.getElementById('importFileInput').click();" class="bg-blue-600 text-white px-4 py-2.5 rounded-xl font-medium shadow-lg shadow-blue-600/30 hover:bg-blue-700 transition flex items-center space-x-2 inline-flex" title="Import Excel/CSV">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+                    <span>Import</span>
+                </button>
+                <a href="{{ route('superuser.products.export', ['search' => request('search'), 'category_id' => request('category_id')]) }}" class="bg-emerald-600 text-white px-4 py-2.5 rounded-xl font-medium shadow-lg shadow-emerald-600/30 hover:bg-emerald-700 transition flex items-center space-x-2 inline-flex">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
                     <span>Export</span>
                 </a>
-                <a href="{{ route('superuser.products.create') }}" class="bg-brand-600 text-white px-5 py-2.5 rounded-xl font-medium shadow-lg shadow-brand-600/30 hover:bg-brand-700 transition flex items-center space-x-2 inline-flex">
+                <a href="{{ route('superuser.products.create') }}" class="bg-brand-600 text-white px-4 py-2.5 rounded-xl font-medium shadow-lg shadow-brand-600/30 hover:bg-brand-700 transition flex items-center space-x-2 inline-flex">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
-                    <span>Add Product</span>
+                    <span>Add</span>
                 </a>
             </div>
         </div>

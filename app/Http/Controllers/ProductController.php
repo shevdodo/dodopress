@@ -223,4 +223,18 @@ class ProductController extends Controller
         
         return \Maatwebsite\Excel\Facades\Excel::download(new \App\Exports\ProductsExport($search, $categoryId), 'products-' . date('Y-m-d-H-i-s') . '.xlsx');
     }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'import_file' => 'required|file|mimes:xlsx,csv'
+        ]);
+
+        try {
+            \Maatwebsite\Excel\Facades\Excel::import(new \App\Imports\ProductsImport, $request->file('import_file'));
+            return redirect()->route('superuser.products.index')->with('status', 'Products imported successfully.');
+        } catch (\Exception $e) {
+            return redirect()->route('superuser.products.index')->with('status', 'Error importing products: ' . $e->getMessage());
+        }
+    }
 }
