@@ -9,12 +9,31 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 
 class ProductsExport implements FromCollection, WithHeadings, WithMapping
 {
+    protected $search;
+    protected $categoryId;
+
+    public function __construct($search = null, $categoryId = null)
+    {
+        $this->search = $search;
+        $this->categoryId = $categoryId;
+    }
+
     /**
     * @return \Illuminate\Support\Collection
     */
     public function collection()
     {
-        return Product::with('category')->latest()->get();
+        $query = Product::with('category')->latest();
+        
+        if ($this->search) {
+            $query->where('name', 'like', "%{$this->search}%");
+        }
+        
+        if ($this->categoryId) {
+            $query->where('category_id', $this->categoryId);
+        }
+        
+        return $query->get();
     }
 
     public function headings(): array

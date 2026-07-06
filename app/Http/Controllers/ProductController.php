@@ -216,8 +216,11 @@ class ProductController extends Controller
         return redirect()->route('superuser.products.index')->with('status', "{$count} product(s) deleted successfully.");
     }
 
-    public function export()
+    public function export(Request $request)
     {
-        return \Maatwebsite\Excel\Facades\Excel::download(new \App\Exports\ProductsExport, 'products-' . date('Y-m-d-H-i-s') . '.xlsx');
+        $search = $request->input('search');
+        $categoryId = $request->input('category_id');
+        
+        return \Maatwebsite\Excel\Facades\Excel::download(new \App\Exports\ProductsExport($search, $categoryId), 'products-' . date('Y-m-d-H-i-s') . '.xlsx');
     }
 }
