@@ -215,4 +215,9 @@ class ProductController extends Controller
         Product::whereIn('id', $ids)->delete();
         return redirect()->route('superuser.products.index')->with('status', "{$count} product(s) deleted successfully.");
     }
+
+    public function export()
+    {
+        return \Maatwebsite\Excel\Facades\Excel::download(new \App\Exports\ProductsExport, 'products-' . date('Y-m-d-H-i-s') . '.xlsx');
+    }
 }

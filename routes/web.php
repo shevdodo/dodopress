@@ -89,6 +89,7 @@ Route::prefix('pranotoweb')
 
         // Bulk delete HARUS sebelum resource route agar tidak ditangkap sebagai {product} ID
         Route::delete('/products/bulk-delete', [ProductController::class, 'bulkDestroy'])->name('products.bulk-destroy');
+        Route::get('/products/export', [ProductController::class, 'export'])->name('products.export');
         Route::resource('products', ProductController::class);
 
         

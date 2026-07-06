@@ -6,7 +6,11 @@
                 <h2 class="text-2xl sm:text-3xl font-bold text-gray-900">Products</h2>
                 <p class="text-sm text-gray-500 mt-1">Manage your catalog and inventory.</p>
             </div>
-            <div class="mt-4 sm:mt-0">
+            <div class="mt-4 sm:mt-0 flex gap-2">
+                <a href="{{ route('superuser.products.export') }}" class="bg-emerald-600 text-white px-5 py-2.5 rounded-xl font-medium shadow-lg shadow-emerald-600/30 hover:bg-emerald-700 transition flex items-center space-x-2 inline-flex">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                    <span>Export</span>
+                </a>
                 <a href="{{ route('superuser.products.create') }}" class="bg-brand-600 text-white px-5 py-2.5 rounded-xl font-medium shadow-lg shadow-brand-600/30 hover:bg-brand-700 transition flex items-center space-x-2 inline-flex">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
                     <span>Add Product</span>
