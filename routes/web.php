@@ -14,6 +14,46 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\InstallController;
 use App\Http\Controllers\ContactController;
 
+// TEMPORARY ROUTE UNTUK SINKRONISASI GAMBAR BATIK
+Route::get('/sync-images', function() {
+    $products = \App\Models\Product::where('name', 'like', 'Kain Batik Colet%')->get();
+    $count = 0;
+    $folder = 'media/2026/07/';
+    $log = [];
+    
+    foreach ($products as $product) {
+        $baseName = $product->name;
+        
+        // Cari Foto Utama
+        $mainImagePath = $folder . $baseName . '.webp';
+        if (\Illuminate\Support\Facades\Storage::disk('public')->exists($mainImagePath)) {
+            $product->image = $mainImagePath;
+            $log[] = "Set Main Image: {$mainImagePath} for {$baseName}";
+        }
+        
+        // Cari Foto Gallery (2 sampai 10)
+        $imagesArray = [];
+        for ($i = 2; $i <= 10; $i++) {
+            $galleryImagePath = $folder . $baseName . ' (' . $i . ').webp';
+            if (\Illuminate\Support\Facades\Storage::disk('public')->exists($galleryImagePath)) {
+                $imagesArray[] = $galleryImagePath;
+                $log[] = "  -> Set Gallery Image: {$galleryImagePath}";
+            }
+        }
+        
+        if (count($imagesArray) > 0) {
+            $product->images = $imagesArray;
+        }
+        
+        if ($product->isDirty()) {
+            $product->save();
+            $count++;
+        }
+    }
+    
+    return "<h1>Berhasil mensinkronisasi gambar untuk {$count} produk!</h1><pre>" . implode("<br>", $log) . "</pre>";
+});
+
 /*
 |--------------------------------------------------------------------------
 | Installer Routes
@@ -278,43 +318,3 @@ Route::get('/{slug}', function ($slug) {
     }
     return view('page', compact('page'));
 })->name('page.show');
-
-// TEMPORARY ROUTE UNTUK SINKRONISASI GAMBAR BATIK
-Route::get('/sync-images', function() {
-    $products = \App\Models\Product::where('name', 'like', 'Kain Batik Colet%')->get();
-    $count = 0;
-    $folder = 'media/2026/07/';
-    $log = [];
-    
-    foreach ($products as $product) {
-        $baseName = $product->name;
-        
-        // Cari Foto Utama
-        $mainImagePath = $folder . $baseName . '.webp';
-        if (\Illuminate\Support\Facades\Storage::disk('public')->exists($mainImagePath)) {
-            $product->image = $mainImagePath;
-            $log[] = "Set Main Image: {$mainImagePath} for {$baseName}";
-        }
-        
-        // Cari Foto Gallery (2 sampai 10)
-        $imagesArray = [];
-        for ($i = 2; $i <= 10; $i++) {
-            $galleryImagePath = $folder . $baseName . ' (' . $i . ').webp';
-            if (\Illuminate\Support\Facades\Storage::disk('public')->exists($galleryImagePath)) {
-                $imagesArray[] = $galleryImagePath;
-                $log[] = "  -> Set Gallery Image: {$galleryImagePath}";
-            }
-        }
-        
-        if (count($imagesArray) > 0) {
-            $product->images = $imagesArray;
-        }
-        
-        if ($product->isDirty()) {
-            $product->save();
-            $count++;
-        }
-    }
-    
-    return "<h1>Berhasil mensinkronisasi gambar untuk {$count} produk!</h1><pre>" . implode("<br>", $log) . "</pre>";
-});
