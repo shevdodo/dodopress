@@ -35,6 +35,13 @@
                 <input type="text" id="tagline" name="tagline" value="{{ old('tagline', $settings['tagline'] ?? 'Just another Laravel site') }}" class="w-full sm:max-w-md border-gray-300 rounded-lg shadow-sm focus:border-brand-500 focus:ring focus:ring-brand-500/20 px-4 py-2">
             </div>
 
+            {{-- Whatsapp CS --}}
+            <div>
+                <label for="whatsapp_cs_number" class="block text-sm font-semibold text-gray-800 mb-1">Nomor WhatsApp CS</label>
+                <p class="text-xs text-gray-500 mb-2">Nomor WhatsApp untuk tombol 'Tanya CS' di halaman produk. Contoh: 6281329515082 (Gunakan kode negara 62, tanpa tanda +)</p>
+                <input type="text" id="whatsapp_cs_number" name="whatsapp_cs_number" value="{{ old('whatsapp_cs_number', $settings['whatsapp_cs_number'] ?? '6281329515082') }}" class="w-full sm:max-w-md border-gray-300 rounded-lg shadow-sm focus:border-brand-500 focus:ring focus:ring-brand-500/20 px-4 py-2">
+            </div>
+
             {{-- Site Icon --}}
             <div>
                 <x-media-picker
