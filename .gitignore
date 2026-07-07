@@ -24,3 +24,4 @@ Homestead.yaml
 Thumbs.db
 /storage/installed
 generate_batik_import.py
+convert_to_webp.py
