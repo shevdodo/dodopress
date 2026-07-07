@@ -59,24 +59,91 @@
         @if($products->count() > 0)
             {{-- Bulk Action Bar --}}
             <div x-show="selectedCount > 0" x-transition
-                class="mb-4 px-4 py-3 bg-red-50 border border-red-200 rounded-xl flex items-center justify-between gap-4">
-                <p class="text-sm font-medium text-red-700">
+                class="mb-4 px-4 py-3 bg-brand-50 border border-brand-200 rounded-xl flex items-center justify-between gap-4">
+                <p class="text-sm font-medium text-brand-800">
                     <span x-text="selectedCount"></span> produk dipilih
                 </p>
-                <form action="{{ route('superuser.products.bulk-destroy') }}" method="POST" @submit.prevent="confirmBulkDelete($el)">
-                    @csrf
-                    @method('DELETE')
-                    <template x-for="id in selectedIds" :key="id">
-                        <input type="hidden" name="ids[]" :value="id">
-                    </template>
-                    <button type="submit"
-                        class="inline-flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-semibold rounded-lg transition shadow-sm">
+                <div class="flex gap-2">
+                    <!-- Tombol Edit Massal -->
+                    <button type="button" @click="showEditModal = true"
+                        class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-brand-300 hover:bg-brand-100 text-brand-700 text-sm font-semibold rounded-lg transition shadow-sm">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                         </svg>
-                        Hapus yang Dipilih
+                        Edit yang Dipilih
                     </button>
-                </form>
+
+                    <!-- Tombol Hapus Massal -->
+                    <form action="{{ route('superuser.products.bulk-destroy') }}" method="POST" @submit.prevent="confirmBulkDelete($el)">
+                        @csrf
+                        @method('DELETE')
+                        <template x-for="id in selectedIds" :key="id">
+                            <input type="hidden" name="ids[]" :value="id">
+                        </template>
+                        <button type="submit"
+                            class="inline-flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-semibold rounded-lg transition shadow-sm">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                            Hapus
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Modal Edit Massal -->
+            <div x-show="showEditModal" style="display: none;" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm" x-transition.opacity>
+                <div @click.away="showEditModal = false" class="bg-white rounded-2xl shadow-xl w-full max-w-md overflow-hidden flex flex-col" x-transition>
+                    <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
+                        <h3 class="text-lg font-bold text-gray-900">Bulk Edit Produk</h3>
+                        <button @click="showEditModal = false" class="text-gray-400 hover:text-gray-600 transition">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                        </button>
+                    </div>
+                    <form action="{{ route('superuser.products.bulk-update') }}" method="POST" class="p-6">
+                        @csrf
+                        @method('PUT')
+                        <template x-for="id in selectedIds" :key="id">
+                            <input type="hidden" name="ids[]" :value="id">
+                        </template>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Update Kategori (Opsional)</label>
+                                <select name="bulk_category_id" class="w-full border-gray-300 rounded-lg focus:ring-brand-500 focus:border-brand-500 text-sm">
+                                    <option value="">-- Jangan Ubah --</option>
+                                    @foreach($categories as $cat)
+                                        <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Update Status (Opsional)</label>
+                                <select name="bulk_status" class="w-full border-gray-300 rounded-lg focus:ring-brand-500 focus:border-brand-500 text-sm">
+                                    <option value="">-- Jangan Ubah --</option>
+                                    <option value="available">Available (Aktif)</option>
+                                    <option value="unavailable">Unavailable (Nonaktif)</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Update Harga (Opsional)</label>
+                                <input type="number" name="bulk_price" placeholder="Biarkan kosong jika tidak diubah" class="w-full border-gray-300 rounded-lg focus:ring-brand-500 focus:border-brand-500 text-sm">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Update Stok (Opsional)</label>
+                                <input type="number" name="bulk_stock" placeholder="Biarkan kosong jika tidak diubah" class="w-full border-gray-300 rounded-lg focus:ring-brand-500 focus:border-brand-500 text-sm">
+                            </div>
+                        </div>
+
+                        <div class="mt-8 flex justify-end gap-3">
+                            <button type="button" @click="showEditModal = false" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition">Batal</button>
+                            <button type="submit" class="px-4 py-2 text-sm font-medium text-white bg-brand-600 rounded-lg hover:bg-brand-700 transition shadow-sm">Simpan Perubahan</button>
+                        </div>
+                    </form>
+                </div>
             </div>
 
             <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
@@ -185,6 +252,7 @@
     <script>
         function bulkSelect() {
             return {
+                showEditModal: false,
                 selectedIds: [],
                 allIds: @json($products->pluck('id')),
 

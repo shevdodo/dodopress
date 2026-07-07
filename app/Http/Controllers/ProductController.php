@@ -216,6 +216,35 @@ class ProductController extends Controller
         return redirect()->route('superuser.products.index')->with('status', "{$count} product(s) deleted successfully.");
     }
 
+    public function bulkUpdate(Request $request)
+    {
+        $ids = $request->input('ids', []);
+        if (empty($ids)) {
+            return redirect()->route('superuser.products.index')->with('status', 'No products selected.');
+        }
+
+        $updateData = [];
+        if ($request->filled('bulk_category_id')) {
+            $updateData['category_id'] = $request->input('bulk_category_id');
+        }
+        if ($request->filled('bulk_status')) {
+            $updateData['status'] = $request->input('bulk_status');
+        }
+        if ($request->filled('bulk_price')) {
+            $updateData['price'] = $request->input('bulk_price');
+        }
+        if ($request->filled('bulk_stock')) {
+            $updateData['stock'] = $request->input('bulk_stock');
+        }
+
+        if (empty($updateData)) {
+            return redirect()->route('superuser.products.index')->with('status', 'No changes specified for bulk edit.');
+        }
+
+        $count = Product::whereIn('id', $ids)->update($updateData);
+        return redirect()->route('superuser.products.index')->with('status', "{$count} product(s) updated successfully.");
+    }
+
     public function export(Request $request)
     {
         $search = $request->input('search');
