@@ -17,6 +17,16 @@ class ProductsImport implements ToModel, WithHeadingRow
         // Cek apakah produk sudah ada
         $product = Product::where('slug', Str::slug($name))->first();
 
+        $categoryName = $row['kategori'] ?? null;
+        $categoryId = null;
+        if ($categoryName) {
+            $category = \App\Models\Category::firstOrCreate(
+                ['name' => $categoryName, 'type' => 'product'],
+                ['slug' => Str::slug($categoryName)]
+            );
+            $categoryId = $category->id;
+        }
+
         if ($product) {
             // Update jika ada
             $product->update([
@@ -25,6 +35,7 @@ class ProductsImport implements ToModel, WithHeadingRow
                 'stock' => $row['stok'] ?? $product->stock,
                 'sizes' => $row['ukuran'] ?? $product->sizes,
                 'status' => (isset($row['status']) && strtolower($row['status']) == 'aktif') ? 'available' : 'unavailable',
+                'category_id' => $categoryId ?? $product->category_id,
             ]);
             return null; // Mengembalikan null karena sudah diupdate
         }
@@ -38,7 +49,7 @@ class ProductsImport implements ToModel, WithHeadingRow
             'stock' => $row['stok'] ?? 0,
             'sizes' => $row['ukuran'] ?? null,
             'status' => (isset($row['status']) && strtolower($row['status']) == 'aktif') ? 'available' : 'unavailable',
-            'category_id' => null, // Kategori dikosongkan secara default untuk produk baru karena nama kategori belum tentu match dengan ID
+            'category_id' => $categoryId,
         ]);
     }
 }
