@@ -260,7 +260,7 @@
             <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 sm:p-10">
                 <h2 class="text-xl font-bold text-gray-800 mb-6 border-b border-gray-100 pb-4">Spesifikasi & Deskripsi Produk</h2>
                 <div class="prose max-w-none text-gray-600 leading-relaxed text-sm sm:text-base">
-                    {!! nl2br(e($product->description)) !!}
+                    {!! $product->description !!}
                 </div>
             </div>
         </div>
