@@ -141,8 +141,14 @@ Route::prefix('pranotoweb')
 
     });
 
-// Sitemap Route
-Route::get('/sitemap.xml', [\App\Http\Controllers\SitemapController::class, 'index'])->name('sitemap.xml');
+// Sitemap Routes
+Route::get('/sitemap.xml', function() {
+    return redirect('/sitemap_index.xml');
+});
+Route::get('/sitemap_index.xml', [\App\Http\Controllers\SitemapController::class, 'index'])->name('sitemap.index');
+Route::get('/page-sitemap.xml', [\App\Http\Controllers\SitemapController::class, 'pages'])->name('sitemap.pages');
+Route::get('/product-sitemap.xml', [\App\Http\Controllers\SitemapController::class, 'products'])->name('sitemap.products');
+Route::get('/post-sitemap.xml', [\App\Http\Controllers\SitemapController::class, 'posts'])->name('sitemap.posts');
 
 /*
 |--------------------------------------------------------------------------
