@@ -196,7 +196,7 @@ class ProductController extends Controller
 
         $product->update($data);
 
-        return redirect()->route('superuser.products.index')->with('status', 'Product updated successfully.');
+        return redirect()->route('superuser.products.edit', $product)->with('status', 'Product updated successfully.');
     }
 
     public function destroy(Product $product)

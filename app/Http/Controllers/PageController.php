@@ -179,7 +179,7 @@ class PageController extends Controller
 
         $page->update($data);
 
-        return redirect()->route('superuser.pages.index')->with('status', 'Page updated successfully.');
+        return redirect()->route('superuser.pages.edit', $page)->with('status', 'Page updated successfully.');
     }
 
     public function destroy(Page $page)

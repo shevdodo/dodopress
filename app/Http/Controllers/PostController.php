@@ -107,7 +107,7 @@ class PostController extends Controller
 
         $post->update($data);
 
-        return redirect()->route('superuser.posts.index')->with('status', 'Post updated successfully.');
+        return redirect()->route('superuser.posts.edit', $post)->with('status', 'Post updated successfully.');
     }
 
     public function destroy(Post $post)
