@@ -108,4 +108,34 @@
             </div>
         </div>
     </form>
+
+    <style>
+        /* Hide TinyMCE API Key Warning */
+        .tox-notifications-container { display: none !important; }
+    </style>
+    <!-- TinyMCE Classic Editor Setup -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.2/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            tinymce.init({
+                selector: '#content',
+                height: 600,
+                menubar: true,
+                plugins: [
+                    'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+                    'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+                    'insertdatetime', 'media', 'table', 'help', 'wordcount'
+                ],
+                toolbar: 'undo redo | blocks | ' +
+                'bold italic forecolor | alignleft aligncenter ' +
+                'alignright alignjustify | bullist numlist outdent indent | ' +
+                'link image media table | removeformat | fullscreen code help',
+                content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 16px; color: #374151; }',
+                extended_valid_elements: "svg[*],use[*],path[*]",
+                custom_elements: "svg,path,use",
+                promotion: false,
+                branding: false
+            });
+        });
+    </script>
 </x-layouts.dashboard>
