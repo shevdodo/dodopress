@@ -231,6 +231,14 @@
                         <span class="{{ request()->routeIs('superuser.settings.api') ? 'font-medium' : '' }}">API Settings</span>
                     </a>
 
+                    <a href="{{ route('superuser.settings.seo') }}"
+                        class="flex items-center space-x-3 px-4 py-3 rounded-xl {{ request()->routeIs('superuser.settings.seo') ? 'text-white bg-gradient-to-r from-brand-600 to-brand-700 shadow-lg shadow-brand-900/30 font-medium' : 'text-brand-200 hover:text-white hover:bg-brand-800/60' }} transition-all duration-200">
+                        <div class="w-5 h-5 flex items-center justify-center">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" /></svg>
+                        </div>
+                        <span class="{{ request()->routeIs('superuser.settings.seo') ? 'font-medium' : '' }}">SEO & Sitemap</span>
+                    </a>
+
                     <a href="{{ route('superuser.contact-messages.index') }}"
                         class="flex items-center space-x-3 px-4 py-3 rounded-xl {{ request()->routeIs('superuser.contact-messages.*') ? 'text-white bg-gradient-to-r from-brand-600 to-brand-700 shadow-lg shadow-brand-900/30 font-medium' : 'text-brand-200 hover:text-white hover:bg-brand-800/60' }} transition-all duration-200">
                         <div class="w-5 h-5 flex items-center justify-center">

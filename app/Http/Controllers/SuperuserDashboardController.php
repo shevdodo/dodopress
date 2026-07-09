@@ -289,4 +289,29 @@ class SuperuserDashboardController extends Controller
         
         return redirect()->route('superuser.clear-cache')->with('status', 'Semua cache (views, config, routes, application) berhasil dihapus!');
     }
+
+    public function settingsSeo()
+    {
+        return view('dashboard.settings.seo');
+    }
+
+    public function settingsSeoUpdate(Request $request)
+    {
+        $data = $request->validate([
+            'sitemap_enabled' => 'required|in:0,1',
+            'robots_txt' => 'nullable|string',
+        ]);
+
+        foreach ($data as $key => $value) {
+            \App\Models\Setting::updateOrCreate(['key' => $key], ['value' => $value]);
+        }
+
+        // If robots_txt was provided, let's write it to public/robots.txt
+        $robotsPath = public_path('robots.txt');
+        if (isset($data['robots_txt'])) {
+            file_put_contents($robotsPath, $data['robots_txt']);
+        }
+
+        return back()->with('status', 'SEO settings updated successfully.');
+    }
 }

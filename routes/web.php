@@ -136,7 +136,13 @@ Route::prefix('pranotoweb')
         Route::get('/clear-cache', [SuperuserDashboardController::class, 'clearCache'])->name('clear-cache');
         Route::post('/clear-cache', [SuperuserDashboardController::class, 'clearCacheExecute'])->name('clear-cache.execute');
 
+        Route::get('/settings/seo', [SuperuserDashboardController::class, 'settingsSeo'])->name('settings.seo');
+        Route::post('/settings/seo', [SuperuserDashboardController::class, 'settingsSeoUpdate'])->name('settings.seo.update');
+
     });
+
+// Sitemap Route
+Route::get('/sitemap.xml', [\App\Http\Controllers\SitemapController::class, 'index'])->name('sitemap.xml');
 
 /*
 |--------------------------------------------------------------------------
