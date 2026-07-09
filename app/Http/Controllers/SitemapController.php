@@ -18,9 +18,20 @@ class SitemapController extends Controller
         }
     }
 
+    private function secureUrl($path)
+    {
+        $url = url($path);
+        // Force HTTPS if request is secure, behind proxy, or on the live domain
+        if (request()->secure() || request()->header('x-forwarded-proto') === 'https' || str_contains($url, 'batikmukti.co.id')) {
+            $url = str_replace('http://', 'https://', $url);
+        }
+        return $url;
+    }
+
     private function renderXml($content)
     {
-        return response('<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="' . url('/sitemap.xsl') . '"?>' . "\n" . $content, 200)
+        // Use relative path for XSL to avoid Mixed Content Block by browsers
+        return response('<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>' . "\n" . $content, 200)
             ->header('Content-Type', 'text/xml');
     }
 
@@ -28,28 +39,24 @@ class SitemapController extends Controller
     {
         $this->checkEnabled();
 
-        // Find the latest modification dates
         $latestPage = Page::where('status', 'published')->latest('updated_at')->first();
         $latestPost = Post::where('status', 'published')->latest('updated_at')->first();
         $latestProduct = Product::where('status', 'available')->latest('updated_at')->first();
 
         $content = '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
 
-        // Page Sitemap
         $content .= '<sitemap>';
-        $content .= '<loc>' . url('/page-sitemap.xml') . '</loc>';
+        $content .= '<loc>' . $this->secureUrl('/page-sitemap.xml') . '</loc>';
         if ($latestPage) $content .= '<lastmod>' . $latestPage->updated_at->toAtomString() . '</lastmod>';
         $content .= '</sitemap>';
 
-        // Product Sitemap
         $content .= '<sitemap>';
-        $content .= '<loc>' . url('/product-sitemap.xml') . '</loc>';
+        $content .= '<loc>' . $this->secureUrl('/product-sitemap.xml') . '</loc>';
         if ($latestProduct) $content .= '<lastmod>' . $latestProduct->updated_at->toAtomString() . '</lastmod>';
         $content .= '</sitemap>';
 
-        // Post Sitemap
         $content .= '<sitemap>';
-        $content .= '<loc>' . url('/post-sitemap.xml') . '</loc>';
+        $content .= '<loc>' . $this->secureUrl('/post-sitemap.xml') . '</loc>';
         if ($latestPost) $content .= '<lastmod>' . $latestPost->updated_at->toAtomString() . '</lastmod>';
         $content .= '</sitemap>';
 
@@ -65,9 +72,8 @@ class SitemapController extends Controller
 
         $content = '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
         
-        // Homepage
         $content .= '<url>';
-        $content .= '<loc>' . url('/') . '</loc>';
+        $content .= '<loc>' . $this->secureUrl('/') . '</loc>';
         $content .= '<lastmod>' . now()->toAtomString() . '</lastmod>';
         $content .= '<changefreq>daily</changefreq>';
         $content .= '<priority>1.0</priority>';
@@ -75,9 +81,8 @@ class SitemapController extends Controller
 
         foreach ($pages as $page) {
             if ($page->slug === '__homepage__') continue;
-            
             $content .= '<url>';
-            $content .= '<loc>' . url('/' . $page->slug) . '</loc>';
+            $content .= '<loc>' . $this->secureUrl('/' . $page->slug) . '</loc>';
             $content .= '<lastmod>' . $page->updated_at->toAtomString() . '</lastmod>';
             $content .= '<changefreq>weekly</changefreq>';
             $content .= '<priority>0.8</priority>';
@@ -96,9 +101,8 @@ class SitemapController extends Controller
 
         $content = '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
 
-        // Store Index
         $content .= '<url>';
-        $content .= '<loc>' . url('/' . $productBase) . '</loc>';
+        $content .= '<loc>' . $this->secureUrl('/' . $productBase) . '</loc>';
         $content .= '<changefreq>daily</changefreq>';
         $content .= '<priority>0.9</priority>';
         $content .= '</url>';
@@ -106,7 +110,7 @@ class SitemapController extends Controller
         foreach ($products as $product) {
             $catSlug = $product->category ? $product->category->slug : 'uncategorized';
             $content .= '<url>';
-            $content .= '<loc>' . url('/' . $productBase . '/' . $catSlug . '/' . $product->slug) . '</loc>';
+            $content .= '<loc>' . $this->secureUrl('/' . $productBase . '/' . $catSlug . '/' . $product->slug) . '</loc>';
             $content .= '<lastmod>' . $product->updated_at->toAtomString() . '</lastmod>';
             $content .= '<changefreq>weekly</changefreq>';
             $content .= '<priority>0.8</priority>';
@@ -125,9 +129,8 @@ class SitemapController extends Controller
 
         $content = '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
 
-        // Blog Index
         $content .= '<url>';
-        $content .= '<loc>' . url('/' . $postBase) . '</loc>';
+        $content .= '<loc>' . $this->secureUrl('/' . $postBase) . '</loc>';
         $content .= '<changefreq>daily</changefreq>';
         $content .= '<priority>0.9</priority>';
         $content .= '</url>';
@@ -135,7 +138,7 @@ class SitemapController extends Controller
         foreach ($posts as $post) {
             $catSlug = $post->category ? $post->category->slug : 'uncategorized';
             $content .= '<url>';
-            $content .= '<loc>' . url('/' . $postBase . '/' . $catSlug . '/' . $post->slug) . '</loc>';
+            $content .= '<loc>' . $this->secureUrl('/' . $postBase . '/' . $catSlug . '/' . $post->slug) . '</loc>';
             $content .= '<lastmod>' . $post->updated_at->toAtomString() . '</lastmod>';
             $content .= '<changefreq>weekly</changefreq>';
             $content .= '<priority>0.7</priority>';
