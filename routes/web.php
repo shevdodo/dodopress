@@ -227,7 +227,7 @@ try {
             $catProducts = \App\Models\Product::where('category_id', $cat->id)
                 ->where('status', 'available')
                 ->latest()
-                ->take(2)
+                ->take(6)
                 ->get();
             
             if ($catProducts->count() > 0) {
