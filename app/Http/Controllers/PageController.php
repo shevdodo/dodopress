@@ -132,9 +132,9 @@ class PageController extends Controller
             $data['slug'] = Str::slug($data['slug']);
         }
 
-        Page::create($data);
+        $page = Page::create($data);
 
-        return redirect()->route('superuser.pages.index')->with('status', 'Page created successfully.');
+        return redirect()->route('superuser.pages.edit', $page)->with('status', 'Page created successfully.');
     }
 
     public function edit(Page $page)

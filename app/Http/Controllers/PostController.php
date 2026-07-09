@@ -64,9 +64,9 @@ class PostController extends Controller
             $data['image'] = $request->input('image_media_path');
         }
 
-        Post::create($data);
+        $post = Post::create($data);
 
-        return redirect()->route('superuser.posts.index')->with('status', 'Post created successfully.');
+        return redirect()->route('superuser.posts.edit', $post)->with('status', 'Post created successfully.');
     }
 
     public function edit(Post $post)

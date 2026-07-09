@@ -18,6 +18,15 @@
         </div>
     @endif
 
+    @if (session('status'))
+        <div class="mb-6 p-4 rounded-xl bg-emerald-50 border border-emerald-100 text-emerald-700 text-sm font-medium flex items-center space-x-3">
+            <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span>{{ session('status') }}</span>
+        </div>
+    @endif
+
     <form method="POST" action="{{ route('superuser.pages.update', $page) }}" enctype="multipart/form-data" class="flex flex-col lg:flex-row gap-8">
         @csrf
         @method('PUT')

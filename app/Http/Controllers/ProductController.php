@@ -102,9 +102,9 @@ class ProductController extends Controller
         }
         $data['images'] = $images;
 
-        Product::create($data);
+        $product = Product::create($data);
 
-        return redirect()->route('superuser.products.index')->with('status', 'Product created successfully.');
+        return redirect()->route('superuser.products.edit', $product)->with('status', 'Product created successfully.');
     }
 
     public function edit(Product $product)
