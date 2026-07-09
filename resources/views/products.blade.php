@@ -157,57 +157,116 @@
             </div>
             @endif
             
-            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 sm:gap-4">
-                @forelse($products as $product)
-                <div class="bg-white rounded-xl sm:rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex flex-col group hover:shadow-lg transition duration-300">
-                    <a href="{{ route('product.show', ['category_slug' => $product->category ? $product->category->slug : 'uncategorized', 'slug' => $product->slug]) }}" class="relative block w-full aspect-square bg-gray-100 overflow-hidden">
-                        @if($product->image)
-                        <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                        @else
-                        <div class="w-full h-full flex items-center justify-center">
-                            <svg class="w-8 h-8 sm:w-12 sm:h-12 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                        </div>
-                        @endif
-                        
-                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center hidden sm:flex">
-                            <span class="px-6 py-2 bg-white text-gray-900 font-bold rounded-full shadow-lg transform -translate-y-4 group-hover:translate-y-0 transition duration-300">View Details</span>
-                        </div>
-                    </a>
-                    
-                    <div class="p-3 sm:p-5 flex-grow flex flex-col">
-                        @if($product->category)
-                        <div class="mb-1 hidden sm:block">
-                            <span class="text-[9px] sm:text-[10px] font-bold text-gray-400 uppercase tracking-wider line-clamp-1">{{ $product->category->name }}</span>
-                        </div>
-                        @endif
-                        <h2 class="text-xs sm:text-sm font-medium text-gray-800 mb-1 leading-tight line-clamp-2">
-                            <a href="{{ route('product.show', ['category_slug' => $product->category ? $product->category->slug : 'uncategorized', 'slug' => $product->slug]) }}" class="hover:text-brand-600 transition">{{ $product->name }}</a>
-                        </h2>
-                        <div class="mt-auto pt-1 sm:pt-2">
-                            <span class="font-bold text-brand-600 text-sm sm:text-base">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
-                        </div>
-                        @if($product->review_count > 0)
-                        <div class="flex items-center gap-1 mt-1 sm:mt-2">
-                            <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 text-amber-400 fill-current" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                            <span class="text-[10px] sm:text-xs font-medium text-gray-500">{{ number_format($product->rating ?? 5.0, 1) }}</span>
-                            <span class="text-[10px] sm:text-xs text-gray-400 border-l border-gray-300 pl-1 ml-1">{{ $product->review_count }} terjual</span>
-                        </div>
-                        @endif
+            @if(isset($categorizedProducts))
+                @forelse($categorizedProducts as $section)
+                    <div class="mb-4 mt-10 flex justify-between items-end border-b border-gray-200 pb-3">
+                        <h2 class="text-xl md:text-2xl font-bold text-gray-800">{{ $section['category']->name }}</h2>
+                        <a href="{{ route('product.category', $section['category']->slug) }}" class="text-sm font-semibold text-brand-600 hover:text-brand-800 flex items-center gap-1 transition">
+                            Lihat Semua 
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                        </a>
                     </div>
-                </div>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 sm:gap-4">
+                        @foreach($section['products'] as $product)
+                            <div class="bg-white rounded-xl sm:rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex flex-col group hover:shadow-lg transition duration-300">
+                                <a href="{{ route('product.show', ['category_slug' => $product->category ? $product->category->slug : 'uncategorized', 'slug' => $product->slug]) }}" class="relative block w-full aspect-square bg-gray-100 overflow-hidden">
+                                    @if($product->image)
+                                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                                    @else
+                                    <div class="w-full h-full flex items-center justify-center">
+                                        <svg class="w-8 h-8 sm:w-12 sm:h-12 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                                    </div>
+                                    @endif
+                                    
+                                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center hidden sm:flex">
+                                        <span class="px-6 py-2 bg-white text-gray-900 font-bold rounded-full shadow-lg transform -translate-y-4 group-hover:translate-y-0 transition duration-300">View Details</span>
+                                    </div>
+                                </a>
+                                
+                                <div class="p-3 sm:p-5 flex-grow flex flex-col">
+                                    @if($product->category)
+                                    <div class="mb-1 hidden sm:block">
+                                        <span class="text-[9px] sm:text-[10px] font-bold text-gray-400 uppercase tracking-wider line-clamp-1">{{ $product->category->name }}</span>
+                                    </div>
+                                    @endif
+                                    <h2 class="text-xs sm:text-sm font-medium text-gray-800 mb-1 leading-tight line-clamp-2">
+                                        <a href="{{ route('product.show', ['category_slug' => $product->category ? $product->category->slug : 'uncategorized', 'slug' => $product->slug]) }}" class="hover:text-brand-600 transition">{{ $product->name }}</a>
+                                    </h2>
+                                    <div class="mt-auto pt-1 sm:pt-2">
+                                        <span class="font-bold text-brand-600 text-sm sm:text-base">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
+                                    </div>
+                                    @if($product->review_count > 0)
+                                    <div class="flex items-center gap-1 mt-1 sm:mt-2">
+                                        <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 text-amber-400 fill-current" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                        </svg>
+                                        <span class="text-[10px] sm:text-xs font-medium text-gray-500">{{ number_format($product->rating ?? 5.0, 1) }}</span>
+                                        <span class="text-[10px] sm:text-xs text-gray-400 border-l border-gray-300 pl-1 ml-1">{{ $product->review_count }} terjual</span>
+                                    </div>
+                                    @endif
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
                 @empty
-                <div class="col-span-full py-16 text-center text-gray-500 bg-white rounded-2xl border border-gray-100">
-                    <svg class="w-16 h-16 mx-auto text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>
-                    <p class="text-lg">No products available at the moment.</p>
-                </div>
+                    <div class="col-span-full py-16 text-center text-gray-500 bg-white rounded-2xl border border-gray-100">
+                        <svg class="w-16 h-16 mx-auto text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>
+                        <p class="text-lg">No products available at the moment.</p>
+                    </div>
                 @endforelse
-            </div>
-
-            <div class="mt-12">
-                {{ $products->links() }}
-            </div>
+            @else
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 sm:gap-4">
+                    @forelse($products as $product)
+                    <div class="bg-white rounded-xl sm:rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex flex-col group hover:shadow-lg transition duration-300">
+                        <a href="{{ route('product.show', ['category_slug' => $product->category ? $product->category->slug : 'uncategorized', 'slug' => $product->slug]) }}" class="relative block w-full aspect-square bg-gray-100 overflow-hidden">
+                            @if($product->image)
+                            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                            @else
+                            <div class="w-full h-full flex items-center justify-center">
+                                <svg class="w-8 h-8 sm:w-12 sm:h-12 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                            </div>
+                            @endif
+                            
+                            <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center hidden sm:flex">
+                                <span class="px-6 py-2 bg-white text-gray-900 font-bold rounded-full shadow-lg transform -translate-y-4 group-hover:translate-y-0 transition duration-300">View Details</span>
+                            </div>
+                        </a>
+                        
+                        <div class="p-3 sm:p-5 flex-grow flex flex-col">
+                            @if($product->category)
+                            <div class="mb-1 hidden sm:block">
+                                <span class="text-[9px] sm:text-[10px] font-bold text-gray-400 uppercase tracking-wider line-clamp-1">{{ $product->category->name }}</span>
+                            </div>
+                            @endif
+                            <h2 class="text-xs sm:text-sm font-medium text-gray-800 mb-1 leading-tight line-clamp-2">
+                                <a href="{{ route('product.show', ['category_slug' => $product->category ? $product->category->slug : 'uncategorized', 'slug' => $product->slug]) }}" class="hover:text-brand-600 transition">{{ $product->name }}</a>
+                            </h2>
+                            <div class="mt-auto pt-1 sm:pt-2">
+                                <span class="font-bold text-brand-600 text-sm sm:text-base">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
+                            </div>
+                            @if($product->review_count > 0)
+                            <div class="flex items-center gap-1 mt-1 sm:mt-2">
+                                <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 text-amber-400 fill-current" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                </svg>
+                                <span class="text-[10px] sm:text-xs font-medium text-gray-500">{{ number_format($product->rating ?? 5.0, 1) }}</span>
+                                <span class="text-[10px] sm:text-xs text-gray-400 border-l border-gray-300 pl-1 ml-1">{{ $product->review_count }} terjual</span>
+                            </div>
+                            @endif
+                        </div>
+                    </div>
+                    @empty
+                    <div class="col-span-full py-16 text-center text-gray-500 bg-white rounded-2xl border border-gray-100">
+                        <svg class="w-16 h-16 mx-auto text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>
+                        <p class="text-lg">No products available at the moment.</p>
+                    </div>
+                    @endforelse
+                </div>
+    
+                <div class="mt-12">
+                    {{ $products->links() }}
+                </div>
+            @endif
         </div>
     </main>
 

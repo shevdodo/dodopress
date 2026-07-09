@@ -212,14 +212,33 @@ try {
 
     // Product Routes
     Route::get("/{$productBase}", function (\Illuminate\Http\Request $request) {
-        $query = \App\Models\Product::where('status', 'available')->latest();
+        $categories = \App\Models\Category::where('type', 'product')->orderBy('name')->get();
+
         if ($search = $request->input('search')) {
+            $query = \App\Models\Product::where('status', 'available')->latest();
             $query->where('name', 'like', "%{$search}%");
+            $perPage = \App\Models\Setting::where('key', 'store_products_per_page')->value('value') ?: 12;
+            $products = $query->paginate($perPage)->appends($request->all());
+            return view('products', compact('products', 'categories'));
         }
-        $perPage = \App\Models\Setting::where('key', 'store_products_per_page')->value('value') ?: 12;
-        $products = $query->paginate($perPage)->appends($request->all());
-        $categories = \App\Models\Category::where('type', 'product')->get();
-        return view('products', compact('products', 'categories'));
+
+        $categorizedProducts = [];
+        foreach ($categories as $cat) {
+            $catProducts = \App\Models\Product::where('category_id', $cat->id)
+                ->where('status', 'available')
+                ->latest()
+                ->take(2)
+                ->get();
+            
+            if ($catProducts->count() > 0) {
+                $categorizedProducts[] = [
+                    'category' => $cat,
+                    'products' => $catProducts
+                ];
+            }
+        }
+
+        return view('products', compact('categorizedProducts', 'categories'));
     })->name('product.index');
 
     Route::get("/{$productBase}/{category_slug}", function (\Illuminate\Http\Request $request, $category_slug) {
