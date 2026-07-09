@@ -42,6 +42,9 @@ class SitemapController extends Controller
         $latestPage = Page::where('status', 'published')->latest('updated_at')->first();
         $latestPost = Post::where('status', 'published')->latest('updated_at')->first();
         $latestProduct = Product::where('status', 'available')->latest('updated_at')->first();
+        $latestProductCat = \App\Models\Category::where('type', 'product')->latest('updated_at')->first();
+
+        $latestPostCat = \App\Models\Category::where('type', 'post')->latest('updated_at')->first();
 
         $content = '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
 
@@ -56,11 +59,63 @@ class SitemapController extends Controller
         $content .= '</sitemap>';
 
         $content .= '<sitemap>';
+        $content .= '<loc>' . $this->secureUrl('/product_cat-sitemap.xml') . '</loc>';
+        if ($latestProductCat) $content .= '<lastmod>' . $latestProductCat->updated_at->toAtomString() . '</lastmod>';
+        $content .= '</sitemap>';
+
+        $content .= '<sitemap>';
         $content .= '<loc>' . $this->secureUrl('/post-sitemap.xml') . '</loc>';
         if ($latestPost) $content .= '<lastmod>' . $latestPost->updated_at->toAtomString() . '</lastmod>';
         $content .= '</sitemap>';
 
+        $content .= '<sitemap>';
+        $content .= '<loc>' . $this->secureUrl('/category-sitemap.xml') . '</loc>';
+        if ($latestPostCat) $content .= '<lastmod>' . $latestPostCat->updated_at->toAtomString() . '</lastmod>';
+        $content .= '</sitemap>';
+
         $content .= '</sitemapindex>';
+
+        return $this->renderXml($content);
+    }
+
+    public function postCategories()
+    {
+        $this->checkEnabled();
+        $categories = \App\Models\Category::where('type', 'post')->get();
+        $postBase = Setting::where('key', 'post_permalink_base')->value('value') ?: 'blog';
+
+        $content = '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
+
+        foreach ($categories as $category) {
+            $content .= '<url>';
+            $content .= '<loc>' . $this->secureUrl('/' . $postBase . '/' . $category->slug) . '</loc>';
+            $content .= '<lastmod>' . $category->updated_at->toAtomString() . '</lastmod>';
+            $content .= '<changefreq>weekly</changefreq>';
+            $content .= '<priority>0.7</priority>';
+            $content .= '</url>';
+        }
+        $content .= '</urlset>';
+
+        return $this->renderXml($content);
+    }
+
+    public function productCategories()
+    {
+        $this->checkEnabled();
+        $categories = \App\Models\Category::where('type', 'product')->get();
+        $productBase = Setting::where('key', 'product_permalink_base')->value('value') ?: 'store';
+
+        $content = '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
+
+        foreach ($categories as $category) {
+            $content .= '<url>';
+            $content .= '<loc>' . $this->secureUrl('/' . $productBase . '/' . $category->slug) . '</loc>';
+            $content .= '<lastmod>' . $category->updated_at->toAtomString() . '</lastmod>';
+            $content .= '<changefreq>weekly</changefreq>';
+            $content .= '<priority>0.8</priority>';
+            $content .= '</url>';
+        }
+        $content .= '</urlset>';
 
         return $this->renderXml($content);
     }

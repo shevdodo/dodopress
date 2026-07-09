@@ -148,6 +148,8 @@ Route::get('/sitemap.xml', function() {
 Route::get('/sitemap_index.xml', [\App\Http\Controllers\SitemapController::class, 'index'])->name('sitemap.index');
 Route::get('/page-sitemap.xml', [\App\Http\Controllers\SitemapController::class, 'pages'])->name('sitemap.pages');
 Route::get('/product-sitemap.xml', [\App\Http\Controllers\SitemapController::class, 'products'])->name('sitemap.products');
+Route::get('/product_cat-sitemap.xml', [\App\Http\Controllers\SitemapController::class, 'productCategories'])->name('sitemap.product_categories');
+Route::get('/category-sitemap.xml', [\App\Http\Controllers\SitemapController::class, 'postCategories'])->name('sitemap.post_categories');
 Route::get('/post-sitemap.xml', [\App\Http\Controllers\SitemapController::class, 'posts'])->name('sitemap.posts');
 
 /*
