@@ -314,4 +314,55 @@ class SuperuserDashboardController extends Controller
 
         return back()->with('status', 'SEO settings updated successfully.');
     }
+
+    public function settingsAiVisibility()
+    {
+        $robotsPath = public_path('robots.txt');
+        $robotsContent = file_exists($robotsPath) ? file_get_contents($robotsPath) : '';
+        
+        $bots = [
+            'GPTBot' => str_contains($robotsContent, "User-agent: GPTBot\nDisallow: /") ? false : true,
+            'ClaudeBot' => str_contains($robotsContent, "User-agent: ClaudeBot\nDisallow: /") ? false : true,
+            'PerplexityBot' => str_contains($robotsContent, "User-agent: PerplexityBot\nDisallow: /") ? false : true,
+            'Applebot-Extended' => str_contains($robotsContent, "User-agent: Applebot-Extended\nDisallow: /") ? false : true,
+        ];
+
+        $sitemapEnabled = \App\Models\Setting::where('key', 'sitemap_enabled')->value('value') !== '0';
+        $score = 50; // Base score (assuming Schema & Meta are implemented)
+        if ($sitemapEnabled) $score += 25;
+        if (file_exists($robotsPath)) $score += 25;
+
+        return view('dashboard.settings.ai-visibility', compact('bots', 'score'));
+    }
+
+    public function settingsAiVisibilityUpdate(Request $request)
+    {
+        $bots = ['GPTBot', 'ClaudeBot', 'PerplexityBot', 'Applebot-Extended'];
+        $robotsPath = public_path('robots.txt');
+        $robotsContent = file_exists($robotsPath) ? file_get_contents($robotsPath) : "User-agent: *\nAllow: /\n\nSitemap: " . url('/sitemap_index.xml') . "\n";
+
+        foreach ($bots as $bot) {
+            $status = $request->input($bot, '0');
+            $blockStr = "User-agent: {$bot}\nDisallow: /\n";
+            
+            if ($status == '0') { // 0 means block
+                if (!str_contains($robotsContent, "User-agent: {$bot}")) {
+                    $robotsContent .= "\n" . $blockStr;
+                } elseif (preg_match("/User-agent: {$bot}\r?\nAllow: \/\r?\n?/", $robotsContent)) {
+                    $robotsContent = preg_replace("/User-agent: {$bot}\r?\nAllow: \/\r?\n?/", $blockStr, $robotsContent);
+                }
+            } else { // 1 means allow
+                if (str_contains($robotsContent, $blockStr)) {
+                    $robotsContent = str_replace($blockStr, "", $robotsContent);
+                }
+            }
+        }
+
+        // Clean up empty lines
+        $robotsContent = preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $robotsContent);
+        
+        file_put_contents($robotsPath, trim($robotsContent) . "\n");
+
+        return back()->with('status', 'AI Crawler preferences updated successfully.');
+    }
 }

@@ -139,6 +139,9 @@ Route::prefix('pranotoweb')
         Route::get('/settings/seo', [SuperuserDashboardController::class, 'settingsSeo'])->name('settings.seo');
         Route::post('/settings/seo', [SuperuserDashboardController::class, 'settingsSeoUpdate'])->name('settings.seo.update');
 
+        Route::get('/settings/ai-visibility', [SuperuserDashboardController::class, 'settingsAiVisibility'])->name('settings.ai-visibility');
+        Route::post('/settings/ai-visibility', [SuperuserDashboardController::class, 'settingsAiVisibilityUpdate'])->name('settings.ai-visibility.update');
+
     });
 
 // Sitemap Routes
