@@ -137,11 +137,14 @@
                 @if($menu)
                     @foreach($menu->parentItems as $item)
                         @if($item->children->count() > 0)
-                            <div class="space-y-2">
-                                <div class="px-4 py-3 bg-brand-50 text-brand-800 rounded-xl font-bold text-base">{{ $item->title }}</div>
-                                <div class="pl-4 space-y-2">
+                            <div class="space-y-2" x-data="{ open: false }">
+                                <button @click="open = !open" class="w-full flex justify-between items-center px-4 py-3 bg-brand-50 text-brand-800 hover:bg-brand-100 rounded-xl font-bold text-base transition-colors shadow-sm">
+                                    <span>{{ $item->title }}</span>
+                                    <svg class="w-5 h-5 transform transition-transform duration-200" :class="{'rotate-180': open}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                </button>
+                                <div x-show="open" x-collapse class="pl-4 space-y-2" style="display: none;">
                                     @foreach($item->children as $child)
-                                        <a href="{{ $child->resolved_url }}" class="block px-4 py-3 bg-white border border-gray-100 text-gray-700 hover:text-brand-600 rounded-xl text-sm font-bold shadow-sm">{{ $child->title }}</a>
+                                        <a href="{{ $child->resolved_url }}" class="block px-4 py-3 bg-white border border-gray-100 text-gray-700 hover:text-brand-600 rounded-xl text-sm font-bold shadow-sm transition">{{ $child->title }}</a>
                                     @endforeach
                                 </div>
                             </div>
