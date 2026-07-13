@@ -544,10 +544,11 @@
         // IMAGE COMPONENT OVERRIDE
         editor.Components.addType('image', {
             extend: 'image',
+            isComponent: el => el.tagName === 'IMG',
             model: {
                 defaults: {
                     traits: [
-                        { type: 'media-picker-trait', name: 'src', label: 'Gambar', changeProp: true },
+                        { type: 'media-picker-trait', name: 'src', label: 'Gambar' },
                         { type: 'text', name: 'alt', label: 'Alt Text' },
                         { 
                             type: 'select', 
