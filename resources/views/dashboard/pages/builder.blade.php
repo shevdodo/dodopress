@@ -444,10 +444,10 @@
                     handleStyleChange() {
                         const attrs = this.getAttributes();
                         const style = {};
-                        if (attrs['style-font-size']) style['font-size'] = attrs['style-font-size'] + 'rem';
-                        if (attrs['style-line-height']) style['line-height'] = attrs['style-line-height'];
-                        if (attrs['style-text-align']) style['text-align'] = attrs['style-text-align'];
-                        if (attrs['style-text-color']) style['color'] = attrs['style-text-color'];
+                        style['font-size'] = attrs['style-font-size'] ? attrs['style-font-size'] + 'rem' : '';
+                        style['line-height'] = attrs['style-line-height'] ? attrs['style-line-height'] : '';
+                        style['text-align'] = attrs['style-text-align'] ? attrs['style-text-align'] : '';
+                        style['color'] = attrs['style-text-color'] ? attrs['style-text-color'] : '';
                         this.addStyle(style);
                     }
                 }
@@ -582,15 +582,16 @@
                     this.on('change:attributes:data-overlay', this.handleOverlay);
                 },
                 handleHeight() {
-                    this.addStyle({ height: this.getAttributes()['data-height'] });
+                    this.addStyle({ height: this.getAttributes()['data-height'] ? this.getAttributes()['data-height'] : '' });
                 },
                 handleBg() {
-                    this.addStyle({ 'background-image': `url('${this.getAttributes()['data-bg-image']}')` });
+                    const bg = this.getAttributes()['data-bg-image'];
+                    this.addStyle({ 'background-image': bg ? `url('${bg}')` : '' });
                 },
                 handleOverlay() {
                     const overlay = this.components().models.find(c => c.getClasses().includes('absolute') && c.getClasses().includes('inset-0'));
                     if (overlay) {
-                        overlay.addStyle({ 'background-color': this.getAttributes()['data-overlay'] });
+                        overlay.addStyle({ 'background-color': this.getAttributes()['data-overlay'] ? this.getAttributes()['data-overlay'] : '' });
                     }
                 }
             }
@@ -632,20 +633,24 @@
                 handleStyleChange() {
                     const attrs = this.getAttributes();
                     const style = {};
-                    if (attrs['data-bg-color']) style['background-color'] = attrs['data-bg-color'];
+                    style['background-color'] = attrs['data-bg-color'] ? attrs['data-bg-color'] : '';
                     if (attrs['data-bg-image']) {
                         style['background-image'] = `url('${attrs['data-bg-image']}')`;
                         style['background-size'] = 'cover';
                         style['background-position'] = 'center';
+                    } else {
+                        style['background-image'] = '';
                     }
-                    if (attrs['data-padding-top']) style['padding-top'] = attrs['data-padding-top'] + 'px';
-                    if (attrs['data-padding-bottom']) style['padding-bottom'] = attrs['data-padding-bottom'] + 'px';
-                    if (attrs['data-min-height']) style['min-height'] = attrs['data-min-height'] + 'px';
+                    style['padding-top'] = attrs['data-padding-top'] ? attrs['data-padding-top'] + 'px' : '';
+                    style['padding-bottom'] = attrs['data-padding-bottom'] ? attrs['data-padding-bottom'] + 'px' : '';
+                    style['min-height'] = attrs['data-min-height'] ? attrs['data-min-height'] + 'px' : '';
                     
                     if (attrs['data-color'] === 'dark') {
                         style['color'] = '#ffffff';
                     } else if (attrs['data-color'] === 'light') {
                         style['color'] = '#1b1b18';
+                    } else {
+                        style['color'] = '';
                     }
                     
                     this.addStyle(style);
