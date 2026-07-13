@@ -547,7 +547,7 @@
             model: {
                 defaults: {
                     traits: [
-                        { type: 'media-picker-trait', name: 'src', label: 'Gambar' },
+                        { type: 'media-picker-trait', name: 'src', label: 'Gambar', changeProp: true },
                         { type: 'text', name: 'alt', label: 'Alt Text' },
                         { 
                             type: 'select', 
@@ -625,17 +625,10 @@
                     ]
                 },
                 init() {
-                    this.on('change:attributes:src', this.handleSrcChange);
                     this.on('change:attributes:data-width', this.handleStyleChange);
                     this.on('change:attributes:data-height', this.handleStyleChange);
                     this.on('change:attributes:data-margin', this.handleStyleChange);
                     this.on('change:attributes:data-depth', this.handleStyleChange);
-                },
-                handleSrcChange() {
-                    const src = this.getAttributes().src;
-                    if (src) {
-                        this.set('src', src);
-                    }
                 },
                 handleStyleChange() {
                     const attrs = this.getAttributes();
