@@ -41,9 +41,17 @@ class MenuItem extends Model
         }
 
         if ($this->type === 'category') {
-            // Adjust this if you have a specific route for category frontend
             $category = Category::find($this->reference_id);
-            return $category ? url('/category/' . $category->slug) : '#';
+            if ($category) {
+                if ($category->type === 'product') {
+                    $base = \App\Models\Setting::where('key', 'product_permalink_base')->value('value') ?: 'store';
+                    return url('/' . $base . '/' . $category->slug);
+                } else {
+                    $base = \App\Models\Setting::where('key', 'post_permalink_base')->value('value') ?: 'blog';
+                    return url('/' . $base . '/' . $category->slug);
+                }
+            }
+            return '#';
         }
 
         return '#';

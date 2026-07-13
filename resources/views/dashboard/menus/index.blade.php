@@ -99,10 +99,10 @@
                     </form>
                 </div>
             </div>
-            <!-- Categories Accordion -->
+            <!-- Post Categories Accordion -->
             <div x-data="{ open: false }" class="bg-white border border-gray-100 rounded-xl overflow-hidden shadow-sm">
-                <button @click="open = !open" class="w-full px-5 py-4 text-left font-semibold text-gray-800 bg-gray-50 hover:bg-gray-100 flex justify-between items-center">
-                    <span>Categories</span>
+                <button @click="open = !open" type="button" class="w-full px-5 py-4 text-left font-semibold text-gray-800 bg-gray-50 hover:bg-gray-100 flex justify-between items-center">
+                    <span>Post Categories</span>
                     <svg class="w-5 h-5 text-gray-500 transform transition-transform" :class="{'rotate-180': open}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </button>
                 <div x-show="open" class="p-5 border-t border-gray-100 space-y-4" style="display: none;">
@@ -110,18 +110,46 @@
                         @csrf
                         <input type="hidden" name="type" value="category">
                         <div class="max-h-40 overflow-y-auto mb-4 border border-gray-200 rounded-lg p-2 space-y-2">
-                            @forelse($categories as $category)
+                            @forelse($categories->where('type', 'post') as $category)
                                 <label class="flex items-center space-x-2 text-sm p-1 hover:bg-gray-50 rounded">
-                                    <input type="radio" name="reference_id" value="{{ $category->id }}" class="text-brand-600 focus:ring-brand-500" required onchange="document.getElementById('category_title').value = '{{ addslashes($category->name) }}'">
+                                    <input type="radio" name="reference_id" value="{{ $category->id }}" class="text-brand-600 focus:ring-brand-500" required onchange="document.getElementById('post_category_title').value = '{{ addslashes($category->name) }}'">
                                     <span>{{ $category->name }}</span>
                                 </label>
                             @empty
-                                <p class="text-xs text-gray-500 p-2">No categories found.</p>
+                                <p class="text-xs text-gray-500 p-2">No post categories found.</p>
                             @endforelse
                         </div>
-                        <input type="hidden" name="title" id="category_title" value="">
+                        <input type="hidden" name="title" id="post_category_title" value="">
                         <div class="text-right">
-                            <button type="submit" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 text-sm rounded-lg font-medium transition" {{ $categories->isEmpty() ? 'disabled' : '' }}>Add to Menu</button>
+                            <button type="submit" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 text-sm rounded-lg font-medium transition" {{ $categories->where('type', 'post')->isEmpty() ? 'disabled' : '' }}>Add to Menu</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Product Categories Accordion -->
+            <div x-data="{ open: false }" class="bg-white border border-gray-100 rounded-xl overflow-hidden shadow-sm">
+                <button @click="open = !open" type="button" class="w-full px-5 py-4 text-left font-semibold text-gray-800 bg-gray-50 hover:bg-gray-100 flex justify-between items-center">
+                    <span>Product Categories</span>
+                    <svg class="w-5 h-5 text-gray-500 transform transition-transform" :class="{'rotate-180': open}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div x-show="open" class="p-5 border-t border-gray-100 space-y-4" style="display: none;">
+                    <form action="{{ route('superuser.menus.items.add', $currentMenu) }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="type" value="category">
+                        <div class="max-h-40 overflow-y-auto mb-4 border border-gray-200 rounded-lg p-2 space-y-2">
+                            @forelse($categories->where('type', 'product') as $category)
+                                <label class="flex items-center space-x-2 text-sm p-1 hover:bg-gray-50 rounded">
+                                    <input type="radio" name="reference_id" value="{{ $category->id }}" class="text-brand-600 focus:ring-brand-500" required onchange="document.getElementById('product_category_title').value = '{{ addslashes($category->name) }}'">
+                                    <span>{{ $category->name }}</span>
+                                </label>
+                            @empty
+                                <p class="text-xs text-gray-500 p-2">No product categories found.</p>
+                            @endforelse
+                        </div>
+                        <input type="hidden" name="title" id="product_category_title" value="">
+                        <div class="text-right">
+                            <button type="submit" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 text-sm rounded-lg font-medium transition" {{ $categories->where('type', 'product')->isEmpty() ? 'disabled' : '' }}>Add to Menu</button>
                         </div>
                     </form>
                 </div>
