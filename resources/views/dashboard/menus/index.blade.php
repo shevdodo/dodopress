@@ -148,32 +148,11 @@
                 <div class="p-6 bg-gray-50/50 min-h-[300px]">
                     <p class="text-sm text-gray-500 mb-4">Add items from the column on the left.</p>
                     
-                    <div class="space-y-3" id="menu-items-list">
+                    <div class="space-y-3 nested-sortable min-h-[50px] p-2 border-2 border-dashed border-transparent" id="menu-items-list">
                         @forelse($currentMenu->parentItems as $item)
-                            <div class="bg-white border border-gray-200 rounded-lg p-4 shadow-sm flex items-center justify-between cursor-move group" data-id="{{ $item->id }}">
-                                <div class="flex items-center space-x-3">
-                                    <svg class="w-5 h-5 text-gray-400 group-hover:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16"></path></svg>
-                                    <div>
-                                        <p class="font-semibold text-gray-800">{{ $item->title }}</p>
-                                        <p class="text-xs text-gray-500 mt-1 uppercase tracking-wider">{{ $item->type }} @if($item->type == 'custom') ({{ $item->url }}) @endif</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-center space-x-2">
-                                    <button type="button" 
-                                            onclick="openEditModal({{ $item->id }}, '{{ addslashes($item->title) }}', '{{ $item->url }}', '{{ $item->type }}')"
-                                            class="text-blue-500 hover:text-blue-700 p-2">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
-                                    </button>
-                                    <form action="{{ route('superuser.menus.items.destroy', $item) }}" method="POST" class="inline">
-                                        @csrf @method('DELETE')
-                                        <button class="text-red-500 hover:text-red-700 p-2" onclick="return confirm('Delete this item?')">
-                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
+                            @include('dashboard.menus.partials.item', ['item' => $item])
                         @empty
-                            <div class="text-center py-12 border-2 border-dashed border-gray-300 rounded-xl">
+                            <div class="text-center py-12 border-2 border-dashed border-gray-300 rounded-xl no-items-msg">
                                 <p class="text-gray-500 font-medium">This menu is empty.</p>
                             </div>
                         @endforelse
@@ -243,27 +222,44 @@
         }
 
         document.addEventListener('DOMContentLoaded', function () {
-            var el = document.getElementById('menu-items-list');
-            if (el) {
-                var sortable = Sortable.create(el, {
+            var elements = document.querySelectorAll('.nested-sortable');
+            elements.forEach(function(el) {
+                Sortable.create(el, {
+                    group: 'nested',
                     animation: 150,
                     handle: '.cursor-move',
-                    ghostClass: 'bg-gray-100'
+                    ghostClass: 'bg-brand-50',
+                    fallbackOnBody: true,
+                    swapThreshold: 0.65,
+                    onEnd: function (evt) {
+                        var noItemsMsg = document.querySelector('.no-items-msg');
+                        if (noItemsMsg && document.querySelectorAll('#menu-items-list > [data-id]').length > 0) {
+                            noItemsMsg.style.display = 'none';
+                        }
+                    }
                 });
-            }
+            });
         });
 
         function saveMenuStructure() {
             var el = document.getElementById('menu-items-list');
             if (!el) return;
             
-            var items = el.querySelectorAll('[data-id]');
-            var structure = [];
+            function getStructure(container) {
+                var structure = [];
+                var items = container.children;
+                for (var i = 0; i < items.length; i++) {
+                    var item = items[i];
+                    if (item.hasAttribute('data-id')) {
+                        var childContainer = item.querySelector('.nested-sortable');
+                        var children = childContainer ? getStructure(childContainer) : [];
+                        structure.push({ id: item.dataset.id, children: children });
+                    }
+                }
+                return structure;
+            }
             
-            items.forEach(function(item) {
-                structure.push({ id: item.dataset.id, children: [] });
-            });
-            
+            var structure = getStructure(el);
             document.getElementById('structure-input').value = JSON.stringify(structure);
             document.getElementById('save-structure-form').submit();
         }
