@@ -541,6 +541,120 @@
             }
         });
 
+        // IMAGE COMPONENT OVERRIDE
+        editor.Components.addType('image', {
+            model: {
+                defaults: {
+                    traits: [
+                        { type: 'media-picker-trait', name: 'src', label: 'Gambar' },
+                        { type: 'text', name: 'alt', label: 'Alt Text' },
+                        { 
+                            type: 'select', 
+                            name: 'data-size', 
+                            label: 'Image Size',
+                            options: [
+                                { id: '', name: 'Original' },
+                                { id: 'large', name: 'Large (1024x1024)' },
+                                { id: 'medium', name: 'Medium' },
+                                { id: 'thumbnail', name: 'Thumbnail' }
+                            ]
+                        },
+                        { type: 'number', name: 'data-width', label: 'Width (%)' },
+                        { type: 'text', name: 'data-height', label: 'Tinggi' },
+                        { type: 'text', name: 'data-margin', label: 'Margin (e.g. 10px 0)' },
+                        { type: 'checkbox', name: 'data-lightbox', label: 'Lightbox' },
+                        { type: 'checkbox', name: 'data-caption', label: 'Keterangan' },
+                        { type: 'checkbox', name: 'data-title', label: 'Judul' },
+                        { type: 'color', name: 'data-overlay', label: 'Image Overlay' },
+                        { 
+                            type: 'select', 
+                            name: 'data-hover', 
+                            label: 'Image Hover',
+                            options: [
+                                { id: '', name: 'None' },
+                                { id: 'zoom', name: 'Zoom In' },
+                                { id: 'fade', name: 'Fade In' },
+                                { id: 'blur', name: 'Blur' }
+                            ]
+                        },
+                        { 
+                            type: 'select', 
+                            name: 'data-hover-alt', 
+                            label: 'Image Hover Alt',
+                            options: [
+                                { id: '', name: 'None' },
+                                { id: 'grayscale', name: 'Grayscale' }
+                            ]
+                        },
+                        { type: 'number', name: 'data-depth', label: 'Depth', min: 0, max: 5 },
+                        { type: 'number', name: 'data-depth-hover', label: 'Depth:hover', min: 0, max: 5 },
+                        { type: 'number', name: 'data-parallax', label: 'Parallax' },
+                        { 
+                            type: 'select', 
+                            name: 'data-animate', 
+                            label: 'Animate',
+                            options: [
+                                { id: '', name: 'None' },
+                                { id: 'fadeIn', name: 'Fade In' },
+                                { id: 'slideUp', name: 'Slide Up' }
+                            ]
+                        },
+                        { type: 'text', name: 'data-link', label: 'Taut' },
+                        { 
+                            type: 'select', 
+                            name: 'data-target', 
+                            label: 'Target',
+                            options: [
+                                { id: '', name: 'Same window' },
+                                { id: '_blank', name: 'New window' }
+                            ]
+                        },
+                        { type: 'text', name: 'data-rel', label: 'Rel' },
+                        { type: 'text', name: 'class', label: 'Class' },
+                        { 
+                            type: 'select', 
+                            name: 'data-visibility', 
+                            label: 'Visibility',
+                            options: [
+                                { id: '', name: 'Visible' },
+                                { id: 'hidden', name: 'Hidden' },
+                                { id: 'hide-mobile', name: 'Hide for Mobile' }
+                            ]
+                        }
+                    ]
+                },
+                init() {
+                    this.on('change:attributes:data-width', this.handleStyleChange);
+                    this.on('change:attributes:data-height', this.handleStyleChange);
+                    this.on('change:attributes:data-margin', this.handleStyleChange);
+                    this.on('change:attributes:data-depth', this.handleStyleChange);
+                },
+                handleStyleChange() {
+                    const attrs = this.getAttributes();
+                    const style = {};
+                    
+                    style['width'] = attrs['data-width'] ? attrs['data-width'] + '%' : '';
+                    style['height'] = attrs['data-height'] ? attrs['data-height'] : '';
+                    style['margin'] = attrs['data-margin'] ? attrs['data-margin'] : '';
+                    
+                    if (attrs['data-depth']) {
+                        const depths = {
+                            1: '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)',
+                            2: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)',
+                            3: '0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)',
+                            4: '0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)',
+                            5: '0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)'
+                        };
+                        style['box-shadow'] = depths[attrs['data-depth']] || '';
+                    } else {
+                        style['box-shadow'] = '';
+                    }
+                    
+                    this.addStyle(style);
+                }
+            }
+        });
+
         // SWIPER SLIDER COMPONENT
         editor.Components.addType('swiper-slider', {
             model: {
