@@ -626,10 +626,17 @@
                     ]
                 },
                 init() {
+                    this.on('change:attributes:src', this.handleSrcChange);
                     this.on('change:attributes:data-width', this.handleStyleChange);
                     this.on('change:attributes:data-height', this.handleStyleChange);
                     this.on('change:attributes:data-margin', this.handleStyleChange);
                     this.on('change:attributes:data-depth', this.handleStyleChange);
+                },
+                handleSrcChange() {
+                    const attrs = this.getAttributes();
+                    if (attrs.src) {
+                        this.set('src', attrs.src);
+                    }
                 },
                 handleStyleChange() {
                     const attrs = this.getAttributes();
