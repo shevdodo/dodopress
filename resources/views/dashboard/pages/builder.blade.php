@@ -148,6 +148,7 @@
     </div>
 
     <script>
+        // @ts-nocheck
         // Check if we have saved builder data
         const savedData = {!! $page->builder_data ? json_encode($page->builder_data) : 'null' !!};
         
