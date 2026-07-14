@@ -26,7 +26,16 @@ class CartController extends Controller
                 
                 if ($response->successful()) {
                     $json = $response->json();
-                    $provinces = $json['data'] ?? ($json['rajaongkir']['results'] ?? []);
+                    if (isset($json['data'])) {
+                        $provinces = array_map(function($item) {
+                            return [
+                                'province_id' => $item['id'] ?? $item['province_id'] ?? '',
+                                'province' => $item['name'] ?? $item['province'] ?? ''
+                            ];
+                        }, $json['data']);
+                    } else {
+                        $provinces = $json['rajaongkir']['results'] ?? [];
+                    }
                 } else {
                     throw new \Exception('API Error: ' . $response->body());
                 }
@@ -137,7 +146,18 @@ class CartController extends Controller
             
             if ($response->successful()) {
                 $json = $response->json();
-                $results = $json['data'] ?? ($json['rajaongkir']['results'] ?? []);
+                if (isset($json['data'])) {
+                    $results = array_map(function($item) {
+                        return [
+                            'city_id' => $item['id'] ?? $item['city_id'] ?? '',
+                            'city_name' => $item['name'] ?? $item['city_name'] ?? '',
+                            'type' => $item['type'] ?? 'Kota'
+                        ];
+                    }, $json['data']);
+                } else {
+                    $results = $json['rajaongkir']['results'] ?? [];
+                }
+                
                 if (!empty($results)) {
                     return response()->json($results);
                 }
