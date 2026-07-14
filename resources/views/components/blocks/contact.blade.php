@@ -204,10 +204,10 @@
                 @if(count($socials) > 0)
                 <div class="bg-white rounded-3xl border border-gray-100 shadow-xl shadow-gray-900/[0.07] p-6">
                     <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Temukan Kami Di</p>
-                    <div class="flex flex-wrap gap-3">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         @foreach($socials as $s)
                         <a href="{{ $s['url'] }}" target="_blank" rel="noopener"
-                            class="group flex items-center gap-2 px-3.5 py-2.5 rounded-xl border border-gray-100 text-gray-600 hover:text-white text-sm font-medium transition-all duration-200 hover:shadow-md hover:border-transparent"
+                            class="group flex w-full justify-center items-center gap-2 px-3.5 py-3 rounded-xl border border-gray-100 text-gray-600 hover:text-white text-sm font-medium transition-all duration-200 hover:shadow-md hover:border-transparent"
                             onmouseover="this.style.background='{{ $s['bg'] }}';this.style.color='#fff'"
                             onmouseout="this.style.background='';this.style.color=''">
                             {!! $s['icon'] !!}
