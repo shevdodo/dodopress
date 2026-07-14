@@ -119,18 +119,64 @@ class CartController extends Controller
             ]);
             
             if ($response->successful()) {
-                return response()->json($response->json()['rajaongkir']['results'] ?? []);
+                $results = $response->json()['rajaongkir']['results'] ?? [];
+                if (!empty($results)) {
+                    return response()->json($results);
+                }
             }
-            throw new \Exception('API Error: ' . $response->body());
+            throw new \Exception('API Error or empty results');
         } catch (\Exception $e) {
             \Illuminate\Support\Facades\Log::error('RajaOngkir City Exception: ' . $e->getMessage());
-            // Fallback Mock Data
-            $mockCities = [
-                ['city_id' => '1', 'type' => 'Kota', 'city_name' => 'Bandung'],
-                ['city_id' => '2', 'type' => 'Kota', 'city_name' => 'Surakarta (Solo)'],
-                ['city_id' => '3', 'type' => 'Kota', 'city_name' => 'Surabaya'],
-                ['city_id' => '4', 'type' => 'Kota', 'city_name' => 'Jakarta Pusat'],
-            ];
+            // Fallback Mock Data with more cities for realism
+            $mockCities = [];
+            
+            if ($provinceId == '9') { // Jawa Barat
+                $mockCities = [
+                    ['city_id' => '22', 'type' => 'Kabupaten', 'city_name' => 'Bandung'],
+                    ['city_id' => '23', 'type' => 'Kota', 'city_name' => 'Bandung'],
+                    ['city_id' => '54', 'type' => 'Kota', 'city_name' => 'Bekasi'],
+                    ['city_id' => '78', 'type' => 'Kota', 'city_name' => 'Bogor'],
+                    ['city_id' => '104', 'type' => 'Kota', 'city_name' => 'Cirebon'],
+                    ['city_id' => '115', 'type' => 'Kota', 'city_name' => 'Depok'],
+                ];
+            } elseif ($provinceId == '10') { // Jawa Tengah
+                $mockCities = [
+                    ['city_id' => '39', 'type' => 'Kabupaten', 'city_name' => 'Bantul'],
+                    ['city_id' => '41', 'type' => 'Kabupaten', 'city_name' => 'Banyumas'],
+                    ['city_id' => '109', 'type' => 'Kabupaten', 'city_name' => 'Demak'],
+                    ['city_id' => '163', 'type' => 'Kabupaten', 'city_name' => 'Karanganyar'],
+                    ['city_id' => '197', 'type' => 'Kabupaten', 'city_name' => 'Kudus'],
+                    ['city_id' => '252', 'type' => 'Kabupaten', 'city_name' => 'Magelang'],
+                    ['city_id' => '344', 'type' => 'Kabupaten', 'city_name' => 'Pati'],
+                    ['city_id' => '398', 'type' => 'Kota', 'city_name' => 'Semarang'],
+                    ['city_id' => '427', 'type' => 'Kabupaten', 'city_name' => 'Sukoharjo'],
+                    ['city_id' => '445', 'type' => 'Kota', 'city_name' => 'Surakarta (Solo)'],
+                ];
+            } elseif ($provinceId == '11') { // Jawa Timur
+                $mockCities = [
+                    ['city_id' => '255', 'type' => 'Kota', 'city_name' => 'Malang'],
+                    ['city_id' => '444', 'type' => 'Kota', 'city_name' => 'Surabaya'],
+                    ['city_id' => '425', 'type' => 'Kabupaten', 'city_name' => 'Sidoarjo'],
+                    ['city_id' => '133', 'type' => 'Kabupaten', 'city_name' => 'Gresik'],
+                    ['city_id' => '160', 'type' => 'Kabupaten', 'city_name' => 'Kediri'],
+                ];
+            } elseif ($provinceId == '6') { // DKI Jakarta
+                $mockCities = [
+                    ['city_id' => '151', 'type' => 'Kota', 'city_name' => 'Jakarta Barat'],
+                    ['city_id' => '152', 'type' => 'Kota', 'city_name' => 'Jakarta Pusat'],
+                    ['city_id' => '153', 'type' => 'Kota', 'city_name' => 'Jakarta Selatan'],
+                    ['city_id' => '154', 'type' => 'Kota', 'city_name' => 'Jakarta Timur'],
+                    ['city_id' => '155', 'type' => 'Kota', 'city_name' => 'Jakarta Utara'],
+                ];
+            } else {
+                // Generic fallback
+                $mockCities = [
+                    ['city_id' => '1', 'type' => 'Kota', 'city_name' => 'Bandung'],
+                    ['city_id' => '2', 'type' => 'Kota', 'city_name' => 'Surakarta (Solo)'],
+                    ['city_id' => '3', 'type' => 'Kota', 'city_name' => 'Surabaya'],
+                    ['city_id' => '4', 'type' => 'Kota', 'city_name' => 'Jakarta Pusat'],
+                ];
+            }
             return response()->json($mockCities);
         }
     }
