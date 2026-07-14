@@ -15,19 +15,24 @@ class CartController extends Controller
         $provinces = [];
         
         if ($apiShippingEnabled && !empty($apiKey)) {
+            $isKomerce = !preg_match('/^[a-f0-9]{32}$/', $apiKey); // Classic RajaOngkir keys are strict 32-char hex
+            $baseUrl = $isKomerce ? 'https://rajaongkir.komerce.id/api/v1' : 'https://api.rajaongkir.com/starter';
+            $endpoint = $isKomerce ? '/destination/province' : '/province';
+
             try {
-                $response = \Illuminate\Support\Facades\Http::timeout(3)->withoutVerifying()->withHeaders([
+                $response = \Illuminate\Support\Facades\Http::timeout(5)->withoutVerifying()->withHeaders([
                     'key' => $apiKey
-                ])->get('https://api.rajaongkir.com/starter/province');
+                ])->get($baseUrl . $endpoint);
                 
                 if ($response->successful()) {
-                    $provinces = $response->json()['rajaongkir']['results'] ?? [];
+                    $json = $response->json();
+                    $provinces = $json['data'] ?? ($json['rajaongkir']['results'] ?? []);
                 } else {
                     throw new \Exception('API Error: ' . $response->body());
                 }
             } catch (\Exception $e) {
                 \Illuminate\Support\Facades\Log::error('RajaOngkir Exception: ' . $e->getMessage());
-                // Fallback Mock Data for Development/Sandbox if API fails
+                // Fallback Mock Data
                 $provinces = [
                     ['province_id' => '9', 'province' => 'Jawa Barat'],
                     ['province_id' => '10', 'province' => 'Jawa Tengah'],
@@ -111,20 +116,33 @@ class CartController extends Controller
         $apiKey = \App\Models\Setting::where('key', 'api_shipping_key')->value('value');
         if (empty($apiKey)) return response()->json([]);
 
+        $isKomerce = !preg_match('/^[a-f0-9]{32}$/', $apiKey);
+        
         try {
-            $response = \Illuminate\Support\Facades\Http::timeout(3)->withoutVerifying()->withHeaders([
-                'key' => $apiKey
-            ])->get('https://api.rajaongkir.com/starter/city', [
-                'province' => $provinceId
-            ]);
+            if ($isKomerce) {
+                // Komerce API V2
+                $response = \Illuminate\Support\Facades\Http::timeout(5)->withoutVerifying()->withHeaders([
+                    'key' => $apiKey
+                ])->get('https://rajaongkir.komerce.id/api/v1/destination/city', [
+                    'province' => $provinceId
+                ]);
+            } else {
+                // Classic RajaOngkir
+                $response = \Illuminate\Support\Facades\Http::timeout(5)->withoutVerifying()->withHeaders([
+                    'key' => $apiKey
+                ])->get('https://api.rajaongkir.com/starter/city', [
+                    'province' => $provinceId
+                ]);
+            }
             
             if ($response->successful()) {
-                $results = $response->json()['rajaongkir']['results'] ?? [];
+                $json = $response->json();
+                $results = $json['data'] ?? ($json['rajaongkir']['results'] ?? []);
                 if (!empty($results)) {
                     return response()->json($results);
                 }
             }
-            throw new \Exception('API Error or empty results');
+            throw new \Exception('API Error or empty results: ' . $response->body());
         } catch (\Exception $e) {
             \Illuminate\Support\Facades\Log::error('RajaOngkir City Exception: ' . $e->getMessage());
             // Fallback Mock Data with more cities for realism
@@ -197,17 +215,34 @@ class CartController extends Controller
             // ID for Surakarta is 445 in RajaOngkir starter.
             $originId = \App\Models\Setting::where('key', 'store_city_id')->value('value') ?: 445; 
 
-            $response = \Illuminate\Support\Facades\Http::timeout(4)->withoutVerifying()->withHeaders([
-                'key' => $apiKey
-            ])->post('https://api.rajaongkir.com/starter/cost', [
-                'origin' => $originId,
-                'destination' => $request->destination,
-                'weight' => $request->weight,
-                'courier' => $request->courier
-            ]);
+            $isKomerce = !preg_match('/^[a-f0-9]{32}$/', $apiKey);
+            
+            if ($isKomerce) {
+                $response = \Illuminate\Support\Facades\Http::timeout(5)->withoutVerifying()->withHeaders([
+                    'key' => $apiKey
+                ])->post('https://rajaongkir.komerce.id/api/v1/calculate/domestic-cost', [
+                    'origin' => $originId,
+                    'destination' => $request->destination,
+                    'weight' => $request->weight,
+                    'courier' => $request->courier
+                ]);
+            } else {
+                $response = \Illuminate\Support\Facades\Http::timeout(5)->withoutVerifying()->withHeaders([
+                    'key' => $apiKey
+                ])->post('https://api.rajaongkir.com/starter/cost', [
+                    'origin' => $originId,
+                    'destination' => $request->destination,
+                    'weight' => $request->weight,
+                    'courier' => $request->courier
+                ]);
+            }
             
             if ($response->successful()) {
-                return response()->json($response->json()['rajaongkir']['results'][0]['costs'] ?? []);
+                $json = $response->json();
+                $costs = $json['data'][0]['costs'] ?? ($json['rajaongkir']['results'][0]['costs'] ?? []);
+                if (!empty($costs)) {
+                    return response()->json($costs);
+                }
             }
             throw new \Exception('API Error: ' . $response->body());
         } catch (\Exception $e) {
