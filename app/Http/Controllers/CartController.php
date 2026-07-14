@@ -132,9 +132,7 @@ class CartController extends Controller
                 // Komerce API V2
                 $response = \Illuminate\Support\Facades\Http::timeout(5)->withoutVerifying()->withHeaders([
                     'key' => $apiKey
-                ])->get('https://rajaongkir.komerce.id/api/v1/destination/city', [
-                    'province' => $provinceId
-                ]);
+                ])->get("https://rajaongkir.komerce.id/api/v1/destination/city/{$provinceId}");
             } else {
                 // Classic RajaOngkir
                 $response = \Illuminate\Support\Facades\Http::timeout(5)->withoutVerifying()->withHeaders([
@@ -238,7 +236,7 @@ class CartController extends Controller
             $isKomerce = !preg_match('/^[a-f0-9]{32}$/', $apiKey);
             
             if ($isKomerce) {
-                $response = \Illuminate\Support\Facades\Http::timeout(5)->withoutVerifying()->withHeaders([
+                $response = \Illuminate\Support\Facades\Http::timeout(5)->asForm()->withoutVerifying()->withHeaders([
                     'key' => $apiKey
                 ])->post('https://rajaongkir.komerce.id/api/v1/calculate/domestic-cost', [
                     'origin' => $originId,
@@ -247,7 +245,7 @@ class CartController extends Controller
                     'courier' => $request->courier
                 ]);
             } else {
-                $response = \Illuminate\Support\Facades\Http::timeout(5)->withoutVerifying()->withHeaders([
+                $response = \Illuminate\Support\Facades\Http::timeout(5)->asForm()->withoutVerifying()->withHeaders([
                     'key' => $apiKey
                 ])->post('https://api.rajaongkir.com/starter/cost', [
                     'origin' => $originId,
