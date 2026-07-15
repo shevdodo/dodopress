@@ -32,12 +32,12 @@
                                     <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-xl bg-gray-50 border border-gray-100 flex items-center justify-center font-bold text-gray-400 text-[10px] sm:text-xs shrink-0 text-center leading-tight">No Img</div>
                                 @endif
                                 
-                                <div class="min-w-0">
+                                <div class="min-w-0 flex-1">
                                     <p class="font-bold text-gray-900 text-sm sm:text-base leading-snug truncate">{{ $item->product_name }}</p>
-                                    <p class="text-xs sm:text-sm text-gray-500 mt-1">{{ $item->quantity }}x @ Rp {{ number_format($item->price, 0, ',', '.') }}</p>
+                                    <p class="text-xs sm:text-sm text-gray-500 mt-1 truncate">{{ $item->quantity }}x @ Rp {{ number_format($item->price, 0, ',', '.') }}</p>
                                 </div>
                             </div>
-                            <div class="font-bold text-gray-900 text-sm sm:text-base shrink-0 ml-3">
+                            <div class="font-bold text-gray-900 text-sm sm:text-base shrink-0 text-right">
                                 Rp {{ number_format($item->total, 0, ',', '.') }}
                             </div>
                         </div>
