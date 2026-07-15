@@ -225,7 +225,7 @@ class CartController extends Controller
         $request->validate([
             'destination' => 'required|numeric',
             'weight' => 'required|numeric|min:1',
-            'courier' => 'required|string|in:jne,pos,tiki'
+            'courier' => 'required|string|in:jne,pos,tiki,jnt,sicepat,anteraja,ninja,ide,lion'
         ]);
 
         try {
