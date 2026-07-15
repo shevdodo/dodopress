@@ -344,13 +344,13 @@
         </nav>
 
         <!-- Sidebar Footer / User Info -->
-        <div class="p-3 mx-3 mb-3 rounded-xl bg-brand-900/60 border border-brand-800/40 backdrop-blur-sm flex items-center justify-between">
-            <div class="flex items-center space-x-3" x-show="sidebarOpen">
-                <div class="w-9 h-9 rounded-full bg-gradient-to-br from-brand-400 to-brand-600 flex items-center justify-center font-bold text-white uppercase text-sm shadow-lg shadow-brand-900/40">
+        <div class="p-3 mx-3 mb-3 rounded-xl bg-brand-900/60 border border-brand-800/40 backdrop-blur-sm flex items-center justify-between min-w-0">
+            <div class="flex items-center space-x-3 min-w-0 flex-1 pr-2" x-show="sidebarOpen">
+                <div class="w-9 h-9 shrink-0 rounded-full bg-gradient-to-br from-brand-400 to-brand-600 flex items-center justify-center font-bold text-white uppercase text-sm shadow-lg shadow-brand-900/40">
                     {{ substr(Auth::user()->name, 0, 2) }}
                 </div>
                 <div class="flex-1 min-w-0">
-                    <p class="text-sm font-semibold truncate leading-tight">{{ Auth::user()->name }}</p>
+                    <p class="text-sm font-semibold truncate leading-tight" title="{{ Auth::user()->name }}">{{ Auth::user()->name }}</p>
                     <p class="text-[11px] text-brand-300 truncate capitalize font-medium">{{ Auth::user()->role }}</p>
                 </div>
             </div>
