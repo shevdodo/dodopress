@@ -50,6 +50,15 @@ class AppServiceProvider extends ServiceProvider
                     \Illuminate\Support\Facades\Config::set('mail.mailers.smtp.password', \Illuminate\Support\Facades\DB::table('settings')->where('key', 'mail_password')->value('value'));
                     \Illuminate\Support\Facades\Config::set('mail.mailers.smtp.encryption', 'tls'); // Brevo standard
                     
+                    // Disable SSL verification to bypass aggressive shared hosting interception
+                    \Illuminate\Support\Facades\Config::set('mail.mailers.smtp.stream', [
+                        'ssl' => [
+                            'allow_self_signed' => true,
+                            'verify_peer' => false,
+                            'verify_peer_name' => false,
+                        ],
+                    ]);
+                    
                     $fromAddress = \Illuminate\Support\Facades\DB::table('settings')->where('key', 'mail_from_address')->value('value');
                     if ($fromAddress) {
                         \Illuminate\Support\Facades\Config::set('mail.from.address', $fromAddress);
