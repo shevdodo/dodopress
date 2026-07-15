@@ -230,8 +230,8 @@
             const citySelect = document.getElementById('city_id');
             const btnCheck = document.getElementById('btn-check');
             const resultsDiv = document.getElementById('shipping-results');
-            const BASE_URL = '{{ url("/cart/cities") }}';
-            const ONGKIR_URL = '{{ url("/cart/ongkir") }}';
+            const BASE_URL = '{{ url("/cart/cities") }}'.replace(/^http:/, window.location.protocol);
+            const ONGKIR_URL = '{{ url("/cart/ongkir") }}'.replace(/^http:/, window.location.protocol);
 
             provSelect.addEventListener('change', function() {
                 const provId = this.value;
