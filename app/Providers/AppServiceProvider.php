@@ -20,8 +20,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Force HTTPS in production (needed for Cloudflare / reverse proxy environments)
-        if ($this->app->environment('production')) {
+        // Force HTTPS on live server (needed for Cloudflare / reverse proxy environments)
+        if (request()->getHost() !== 'localhost' && request()->getHost() !== '127.0.0.1') {
             \Illuminate\Support\Facades\URL::forceScheme('https');
         }
 
@@ -36,7 +36,7 @@ class AppServiceProvider extends ServiceProvider
                     \Illuminate\Support\Facades\Config::set('services.google', [
                         'client_id' => $clientId,
                         'client_secret' => $clientSecret,
-                        'redirect' => '/auth/google/callback',
+                        'redirect' => url('/auth/google/callback'),
                     ]);
                 }
             }
