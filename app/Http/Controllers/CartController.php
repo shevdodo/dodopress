@@ -257,7 +257,27 @@ class CartController extends Controller
             
             if ($response->successful()) {
                 $json = $response->json();
-                $costs = $json['data'][0]['costs'] ?? ($json['rajaongkir']['results'][0]['costs'] ?? []);
+                $costs = [];
+                
+                if (isset($json['data']) && is_array($json['data'])) {
+                    // Map Komerce V2 structure to RajaOngkir Classic structure
+                    foreach ($json['data'] as $item) {
+                        $costs[] = [
+                            'service' => $item['service'] ?? '',
+                            'description' => $item['description'] ?? '',
+                            'cost' => [
+                                [
+                                    'value' => $item['cost'] ?? 0,
+                                    'etd' => $item['etd'] ?? '',
+                                    'note' => ''
+                                ]
+                            ]
+                        ];
+                    }
+                } elseif (!empty($json['rajaongkir']['results']) && isset($json['rajaongkir']['results'][0]['costs'])) {
+                    $costs = $json['rajaongkir']['results'][0]['costs'];
+                }
+                
                 if (!empty($costs)) {
                     return response()->json($costs);
                 }
