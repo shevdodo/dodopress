@@ -1,4 +1,4 @@
-<x-layouts.dashboard title="Superuser Dashboard">
+<x-layouts.dashboard title="{{ Auth::user()->role === 'superuser' ? 'Superuser Dashboard' : 'Admin Dashboard' }}">
     {{-- Page Header --}}
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
         <div>
