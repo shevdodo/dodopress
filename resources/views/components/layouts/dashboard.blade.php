@@ -425,8 +425,8 @@
         <!-- ====== TOPBAR ====== -->
         <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-4 sm:px-6 sticky top-0 z-20 shadow-sm">
             <!-- Left: Hamburger + Title -->
-            <div class="flex items-center space-x-4">
-                <button @click="sidebarOpen = !sidebarOpen" class="text-gray-500 hover:text-brand-600 p-2 rounded-lg hover:bg-gray-100 transition">
+            <div class="flex items-center space-x-4 min-w-0 flex-1">
+                <button @click="sidebarOpen = !sidebarOpen" class="text-gray-500 hover:text-brand-600 p-2 rounded-lg hover:bg-gray-100 transition shrink-0">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                     </svg>

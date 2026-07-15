@@ -1,11 +1,11 @@
 <x-layouts.dashboard title="Order Details - {{ $order->order_number }}">
     <div class="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div class="min-w-0">
-            <div class="flex items-center space-x-3">
+        <div class="min-w-0 flex-1">
+            <div class="flex items-center space-x-3 min-w-0">
                 <a href="{{ route('superuser.orders.index') }}" class="text-gray-400 hover:text-brand-600 transition shrink-0">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
                 </a>
-                <h2 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 truncate">Order {{ $order->order_number }}</h2>
+                <h2 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 truncate">{{ 'Order ' . $order->order_number }}</h2>
             </div>
             <p class="text-sm text-gray-500 mt-2 sm:mt-1 sm:ml-9">Placed on {{ $order->created_at->format('d M Y, H:i') }}</p>
         </div>
