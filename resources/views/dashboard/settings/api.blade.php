@@ -61,6 +61,12 @@
                 <p class="text-xs text-gray-500 mt-3">Select which couriers should be available to customers on the checkout page.</p>
             </div>
 
+            <div class="mt-4">
+                <label for="store_city_id" class="block text-sm font-semibold text-gray-800 mb-1">Origin City ID (ID Kota Asal Pengiriman)</label>
+                <input type="number" id="store_city_id" name="store_city_id" value="{{ old('store_city_id', $settings['store_city_id'] ?? '445') }}" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-brand-500 focus:ring focus:ring-brand-500/20 px-4 py-2 text-sm" placeholder="Contoh: 445">
+                <p class="text-xs text-gray-500 mt-1">Masukkan ID Kota asal toko Anda berdasarkan ID RajaOngkir. Contoh: <strong>445</strong> untuk Kota Surakarta (Solo), <strong>114</strong> untuk Kota Denpasar.</p>
+            </div>
+
             <hr class="border-gray-100">
 
             <!-- Payment API -->
