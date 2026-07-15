@@ -24,8 +24,8 @@
                 <h3 class="text-lg font-bold text-gray-900 mb-4 border-b border-gray-100 pb-3">Order Items</h3>
                 <div class="space-y-4">
                     @foreach($order->items as $item)
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center space-x-3 sm:space-x-4 min-w-0">
+                        <div class="flex items-center justify-between gap-2">
+                            <div class="flex items-center space-x-3 sm:space-x-4 min-w-0 flex-1">
                                 @if($item->product && $item->product->image)
                                     <img src="{{ asset('storage/' . $item->product->image) }}" class="w-12 h-12 sm:w-16 sm:h-16 object-cover rounded-xl shrink-0 border border-gray-100 shadow-sm" alt="{{ $item->product_name }}">
                                 @else
