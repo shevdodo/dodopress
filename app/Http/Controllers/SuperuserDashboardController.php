@@ -229,6 +229,11 @@ class SuperuserDashboardController extends Controller
             'api_google_oauth_enabled' => 'nullable|boolean',
             'api_google_client_id' => 'nullable|string',
             'api_google_client_secret' => 'nullable|string',
+            'mail_host' => 'nullable|string',
+            'mail_port' => 'nullable|string',
+            'mail_username' => 'nullable|string',
+            'mail_password' => 'nullable|string',
+            'mail_from_address' => 'nullable|string',
         ]);
 
         $data = [
@@ -242,6 +247,11 @@ class SuperuserDashboardController extends Controller
             'api_google_oauth_enabled' => $request->has('api_google_oauth_enabled') ? '1' : '0',
             'api_google_client_id' => $request->input('api_google_client_id', ''),
             'api_google_client_secret' => $request->input('api_google_client_secret', ''),
+            'mail_host' => $request->input('mail_host', ''),
+            'mail_port' => $request->input('mail_port', '587'),
+            'mail_username' => $request->input('mail_username', ''),
+            'mail_password' => $request->input('mail_password', ''),
+            'mail_from_address' => $request->input('mail_from_address', 'noreply@batikmukti.co.id'),
         ];
         
         foreach ($data as $key => $value) {

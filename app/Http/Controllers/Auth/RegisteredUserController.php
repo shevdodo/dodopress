@@ -45,6 +45,13 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
 
+        // Send Welcome Email
+        try {
+            \Illuminate\Support\Facades\Mail::to($user->email)->send(new \App\Mail\WelcomeUserMail($user));
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Failed to send welcome email (Standard): ' . $e->getMessage());
+        }
+
         Auth::login($user);
 
         if ($user->isSuperuser()) {

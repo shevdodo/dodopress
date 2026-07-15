@@ -60,6 +60,13 @@ class OAuthController extends Controller
                         'email_verified_at' => now(), // Automatically verify email since Google already verified it
                     ]);
                     
+                    // Send Welcome Email
+                    try {
+                        \Illuminate\Support\Facades\Mail::to($newUser->email)->send(new \App\Mail\WelcomeUserMail($newUser));
+                    } catch (\Exception $e) {
+                        \Illuminate\Support\Facades\Log::error('Failed to send welcome email (Google OAuth): ' . $e->getMessage());
+                    }
+                    
                     Auth::login($newUser);
                 }
             }

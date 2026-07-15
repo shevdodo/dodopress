@@ -39,6 +39,22 @@ class AppServiceProvider extends ServiceProvider
                         'redirect' => url('/auth/google/callback'),
                     ]);
                 }
+
+                // Dynamically load SMTP settings
+                $mailHost = \Illuminate\Support\Facades\DB::table('settings')->where('key', 'mail_host')->value('value');
+                if (!empty($mailHost)) {
+                    \Illuminate\Support\Facades\Config::set('mail.mailers.smtp.host', $mailHost);
+                    \Illuminate\Support\Facades\Config::set('mail.mailers.smtp.port', \Illuminate\Support\Facades\DB::table('settings')->where('key', 'mail_port')->value('value') ?: 587);
+                    \Illuminate\Support\Facades\Config::set('mail.mailers.smtp.username', \Illuminate\Support\Facades\DB::table('settings')->where('key', 'mail_username')->value('value'));
+                    \Illuminate\Support\Facades\Config::set('mail.mailers.smtp.password', \Illuminate\Support\Facades\DB::table('settings')->where('key', 'mail_password')->value('value'));
+                    \Illuminate\Support\Facades\Config::set('mail.mailers.smtp.encryption', 'tls'); // Brevo standard
+                    
+                    $fromAddress = \Illuminate\Support\Facades\DB::table('settings')->where('key', 'mail_from_address')->value('value');
+                    if ($fromAddress) {
+                        \Illuminate\Support\Facades\Config::set('mail.from.address', $fromAddress);
+                        \Illuminate\Support\Facades\Config::set('mail.from.name', config('app.name'));
+                    }
+                }
             }
         } catch (\Exception $e) {
             // Silently ignore DB errors during initial setup or migrations

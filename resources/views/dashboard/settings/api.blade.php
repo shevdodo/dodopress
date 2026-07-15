@@ -96,6 +96,43 @@
 
             <hr class="border-gray-100">
 
+            <!-- SMTP Mail Server -->
+            <div class="flex items-start justify-between">
+                <div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-1">SMTP Mail Server (Email Sender)</h3>
+                    <p class="text-sm text-gray-500 max-w-md">Configure your SMTP server (e.g., Brevo, Mailtrap) to send automated emails like Welcome emails or order confirmations.</p>
+                </div>
+            </div>
+
+            <div class="mt-4 space-y-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label for="mail_host" class="block text-sm font-semibold text-gray-800 mb-1">Mail Host (Server)</label>
+                        <input type="text" id="mail_host" name="mail_host" value="{{ old('mail_host', $settings['mail_host'] ?? '') }}" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-brand-500 focus:ring focus:ring-brand-500/20 px-4 py-2 text-sm font-mono" placeholder="e.g. smtp-relay.brevo.com">
+                    </div>
+                    <div>
+                        <label for="mail_port" class="block text-sm font-semibold text-gray-800 mb-1">Mail Port</label>
+                        <input type="text" id="mail_port" name="mail_port" value="{{ old('mail_port', $settings['mail_port'] ?? '587') }}" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-brand-500 focus:ring focus:ring-brand-500/20 px-4 py-2 text-sm font-mono" placeholder="e.g. 587">
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label for="mail_username" class="block text-sm font-semibold text-gray-800 mb-1">Mail Username (Login)</label>
+                        <input type="text" id="mail_username" name="mail_username" value="{{ old('mail_username', $settings['mail_username'] ?? '') }}" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-brand-500 focus:ring focus:ring-brand-500/20 px-4 py-2 text-sm font-mono" placeholder="Enter SMTP Username">
+                    </div>
+                    <div>
+                        <label for="mail_password" class="block text-sm font-semibold text-gray-800 mb-1">Mail Password (API Key)</label>
+                        <input type="password" id="mail_password" name="mail_password" value="{{ old('mail_password', $settings['mail_password'] ?? '') }}" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-brand-500 focus:ring focus:ring-brand-500/20 px-4 py-2 text-sm font-mono" placeholder="Enter SMTP Password/Key">
+                    </div>
+                </div>
+                <div>
+                    <label for="mail_from_address" class="block text-sm font-semibold text-gray-800 mb-1">Mail From Address</label>
+                    <input type="email" id="mail_from_address" name="mail_from_address" value="{{ old('mail_from_address', $settings['mail_from_address'] ?? 'noreply@batikmukti.co.id') }}" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-brand-500 focus:ring focus:ring-brand-500/20 px-4 py-2 text-sm font-mono" placeholder="e.g. hello@batikmukti.co.id">
+                </div>
+            </div>
+
+            <hr class="border-gray-100">
+
             <!-- Google OAuth API -->
             <div class="flex items-start justify-between">
                 <div>
