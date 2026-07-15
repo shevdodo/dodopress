@@ -43,6 +43,7 @@ class AppServiceProvider extends ServiceProvider
                 // Dynamically load SMTP settings
                 $mailHost = \Illuminate\Support\Facades\DB::table('settings')->where('key', 'mail_host')->value('value');
                 if (!empty($mailHost)) {
+                    \Illuminate\Support\Facades\Config::set('mail.default', 'smtp');
                     \Illuminate\Support\Facades\Config::set('mail.mailers.smtp.host', $mailHost);
                     \Illuminate\Support\Facades\Config::set('mail.mailers.smtp.port', \Illuminate\Support\Facades\DB::table('settings')->where('key', 'mail_port')->value('value') ?: 587);
                     \Illuminate\Support\Facades\Config::set('mail.mailers.smtp.username', \Illuminate\Support\Facades\DB::table('settings')->where('key', 'mail_username')->value('value'));
