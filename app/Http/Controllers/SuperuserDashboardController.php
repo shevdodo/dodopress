@@ -226,6 +226,9 @@ class SuperuserDashboardController extends Controller
             'api_payment_enabled' => 'nullable|boolean',
             'api_payment_server_key' => 'nullable|string',
             'api_payment_client_key' => 'nullable|string',
+            'api_google_oauth_enabled' => 'nullable|boolean',
+            'api_google_client_id' => 'nullable|string',
+            'api_google_client_secret' => 'nullable|string',
         ]);
 
         $data = [
@@ -236,6 +239,9 @@ class SuperuserDashboardController extends Controller
             'api_payment_enabled' => $request->has('api_payment_enabled') ? '1' : '0',
             'api_payment_server_key' => $request->input('api_payment_server_key', ''),
             'api_payment_client_key' => $request->input('api_payment_client_key', ''),
+            'api_google_oauth_enabled' => $request->has('api_google_oauth_enabled') ? '1' : '0',
+            'api_google_client_id' => $request->input('api_google_client_id', ''),
+            'api_google_client_secret' => $request->input('api_google_client_secret', ''),
         ];
         
         foreach ($data as $key => $value) {
