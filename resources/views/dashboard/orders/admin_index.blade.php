@@ -14,7 +14,9 @@
     @endif
 
     <div class="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden">
-        <div class="overflow-x-auto">
+        
+        <!-- Desktop Table View -->
+        <div class="hidden md:block overflow-x-auto">
             <table class="w-full text-left text-sm whitespace-nowrap">
                 <thead class="bg-gray-50 border-b border-gray-100 text-gray-500">
                     <tr>
@@ -54,7 +56,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="px-6 py-12 text-center">
+                            <td colspan="6" class="px-6 py-12 text-center">
                                 <div class="w-12 h-12 bg-gray-50 rounded-full border border-gray-100 flex items-center justify-center mx-auto mb-3 text-gray-400">
                                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" /></svg>
                                 </div>
@@ -66,9 +68,58 @@
                 </tbody>
             </table>
         </div>
+
+        <!-- Mobile Card View -->
+        <div class="block md:hidden">
+            <div class="divide-y divide-gray-100">
+                @forelse($orders as $order)
+                    <div class="p-5 space-y-4">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <span class="font-bold text-gray-900 block text-base">{{ $order->order_number }}</span>
+                                <span class="text-xs text-gray-500 mt-1 block">{{ $order->created_at->format('d M Y, H:i') }}</span>
+                            </div>
+                            <span class="inline-block px-3 py-1 bg-yellow-100 text-yellow-800 rounded-lg text-[10px] font-bold uppercase tracking-wider">
+                                {{ $order->status }}
+                            </span>
+                        </div>
+                        
+                        <div class="bg-gray-50 rounded-2xl p-4 text-sm border border-gray-100/50">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-gray-500">Customer</span>
+                                @if($order->user)
+                                    <span class="font-medium text-gray-900">{{ $order->user->name }}</span>
+                                @else
+                                    <span class="text-gray-400 italic">Guest</span>
+                                @endif
+                            </div>
+                            <div class="flex items-center justify-between font-bold pt-2 border-t border-gray-200/60">
+                                <span class="text-gray-600 font-medium">Total</span>
+                                <span class="text-brand-600 text-base">Rp {{ number_format($order->total_amount, 0, ',', '.') }}</span>
+                            </div>
+                        </div>
+
+                        <div class="pt-1">
+                            <a href="{{ route('superuser.orders.show', $order) }}" class="flex items-center justify-center w-full space-x-2 text-brand-600 font-bold text-sm bg-brand-50 hover:bg-brand-100 px-4 py-3 rounded-xl transition">
+                                <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+                                <span>View Details</span>
+                            </a>
+                        </div>
+                    </div>
+                @empty
+                    <div class="p-8 text-center">
+                        <div class="w-14 h-14 bg-gray-50 rounded-2xl border border-gray-100 flex items-center justify-center mx-auto mb-4 text-gray-400">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" /></svg>
+                        </div>
+                        <h3 class="text-base font-bold text-gray-900 mb-2">No Orders Found</h3>
+                        <p class="text-sm text-gray-500">There are no orders yet in the system.</p>
+                    </div>
+                @endforelse
+            </div>
+        </div>
         
         @if($orders->hasPages())
-            <div class="px-6 py-4 border-t border-gray-100">
+            <div class="px-6 py-4 border-t border-gray-100 bg-gray-50/50">
                 {{ $orders->links() }}
             </div>
         @endif
