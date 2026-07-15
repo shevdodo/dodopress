@@ -95,6 +95,7 @@ Route::prefix('pranotoweb')
         Route::resource('products', ProductController::class);
 
         Route::get('/orders', [SuperuserDashboardController::class, 'ordersIndex'])->name('orders.index');
+        Route::get('/orders/{order}', [SuperuserDashboardController::class, 'ordersShow'])->name('orders.show');
         
         Route::resource('menus', MenuController::class)->except(['create', 'edit', 'update', 'show']);
         Route::post('menus/{menu}/items', [MenuController::class, 'addItem'])->name('menus.items.add');

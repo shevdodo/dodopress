@@ -23,6 +23,7 @@
                         <th class="px-6 py-4 font-semibold text-gray-600">Date</th>
                         <th class="px-6 py-4 font-semibold text-gray-600">Amount</th>
                         <th class="px-6 py-4 font-semibold text-gray-600">Status</th>
+                        <th class="px-6 py-4 font-semibold text-gray-600 text-right">Action</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-100">
@@ -43,6 +44,12 @@
                                 <span class="inline-block px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-bold uppercase tracking-wider">
                                     {{ $order->status }}
                                 </span>
+                            </td>
+                            <td class="px-6 py-4 text-right">
+                                <a href="{{ route('superuser.orders.show', $order) }}" class="inline-flex items-center space-x-1 text-brand-600 hover:text-brand-800 font-medium text-sm bg-brand-50 hover:bg-brand-100 px-3 py-1.5 rounded-lg transition">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+                                    <span>Details</span>
+                                </a>
                             </td>
                         </tr>
                     @empty

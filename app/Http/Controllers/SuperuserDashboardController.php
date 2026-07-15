@@ -13,6 +13,12 @@ class SuperuserDashboardController extends Controller
         return view('dashboard.orders.admin_index', compact('orders'));
     }
 
+    public function ordersShow(\App\Models\Order $order)
+    {
+        $order->load(['user', 'items']);
+        return view('dashboard.orders.admin_show', compact('order'));
+    }
+
     /**
      * Display the superuser dashboard.
      */
