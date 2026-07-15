@@ -60,16 +60,6 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified', 'role:user'])
     ->name('dashboard');
 
-Route::get('/test-mail', function() {
-    $user = \App\Models\User::where('role', 'superuser')->first();
-    try {
-        \Illuminate\Support\Facades\Mail::to('shevdodo@gmail.com')->send(new \App\Mail\WelcomeUserMail($user));
-        return 'SUCCESS';
-    } catch (\Exception $e) {
-        return 'ERROR: ' . $e->getMessage();
-    }
-});
-
 /*
 |--------------------------------------------------------------------------
 | Superuser Dashboard Route
