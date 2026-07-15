@@ -72,6 +72,10 @@ class OAuthController extends Controller
             }
             
             // Redirect to intended page or dashboard
+            $authUser = Auth::user();
+            if ($authUser && ($authUser->isSuperuser() || $authUser->isAdmin())) {
+                return redirect()->intended(route('superuser.dashboard', absolute: false));
+            }
             return redirect()->intended(route('dashboard', absolute: false));
             
         } catch (\Exception $e) {
