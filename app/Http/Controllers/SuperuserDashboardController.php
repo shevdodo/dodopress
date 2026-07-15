@@ -15,7 +15,7 @@ class SuperuserDashboardController extends Controller
 
     public function ordersShow(\App\Models\Order $order)
     {
-        $order->load(['user', 'items']);
+        $order->load(['user', 'items.product']);
         return view('dashboard.orders.admin_show', compact('order'));
     }
 
