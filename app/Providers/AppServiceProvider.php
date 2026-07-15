@@ -62,8 +62,14 @@ class AppServiceProvider extends ServiceProvider
                     $fromAddress = \Illuminate\Support\Facades\DB::table('settings')->where('key', 'mail_from_address')->value('value');
                     if ($fromAddress) {
                         \Illuminate\Support\Facades\Config::set('mail.from.address', $fromAddress);
-                        \Illuminate\Support\Facades\Config::set('mail.from.name', config('app.name'));
+                        \Illuminate\Support\Facades\Config::set('mail.from.name', \Illuminate\Support\Facades\DB::table('settings')->where('key', 'site_title')->value('value') ?: config('app.name'));
                     }
+                }
+
+                // Dynamically set App Name
+                $siteTitle = \Illuminate\Support\Facades\DB::table('settings')->where('key', 'site_title')->value('value');
+                if ($siteTitle) {
+                    \Illuminate\Support\Facades\Config::set('app.name', $siteTitle);
                 }
             }
         } catch (\Exception $e) {
