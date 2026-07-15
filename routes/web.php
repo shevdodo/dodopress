@@ -88,13 +88,13 @@ Route::prefix('pranotoweb')
 
         Route::resource('categories', CategoryController::class);
 
-        // Bulk delete HARUS sebelum resource route agar tidak ditangkap sebagai {product} ID
         Route::delete('/products/bulk-delete', [ProductController::class, 'bulkDestroy'])->name('products.bulk-destroy');
         Route::put('/products/bulk-update', [ProductController::class, 'bulkUpdate'])->name('products.bulk-update');
         Route::get('/products/export', [ProductController::class, 'export'])->name('products.export');
         Route::post('/products/import', [ProductController::class, 'import'])->name('products.import');
         Route::resource('products', ProductController::class);
 
+        Route::get('/orders', [SuperuserDashboardController::class, 'ordersIndex'])->name('orders.index');
         
         Route::resource('menus', MenuController::class)->except(['create', 'edit', 'update', 'show']);
         Route::post('menus/{menu}/items', [MenuController::class, 'addItem'])->name('menus.items.add');

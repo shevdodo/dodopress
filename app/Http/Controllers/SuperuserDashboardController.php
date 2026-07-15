@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 
 class SuperuserDashboardController extends Controller
 {
+    public function ordersIndex()
+    {
+        $orders = \App\Models\Order::with('user', 'items')->latest()->paginate(15);
+        return view('dashboard.orders.admin_index', compact('orders'));
+    }
+
     /**
      * Display the superuser dashboard.
      */
