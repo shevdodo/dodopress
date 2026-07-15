@@ -44,7 +44,7 @@ class AuthenticatedSessionController extends Controller
         $user->cart_data = json_encode($mergedCart);
         $user->save();
 
-        if ($user->isSuperuser()) {
+        if ($user->isSuperuser() || $user->isAdmin()) {
             return redirect()->intended(route('superuser.dashboard', absolute: false));
         }
 

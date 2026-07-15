@@ -76,6 +76,8 @@
                                                     <div class="sm:hidden">
                                                         @if($user->role === 'superuser')
                                                             <span class="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wider bg-red-100 text-red-600 uppercase">Superuser</span>
+                                                        @elseif($user->role === 'admin')
+                                                            <span class="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wider bg-blue-100 text-blue-600 uppercase">Admin</span>
                                                         @else
                                                             <span class="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wider bg-green-100 text-green-600 uppercase">User</span>
                                                         @endif
@@ -113,6 +115,10 @@
                                 @if($user->role === 'superuser')
                                     <span class="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-bold tracking-wider bg-red-100 text-red-600 uppercase">
                                         Superuser
+                                    </span>
+                                @elseif($user->role === 'admin')
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-bold tracking-wider bg-blue-100 text-blue-600 uppercase">
+                                        Admin
                                     </span>
                                 @else
                                     <span class="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-bold tracking-wider bg-emerald-100 text-emerald-600 uppercase">
