@@ -284,6 +284,59 @@
                         <span class="{{ request()->routeIs('superuser.clear-cache') ? 'font-medium' : '' }}">Clear Cache</span>
                     </a>
                 </div>
+            @elseif(Auth::check() && Auth::user()->role === 'admin')
+                <!-- NAVIGASI UTAMA -->
+                <a href="{{ route('superuser.dashboard') }}"
+                    class="flex items-center space-x-3 px-4 py-3 rounded-xl {{ request()->routeIs('superuser.dashboard') ? 'text-white bg-gradient-to-r from-brand-600 to-brand-700 shadow-lg shadow-brand-900/30 font-medium' : 'text-brand-200 hover:text-white hover:bg-brand-800/60' }} transition-all duration-200">
+                    <div class="w-5 h-5 flex items-center justify-center">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" /></svg>
+                    </div>
+                    <span class="{{ request()->routeIs('superuser.dashboard') ? 'font-medium' : '' }}">Overview</span>
+                </a>
+
+                <a href="{{ route('profile.edit') }}"
+                    class="flex items-center space-x-3 px-4 py-3 rounded-xl {{ request()->routeIs('profile.edit') ? 'text-white bg-gradient-to-r from-brand-600 to-brand-700 shadow-lg shadow-brand-900/30 font-medium' : 'text-brand-200 hover:text-white hover:bg-brand-800/60' }} transition-all duration-200 group">
+                    <div class="w-5 h-5 flex items-center justify-center">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+                    </div>
+                    <span class="{{ request()->routeIs('profile.edit') ? 'font-medium' : '' }}">My Profile</span>
+                </a>
+
+                <!-- E-COMMERCE -->
+                <div class="pt-3 mt-3 border-t border-brand-800/50">
+                    <p class="px-4 text-[10px] uppercase tracking-widest text-brand-400 font-semibold mb-2">E-Commerce</p>
+                    <a href="{{ route('superuser.orders.index') }}"
+                        class="flex items-center space-x-3 px-4 py-3 rounded-xl {{ request()->routeIs('superuser.orders.*') ? 'text-white bg-gradient-to-r from-brand-600 to-brand-700 shadow-lg shadow-brand-900/30 font-medium' : 'text-brand-200 hover:text-white hover:bg-brand-800/60' }} transition-all duration-200">
+                        <div class="w-5 h-5 flex items-center justify-center">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" /></svg>
+                        </div>
+                        <span class="{{ request()->routeIs('superuser.orders.*') ? 'font-medium' : '' }}">List Orders</span>
+                    </a>
+                </div>
+
+                <!-- PRODUCT MANAGEMENT -->
+                <div class="pt-3 mt-3 border-t border-brand-800/50">
+                    <p class="px-4 text-[10px] uppercase tracking-widest text-brand-400 font-semibold mb-2">Product Management</p>
+                    <a href="{{ route('superuser.products.index') }}"
+                        class="flex items-center space-x-3 px-4 py-3 rounded-xl {{ request()->routeIs('superuser.products.*') ? 'text-white bg-gradient-to-r from-brand-600 to-brand-700 shadow-lg shadow-brand-900/30 font-medium' : 'text-brand-200 hover:text-white hover:bg-brand-800/60' }} transition-all duration-200">
+                        <div class="w-5 h-5 flex items-center justify-center">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" /></svg>
+                        </div>
+                        <span class="{{ request()->routeIs('superuser.products.*') ? 'font-medium' : '' }}">Products</span>
+                    </a>
+                </div>
+
+                <!-- CUSTOMER SERVICE -->
+                <div class="pt-3 mt-3 border-t border-brand-800/50">
+                    <p class="px-4 text-[10px] uppercase tracking-widest text-brand-400 font-semibold mb-2">Customer Service</p>
+                    <a href="{{ route('superuser.contact-messages.index') }}"
+                        class="flex items-center space-x-3 px-4 py-3 rounded-xl {{ request()->routeIs('superuser.contact-messages.*') ? 'text-white bg-gradient-to-r from-brand-600 to-brand-700 shadow-lg shadow-brand-900/30 font-medium' : 'text-brand-200 hover:text-white hover:bg-brand-800/60' }} transition-all duration-200">
+                        <div class="w-5 h-5 flex items-center justify-center">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                        </div>
+                        <span class="{{ request()->routeIs('superuser.contact-messages.*') ? 'font-medium' : '' }}">Messages</span>
+                    </a>
+                </div>
             @else
                 <!-- Standard User Links -->
                 <a href="{{ route('dashboard') }}"

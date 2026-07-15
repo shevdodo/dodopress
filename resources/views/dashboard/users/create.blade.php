@@ -49,6 +49,7 @@
                 <label for="role" class="block text-sm font-semibold text-gray-800 mb-1">Role</label>
                 <select id="role" name="role" required class="w-full sm:max-w-xs border-gray-300 rounded-lg shadow-sm focus:border-brand-500 focus:ring focus:ring-brand-500/20 px-4 py-2 bg-white">
                     <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>User</option>
+                    <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
                     <option value="superuser" {{ old('role') == 'superuser' ? 'selected' : '' }}>Superuser</option>
                 </select>
             </div>

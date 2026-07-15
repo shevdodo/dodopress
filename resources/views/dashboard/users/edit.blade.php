@@ -53,6 +53,7 @@
                 <label for="role" class="block text-sm font-semibold text-gray-800 mb-1">Role</label>
                 <select id="role" name="role" required class="w-full sm:max-w-xs border-gray-300 rounded-lg shadow-sm focus:border-brand-500 focus:ring focus:ring-brand-500/20 px-4 py-2 bg-white" {{ $user->id === Auth::id() ? 'disabled' : '' }}>
                     <option value="user" {{ old('role', $user->role) == 'user' ? 'selected' : '' }}>User</option>
+                    <option value="admin" {{ old('role', $user->role) == 'admin' ? 'selected' : '' }}>Admin</option>
                     <option value="superuser" {{ old('role', $user->role) == 'superuser' ? 'selected' : '' }}>Superuser</option>
                 </select>
                 @if($user->id === Auth::id())

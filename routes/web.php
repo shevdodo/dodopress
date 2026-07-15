@@ -66,7 +66,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
 |--------------------------------------------------------------------------
 */
 Route::prefix('pranotoweb')
-    ->middleware(['auth', 'verified', 'role:superuser'])
+    ->middleware(['auth', 'verified', 'role:superuser,admin'])
     ->name('superuser.')
     ->group(function () {
         Route::get('/', [SuperuserDashboardController::class, 'index'])->name('dashboard');

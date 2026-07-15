@@ -53,7 +53,7 @@ class SuperuserDashboardController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
-            'role' => 'required|in:user,superuser',
+            'role' => 'required|in:user,superuser,admin',
         ]);
 
         User::create([
@@ -76,7 +76,7 @@ class SuperuserDashboardController extends Controller
         $rules = [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
-            'role' => 'required|in:user,superuser',
+            'role' => 'required|in:user,superuser,admin',
         ];
 
         if ($request->filled('password')) {
