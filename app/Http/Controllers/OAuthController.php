@@ -57,6 +57,7 @@ class OAuthController extends Controller
                         'avatar' => $googleUser->avatar,
                         'password' => bcrypt(Str::random(16)), // Random password
                         'role' => 'user', // Default role
+                        'email_verified_at' => now(), // Automatically verify email since Google already verified it
                     ]);
                     
                     Auth::login($newUser);
