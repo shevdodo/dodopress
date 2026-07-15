@@ -24,6 +24,22 @@ class SuperuserDashboardController extends Controller
      */
     public function index()
     {
+        $user = \Illuminate\Support\Facades\Auth::user();
+        
+        if ($user && $user->role === 'admin') {
+            $stats = [
+                'total_orders' => \App\Models\Order::count(),
+                'pending_orders' => \App\Models\Order::where('status', 'pending')->count(),
+                'total_products' => \App\Models\Product::count(),
+                'unread_messages' => \App\Models\ContactMessage::where('is_read', false)->count(),
+            ];
+            
+            $recent_orders = \App\Models\Order::with('user')->latest()->take(5)->get();
+            $recent_messages = \App\Models\ContactMessage::latest()->take(5)->get();
+            
+            return view('dashboard.admin', compact('stats', 'recent_orders', 'recent_messages'));
+        }
+
         // Fetch some basic stats for a professional dashboard experience
         $stats = [
             'total_users' => User::count(),
