@@ -1,4 +1,4 @@
-<x-layouts.dashboard title="Order Details - {{ $order->order_number }}">
+<x-layouts.dashboard title="Order Details">
     <div class="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div class="min-w-0 flex-1">
             <div class="flex items-center space-x-3 min-w-0">
