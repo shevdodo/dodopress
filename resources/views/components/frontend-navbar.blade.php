@@ -65,7 +65,7 @@
                     <div class="flex items-center space-x-3">
                         @if (Route::has('login'))
                             @auth
-                                @if (Auth::user()->isSuperuser())
+                                @if (Auth::user()->isSuperuser() || Auth::user()->isAdmin())
                                     <a href="{{ route('superuser.dashboard') }}" class="bg-white border-2 border-brand-100 text-brand-700 hover:border-brand-200 hover:bg-brand-50 px-5 py-2.5 rounded-xl text-sm font-bold transition-all duration-300">Dashboard</a>
                                 @else
                                     <a href="{{ route('dashboard') }}" class="bg-white border-2 border-brand-100 text-brand-700 hover:border-brand-200 hover:bg-brand-50 px-5 py-2.5 rounded-xl text-sm font-bold transition-all duration-300">Dashboard</a>
@@ -157,7 +157,7 @@
                 <div class="border-t border-gray-100 pt-4 mt-4">
                     @if (Route::has('login'))
                         @auth
-                            @if (Auth::user()->isSuperuser())
+                            @if (Auth::user()->isSuperuser() || Auth::user()->isAdmin())
                                 <a href="{{ route('superuser.dashboard') }}" class="block text-center bg-gray-50 text-gray-800 px-4 py-3.5 rounded-xl text-base font-bold transition border border-gray-200">Dashboard</a>
                             @else
                                 <a href="{{ route('dashboard') }}" class="block text-center bg-gray-50 text-gray-800 px-4 py-3.5 rounded-xl text-base font-bold transition border border-gray-200">Dashboard</a>
