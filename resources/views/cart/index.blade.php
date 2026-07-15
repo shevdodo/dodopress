@@ -392,11 +392,13 @@
 
                 })
                 .catch(err => {
-                    resultsDiv.innerHTML = `<div class="p-4 rounded-xl bg-red-50 text-red-600 text-sm border border-red-100">An error occurred while calculating shipping cost. Using fallback calculation.</div>`;
+                    console.error("Shipping API Error:", err);
+                    resultsDiv.innerHTML = `<div class="p-4 rounded-xl bg-red-50 text-red-600 text-sm border border-red-100">API Error: ${err.message}. Using fallback calculation.</div>`;
                     
                     // Force fallback calculation button
                     setTimeout(() => {
-                        resultsDiv.innerHTML = '';
+                        // We do not clear the error message so the user can see it
+                        // Just append the fallback data below it
                         const fallbackData = [{ "service": "REG (Fallback)", "description": "Layanan Reguler", "cost": [{"value": 25000, "etd": "2-3"}] }];
                         
                         fallbackData.forEach(cost => {
