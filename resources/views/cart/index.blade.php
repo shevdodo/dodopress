@@ -155,15 +155,24 @@
                             <div>
                                 <label class="block text-sm text-gray-700 mb-1">Courier</label>
                                 <select id="courier" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-brand-500 focus:ring-brand-500/20 px-3 py-2 text-sm">
-                                    <option value="jne">JNE</option>
-                                    <option value="pos">POS Indonesia</option>
-                                    <option value="tiki">TIKI</option>
-                                    <option value="jnt">J&T Express</option>
-                                    <option value="sicepat">SiCepat</option>
-                                    <option value="anteraja">AnterAja</option>
-                                    <option value="ninja">Ninja Xpress</option>
-                                    <option value="ide">ID Express</option>
-                                    <option value="lion">Lion Parcel</option>
+                                    @php
+                                        $allCouriers = [
+                                            'jne' => 'JNE',
+                                            'pos' => 'POS Indonesia',
+                                            'tiki' => 'TIKI',
+                                            'jnt' => 'J&T Express',
+                                            'sicepat' => 'SiCepat',
+                                            'anteraja' => 'AnterAja',
+                                            'ninja' => 'Ninja Xpress',
+                                            'ide' => 'ID Express',
+                                            'lion' => 'Lion Parcel'
+                                        ];
+                                    @endphp
+                                    @foreach($enabledCouriers ?? ['jne','pos','tiki'] as $code)
+                                        @if(isset($allCouriers[$code]))
+                                            <option value="{{ $code }}">{{ $allCouriers[$code] }}</option>
+                                        @endif
+                                    @endforeach
                                 </select>
                             </div>
                         </div>

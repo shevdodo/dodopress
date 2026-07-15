@@ -33,6 +33,33 @@
                 <label for="api_shipping_key" class="block text-sm font-semibold text-gray-800 mb-1">Shipping API Key</label>
                 <input type="text" id="api_shipping_key" name="api_shipping_key" value="{{ old('api_shipping_key', $settings['api_shipping_key'] ?? '') }}" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-brand-500 focus:ring focus:ring-brand-500/20 px-4 py-2 font-mono text-sm" placeholder="Enter your Shipping API Key (e.g., RajaOngkir API Key)">
             </div>
+            
+            <div class="mt-4 p-4 rounded-xl border border-gray-100 bg-gray-50/50">
+                <label class="block text-sm font-semibold text-gray-800 mb-3">Enabled Couriers</label>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                    @php
+                        $enabledCouriers = explode(',', $settings['api_shipping_couriers'] ?? 'jne,pos,tiki');
+                        $availableCouriers = [
+                            'jne' => 'JNE',
+                            'pos' => 'POS Indonesia',
+                            'tiki' => 'TIKI',
+                            'jnt' => 'J&T Express',
+                            'sicepat' => 'SiCepat',
+                            'anteraja' => 'AnterAja',
+                            'ninja' => 'Ninja Xpress',
+                            'ide' => 'ID Express',
+                            'lion' => 'Lion Parcel'
+                        ];
+                    @endphp
+                    @foreach($availableCouriers as $code => $name)
+                    <label class="flex items-center space-x-2 cursor-pointer">
+                        <input type="checkbox" name="api_shipping_couriers[]" value="{{ $code }}" class="rounded border-gray-300 text-brand-600 focus:ring-brand-500" {{ in_array($code, $enabledCouriers) ? 'checked' : '' }}>
+                        <span class="text-sm text-gray-700">{{ $name }}</span>
+                    </label>
+                    @endforeach
+                </div>
+                <p class="text-xs text-gray-500 mt-3">Select which couriers should be available to customers on the checkout page.</p>
+            </div>
 
             <hr class="border-gray-100">
 

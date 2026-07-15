@@ -51,7 +51,10 @@ class CartController extends Controller
             }
         }
 
-        return view('cart.index', compact('cart', 'apiShippingEnabled', 'provinces'));
+        $enabledCouriersStr = \App\Models\Setting::where('key', 'api_shipping_couriers')->value('value') ?: 'jne,pos,tiki';
+        $enabledCouriers = explode(',', $enabledCouriersStr);
+
+        return view('cart.index', compact('cart', 'apiShippingEnabled', 'provinces', 'enabledCouriers'));
     }
 
     private function syncCart($cart)
