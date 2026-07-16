@@ -42,7 +42,7 @@
         aside.bg-brand-950 a:hover { color: #72aee6 !important; background: transparent !important; }
         aside.bg-brand-950 a.bg-gradient-to-r { background-color: #2271b1 !important; color: #fff !important; box-shadow: none !important; font-weight: normal; border-left: 4px solid #fff; padding-left: 12px !important; background-image: none !important; }
         aside.bg-brand-950 .border-t { border-color: transparent !important; }
-        aside.bg-brand-950 p.text-\[10px\] { display: none; }
+        aside.bg-brand-950 p.text-\[10px\] { color: #a7aaad !important; font-size: 11px !important; padding-top: 10px !important; font-weight: 600 !important; }
         .bg-brand-900\/60 { background-color: #1d2327 !important; border: none !important; border-top: 1px solid rgba(255,255,255,0.1) !important; border-radius: 0 !important; }
         header.bg-white { background-color: #fff !important; border-bottom: 1px solid #dcdcde !important; height: 32px !important; min-height: 32px !important; padding-left: 12px; padding-right: 12px; }
         header h1 { font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif; color: #1d2327; font-size: 13px !important; font-weight: normal; }
