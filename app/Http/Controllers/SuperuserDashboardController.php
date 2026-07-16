@@ -178,9 +178,10 @@ class SuperuserDashboardController extends Controller
         $request->validate([
             'theme_color' => 'nullable|string|max:50',
             'theme_font' => 'nullable|string|max:100',
+            'dashboard_theme' => 'nullable|string|max:50',
         ]);
 
-        $data = $request->only(['theme_color', 'theme_font']);
+        $data = $request->only(['theme_color', 'theme_font', 'dashboard_theme']);
         
         foreach ($data as $key => $value) {
             \App\Models\Setting::updateOrCreate(['key' => $key], ['value' => $value]);

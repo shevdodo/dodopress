@@ -7,6 +7,7 @@
     @php
         $siteTitle = \App\Models\Setting::where('key', 'site_title')->value('value') ?: config('app.name', 'Laravel');
         $favIcon = \App\Models\Setting::where('key', 'fav_icon')->value('value');
+        $dashboardTheme = \App\Models\Setting::where('key', 'dashboard_theme')->value('value') ?: 'default';
     @endphp
     <title>{{ $siteTitle }} - {{ $title ?? 'Dashboard' }}</title>
 
@@ -32,6 +33,25 @@
         .card-hover:hover { transform: translateY(-2px); box-shadow: 0 12px 25px -8px rgba(0,0,0,0.15); }
         [x-cloak] { display: none !important; }
     </style>
+    @if($dashboardTheme === 'wordpress')
+    <style>
+        /* WP Admin classic styling overrides */
+        body { background-color: #f1f1f1 !important; }
+        aside.bg-brand-950 { background-color: #1d2327 !important; border-right: none !important; }
+        aside.bg-brand-950 a { color: #c3c4c7 !important; border-radius: 0 !important; margin: 0 !important; padding-top: 8px !important; padding-bottom: 8px !important; transition: none !important; }
+        aside.bg-brand-950 a:hover { color: #72aee6 !important; background: transparent !important; }
+        aside.bg-brand-950 a.bg-gradient-to-r { background-color: #2271b1 !important; color: #fff !important; box-shadow: none !important; font-weight: normal; border-left: 4px solid #fff; padding-left: 12px !important; background-image: none !important; }
+        aside.bg-brand-950 .border-t { border-color: transparent !important; }
+        aside.bg-brand-950 p.text-\[10px\] { display: none; }
+        .bg-brand-900\/60 { background-color: #1d2327 !important; border: none !important; border-top: 1px solid rgba(255,255,255,0.1) !important; border-radius: 0 !important; }
+        header.bg-white { background-color: #fff !important; border-bottom: 1px solid #dcdcde !important; height: 32px !important; min-height: 32px !important; padding-left: 12px; padding-right: 12px; }
+        header h1 { font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif; color: #1d2327; font-size: 13px !important; font-weight: normal; }
+        .rounded-xl, .rounded-lg, .rounded-md { border-radius: 2px !important; }
+        .shadow-sm, .shadow-lg, .shadow-xl { box-shadow: 0 1px 1px rgba(0,0,0,.04) !important; }
+        main.flex-1 { padding: 20px !important; }
+        * { font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif !important; }
+    </style>
+    @endif
 </head>
 <body class="font-sans antialiased bg-gray-50 text-gray-900">
 

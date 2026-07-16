@@ -19,6 +19,21 @@
                     <form action="{{ route('superuser.settings.theme.update') }}" method="POST" class="space-y-6 max-w-2xl">
                         @csrf
                         
+                        <!-- Dashboard Theme -->
+                        <div>
+                            <label for="dashboard_theme" class="block text-sm font-medium text-gray-700">Tampilan Dashboard (Dashboard Theme)</label>
+                            <p class="text-sm text-gray-500 mb-2">Pilih gaya tampilan untuk panel admin.</p>
+                            <select name="dashboard_theme" id="dashboard_theme" class="mt-1 block w-full border-gray-300 focus:border-brand-500 focus:ring-brand-500 rounded-md shadow-sm">
+                                <option value="default" {{ (!isset($settings['dashboard_theme']) || $settings['dashboard_theme'] == 'default') ? 'selected' : '' }}>Default (Modern Tailwind)</option>
+                                <option value="wordpress" {{ (isset($settings['dashboard_theme']) && $settings['dashboard_theme'] == 'wordpress') ? 'selected' : '' }}>Wordpress (Klasik WP-Admin)</option>
+                            </select>
+                            @error('dashboard_theme')
+                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <hr class="border-gray-100">
+                        
                         <!-- Theme Tone Color -->
                         <div>
                             <label for="theme_color" class="block text-sm font-medium text-gray-700">Tone Warna (Theme Color)</label>
