@@ -44,8 +44,13 @@
         aside.bg-brand-950 .border-t { border-color: transparent !important; }
         aside.bg-brand-950 p.text-\[10px\] { color: #a7aaad !important; font-size: 11px !important; padding-top: 10px !important; font-weight: 600 !important; }
         .bg-brand-900\/60 { background-color: #1d2327 !important; border: none !important; border-top: 1px solid rgba(255,255,255,0.1) !important; border-radius: 0 !important; }
-        header.bg-white { background-color: #fff !important; border-bottom: 1px solid #dcdcde !important; height: 32px !important; min-height: 32px !important; padding-left: 12px; padding-right: 12px; }
-        header h1 { font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif; color: #1d2327; font-size: 13px !important; font-weight: normal; }
+        header.bg-white { background-color: #1d2327 !important; color: #fff !important; border-bottom: none !important; }
+        header h1 { font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif; color: #fff !important; font-size: 16px !important; font-weight: normal; }
+        header .text-gray-500, header .text-gray-400 { color: #c3c4c7 !important; }
+        header .text-gray-700, header .text-gray-800 { color: #fff !important; }
+        header input { background-color: #2c3338 !important; border-color: transparent !important; color: #fff !important; }
+        header input::placeholder { color: #8c8f94 !important; }
+        header button:hover { background-color: #2c3338 !important; }
         .rounded-xl, .rounded-lg, .rounded-md { border-radius: 2px !important; }
         .shadow-sm, .shadow-lg, .shadow-xl { box-shadow: 0 1px 1px rgba(0,0,0,.04) !important; }
         main.flex-1 { padding: 20px !important; }
