@@ -377,6 +377,42 @@ class CartController extends Controller
             }
         }
 
+        // Midtrans Integration
+        $paymentEnabled = \App\Models\Setting::where('key', 'api_payment_enabled')->value('value') == '1';
+        $paymentProvider = \App\Models\Setting::where('key', 'api_payment_provider')->value('value') ?: 'midtrans';
+
+        if ($paymentEnabled && $paymentProvider === 'midtrans') {
+            $serverKey = \App\Models\Setting::where('key', 'api_payment_server_key')->value('value');
+            if (!empty($serverKey)) {
+                $isProduction = false; // Set to true if you are using Midtrans production
+                $snapUrl = $isProduction ? 'https://app.midtrans.com/snap/v1/transactions' : 'https://app.sandbox.midtrans.com/snap/v1/transactions';
+
+                $payload = [
+                    'transaction_details' => [
+                        'order_id' => $order->order_number,
+                        'gross_amount' => (int) $order->total_amount,
+                    ],
+                    'customer_details' => [
+                        'first_name' => auth()->user()->name,
+                        'email' => auth()->user()->email,
+                    ],
+                ];
+
+                try {
+                    $response = \Illuminate\Support\Facades\Http::withBasicAuth($serverKey, '')
+                        ->post($snapUrl, $payload);
+                    
+                    if ($response->successful()) {
+                        $order->snap_token = $response->json()['token'] ?? null;
+                        $order->payment_url = $response->json()['redirect_url'] ?? null;
+                        $order->save();
+                    }
+                } catch (\Exception $e) {
+                    \Illuminate\Support\Facades\Log::error('Midtrans API Error: ' . $e->getMessage());
+                }
+            }
+        }
+
         // Clear cart
         $this->syncCart([]);
 

@@ -38,7 +38,22 @@
                         </span>
                     </div>
 
-                    @if(!empty($bankAccounts))
+                    @if($order->payment_url)
+                        <div class="bg-brand-50 p-6 rounded-2xl border border-brand-100 shadow-sm text-center space-y-4">
+                            <div class="w-16 h-16 bg-white rounded-full mx-auto flex items-center justify-center shadow-sm">
+                                <svg class="w-8 h-8 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold text-gray-900 mb-1">Bayar secara Otomatis</h3>
+                                <p class="text-sm text-gray-600 mb-4">Lakukan pembayaran dengan aman melalui sistem Payment Gateway kami (Mendukung Virtual Account, E-Wallet, dan Kartu Kredit).</p>
+                                <a href="{{ $order->payment_url }}" class="inline-block px-8 py-4 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl shadow-lg shadow-brand-600/30 transition transform hover:-translate-y-1">
+                                    Bayar Sekarang (Midtrans)
+                                </a>
+                            </div>
+                        </div>
+                    @endif
+
+                    @if(!$order->payment_url && !empty($bankAccounts))
                         <div class="space-y-3">
                             <h5 class="text-sm font-bold text-gray-700 flex items-center">
                                 <svg class="w-5 h-5 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"></path></svg>
@@ -54,7 +69,7 @@
                 </div>
                 
                 <!-- Right Column: QRIS -->
-                @if(!empty($qrisImage))
+                @if(!$order->payment_url && !empty($qrisImage))
                     <div class="w-full lg:w-[320px] shrink-0 space-y-3">
                         <h5 class="text-sm font-bold text-gray-700 flex items-center">
                             <svg class="w-5 h-5 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path></svg>
@@ -68,20 +83,26 @@
                 @endif
             </div>
 
-            @php
-                $waText = "Halo, saya ingin mengkonfirmasi pembayaran untuk pesanan saya:\n\nOrder ID: *{$order->order_number}*\nTotal: *Rp " . number_format($order->total_amount, 0, ',', '.') . "*\n\nBerikut saya lampirkan bukti pembayarannya.";
-                $waLink = "https://wa.me/" . preg_replace('/[^0-9]/', '', $whatsappNumber) . "?text=" . urlencode($waText);
-            @endphp
+            @if(!$order->payment_url)
+                @php
+                    $waText = "Halo, saya ingin mengkonfirmasi pembayaran untuk pesanan saya:\n\nOrder ID: *{$order->order_number}*\nTotal: *Rp " . number_format($order->total_amount, 0, ',', '.') . "*\n\nBerikut saya lampirkan bukti pembayarannya.";
+                    $waLink = "https://wa.me/" . preg_replace('/[^0-9]/', '', $whatsappNumber) . "?text=" . urlencode($waText);
+                @endphp
 
-            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-brand-100/50">
-                <p class="text-sm text-gray-500 w-full sm:max-w-md text-center sm:text-left">
-                    Setelah melakukan pembayaran, klik tombol di samping untuk mengirim bukti transfer via WhatsApp agar pesanan segera diproses.
-                </p>
-                <a href="{{ $waLink }}" target="_blank" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 bg-[#25D366] hover:bg-[#1da851] text-white font-bold rounded-2xl shadow-lg shadow-[#25D366]/20 transition transform hover:-translate-y-1">
-                    <svg class="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.898-4.45 9.898-9.892 0-2.64-1.02-5.119-2.894-6.992-1.873-1.873-4.361-2.905-7.003-2.905-5.446 0-9.896 4.451-9.896 9.893 0 2.113.553 4.146 1.603 5.945l-1.164 4.257 4.406-1.164zm1.187-8.158c-.144-.405-.298-.415-.415-.422-.104-.006-.226-.006-.35-.006-.124 0-.327.047-.498.233-.171.186-.653.638-.653 1.556 0 .918.669 1.806.762 1.93.093.124 1.317 2.012 3.19 2.774.446.182.793.291 1.065.372.449.144.858.123 1.184.075.364-.055 1.119-.457 1.277-.9.158-.443.158-.823.111-.9-.047-.078-.171-.124-.358-.218-.186-.093-1.119-.553-1.292-.616-.173-.063-.298-.093-.422.093-.124.186-.498.616-.612.74-.114.124-.228.14-.415.047-.186-.093-.799-.295-1.521-.94-.562-.503-.941-1.124-1.055-1.31-.114-.186-.012-.287.081-.38.083-.082.186-.217.28-.325.093-.109.124-.186.186-.31.063-.124.031-.233-.016-.326-.046-.093-.421-1.017-.575-1.391z"/></svg>
-                    Konfirmasi WhatsApp
-                </a>
-            </div>
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-brand-100/50 mt-8">
+                    <p class="text-sm text-gray-500 w-full sm:max-w-md text-center sm:text-left">
+                        Setelah melakukan pembayaran, klik tombol di samping untuk mengirim bukti transfer via WhatsApp agar pesanan segera diproses.
+                    </p>
+                    <a href="{{ $waLink }}" target="_blank" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 bg-[#25D366] hover:bg-[#1da851] text-white font-bold rounded-2xl shadow-lg shadow-[#25D366]/20 transition transform hover:-translate-y-1">
+                        <svg class="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.898-4.45 9.898-9.892 0-2.64-1.02-5.119-2.894-6.992-1.873-1.873-4.361-2.905-7.003-2.905-5.446 0-9.896 4.451-9.896 9.893 0 2.113.553 4.146 1.603 5.945l-1.164 4.257 4.406-1.164zm1.187-8.158c-.144-.405-.298-.415-.415-.422-.104-.006-.226-.006-.35-.006-.124 0-.327.047-.498.233-.171.186-.653.638-.653 1.556 0 .918.669 1.806.762 1.93.093.124 1.317 2.012 3.19 2.774.446.182.793.291 1.065.372.449.144.858.123 1.184.075.364-.055 1.119-.457 1.277-.9.158-.443.158-.823.111-.9-.047-.078-.171-.124-.358-.218-.186-.093-1.119-.553-1.292-.616-.173-.063-.298-.093-.422.093-.124.186-.498.616-.612.74-.114.124-.228.14-.415.047-.186-.093-.799-.295-1.521-.94-.562-.503-.941-1.124-1.055-1.31-.114-.186-.012-.287.081-.38.083-.082.186-.217.28-.325.093-.109.124-.186.186-.31.063-.124.031-.233-.016-.326-.046-.093-.421-1.017-.575-1.391z"/></svg>
+                        Konfirmasi WhatsApp
+                    </a>
+                </div>
+            @else
+                <div class="mt-6 text-center">
+                    <p class="text-sm text-gray-500">Pembayaran Anda akan dikonfirmasi secara otomatis setelah berhasil melalui Midtrans.</p>
+                </div>
+            @endif
         </div>
     </div>
 </x-layouts.dashboard>
