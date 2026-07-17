@@ -384,7 +384,8 @@ class CartController extends Controller
         if ($paymentEnabled && $paymentProvider === 'midtrans') {
             $serverKey = \App\Models\Setting::where('key', 'api_payment_server_key')->value('value');
             if (!empty($serverKey)) {
-                $isProduction = false; // Set to true if you are using Midtrans production
+                // Auto-detect environment based on key prefix (Sandbox keys start with 'SB-')
+                $isProduction = !str_starts_with($serverKey, 'SB-');
                 $snapUrl = $isProduction ? 'https://app.midtrans.com/snap/v1/transactions' : 'https://app.sandbox.midtrans.com/snap/v1/transactions';
 
                 $payload = [
@@ -406,9 +407,11 @@ class CartController extends Controller
                         $order->snap_token = $response->json()['token'] ?? null;
                         $order->payment_url = $response->json()['redirect_url'] ?? null;
                         $order->save();
+                    } else {
+                        \Illuminate\Support\Facades\Log::error('Midtrans API Failed: ' . $response->body());
                     }
                 } catch (\Exception $e) {
-                    \Illuminate\Support\Facades\Log::error('Midtrans API Error: ' . $e->getMessage());
+                    \Illuminate\Support\Facades\Log::error('Midtrans API Exception: ' . $e->getMessage());
                 }
             }
         }
