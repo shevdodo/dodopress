@@ -77,39 +77,44 @@
                                             </div>
                                         </div>
 
-                                        <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                                            <div>
-                                                <p class="text-sm text-gray-500 font-medium mb-1">Total Tagihan</p>
-                                                <p class="text-3xl font-extrabold text-brand-600 tracking-tight">Rp {{ number_format($order->total_amount, 0, ',', '.') }}</p>
-                                            </div>
-                                            <span class="px-4 py-2 bg-yellow-50 text-yellow-700 rounded-xl text-sm font-bold border border-yellow-100 self-start sm:self-auto">
-                                                Status: PENDING
-                                            </span>
-                                        </div>
-                                        
-                                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-                                            @if(!empty($bankAccounts))
-                                                <div class="space-y-3">
-                                                    <h5 class="text-sm font-bold text-gray-700 flex items-center">
-                                                        <svg class="w-5 h-5 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"></path></svg>
-                                                        Transfer Bank
-                                                    </h5>
-                                                    <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
-                                                        <div class="prose prose-sm prose-gray max-w-none font-medium leading-loose">
-                                                            {!! nl2br(e($bankAccounts)) !!}
+                                        <div class="flex flex-col lg:flex-row gap-6 mb-8">
+                                            <!-- Left Column: Bank Accounts & Total -->
+                                            <div class="flex-1 space-y-6">
+                                                <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                                                    <div>
+                                                        <p class="text-sm text-gray-500 font-medium mb-1">Total Tagihan</p>
+                                                        <p class="text-3xl font-extrabold text-brand-600 tracking-tight">Rp {{ number_format($order->total_amount, 0, ',', '.') }}</p>
+                                                    </div>
+                                                    <span class="px-4 py-2 bg-yellow-50 text-yellow-700 rounded-xl text-sm font-bold border border-yellow-100 self-start sm:self-auto">
+                                                        Status: PENDING
+                                                    </span>
+                                                </div>
+
+                                                @if(!empty($bankAccounts))
+                                                    <div class="space-y-3">
+                                                        <h5 class="text-sm font-bold text-gray-700 flex items-center">
+                                                            <svg class="w-5 h-5 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"></path></svg>
+                                                            Transfer Bank Manual
+                                                        </h5>
+                                                        <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm h-full">
+                                                            <div class="prose prose-sm prose-gray max-w-none font-medium leading-loose text-base">
+                                                                {!! nl2br(e($bankAccounts)) !!}
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            @endif
+                                                @endif
+                                            </div>
                                             
+                                            <!-- Right Column: QRIS -->
                                             @if(!empty($qrisImage))
-                                                <div class="space-y-3">
+                                                <div class="w-full lg:w-[320px] shrink-0 space-y-3">
                                                     <h5 class="text-sm font-bold text-gray-700 flex items-center">
                                                         <svg class="w-5 h-5 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path></svg>
                                                         Scan QRIS
                                                     </h5>
-                                                    <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex justify-center items-center">
-                                                        <img src="{{ Storage::url($qrisImage) }}" alt="QRIS" class="w-full max-w-sm rounded-xl object-contain">
+                                                    <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex flex-col items-center justify-center">
+                                                        <img src="{{ Storage::url($qrisImage) }}" alt="QRIS" class="w-full max-w-[240px] rounded-xl object-contain">
+                                                        <p class="text-xs text-center text-gray-400 mt-4">Scan menggunakan aplikasi mobile banking atau e-wallet Anda.</p>
                                                     </div>
                                                 </div>
                                             @endif
