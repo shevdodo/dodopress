@@ -85,12 +85,9 @@
 
             <div class="mt-4 space-y-4">
                 <div>
-                    <label for="api_payment_server_key" class="block text-sm font-semibold text-gray-800 mb-1">Server Key (Secret Key)</label>
-                    <input type="text" id="api_payment_server_key" name="api_payment_server_key" value="{{ old('api_payment_server_key', $settings['api_payment_server_key'] ?? '') }}" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-brand-500 focus:ring focus:ring-brand-500/20 px-4 py-2 font-mono text-sm" placeholder="Enter Server Key">
-                </div>
-                <div>
-                    <label for="api_payment_client_key" class="block text-sm font-semibold text-gray-800 mb-1">Client Key (Public Key)</label>
-                    <input type="text" id="api_payment_client_key" name="api_payment_client_key" value="{{ old('api_payment_client_key', $settings['api_payment_client_key'] ?? '') }}" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-brand-500 focus:ring focus:ring-brand-500/20 px-4 py-2 font-mono text-sm" placeholder="Enter Client Key">
+                    <label for="api_payment_server_key" class="block text-sm font-semibold text-gray-800 mb-1">Payment API Key (Komerce / Midtrans Server Key)</label>
+                    <input type="text" id="api_payment_server_key" name="api_payment_server_key" value="{{ old('api_payment_server_key', $settings['api_payment_server_key'] ?? '') }}" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-brand-500 focus:ring focus:ring-brand-500/20 px-4 py-2 font-mono text-sm" placeholder="e.g. zYheKNkM45358a68665e0a572py8zmzf">
+                    <p class="text-xs text-gray-500 mt-1">Masukkan API Key dari Komerce Payment atau Server Key Anda di sini.</p>
                 </div>
             </div>
 
