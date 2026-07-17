@@ -70,24 +70,42 @@
             <hr class="border-gray-100">
 
             <!-- Payment API -->
-            <div class="flex items-start justify-between">
-                <div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-1">API Payment Gateway</h3>
-                    <p class="text-sm text-gray-500 max-w-md">Enable this to accept automated online payments (Credit Card, Virtual Account, e-Wallet) via a Payment Gateway (e.g. Midtrans, Xendit).</p>
+            <div x-data="{ provider: '{{ old('api_payment_provider', $settings['api_payment_provider'] ?? 'midtrans') }}', enabled: {{ (isset($settings['api_payment_enabled']) && $settings['api_payment_enabled'] == '1') ? 'true' : 'false' }} }">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <h3 class="text-lg font-bold text-gray-900 mb-1">API Payment Gateway</h3>
+                        <p class="text-sm text-gray-500 max-w-md">Enable this to accept automated online payments (Credit Card, Virtual Account, e-Wallet) via a Payment Gateway.</p>
+                    </div>
+                    <div class="ml-4 pt-1">
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" name="api_payment_enabled" value="1" class="sr-only peer" x-model="enabled">
+                            <div class="w-14 h-7 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-brand-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-brand-600"></div>
+                        </label>
+                    </div>
                 </div>
-                <div class="ml-4 pt-1">
-                    <label class="relative inline-flex items-center cursor-pointer">
-                        <input type="checkbox" name="api_payment_enabled" value="1" class="sr-only peer" {{ (isset($settings['api_payment_enabled']) && $settings['api_payment_enabled'] == '1') ? 'checked' : '' }}>
-                        <div class="w-14 h-7 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-brand-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-brand-600"></div>
-                    </label>
-                </div>
-            </div>
 
-            <div class="mt-4 space-y-4">
-                <div>
-                    <label for="api_payment_server_key" class="block text-sm font-semibold text-gray-800 mb-1">Payment API Key (Komerce / Midtrans Server Key)</label>
-                    <input type="text" id="api_payment_server_key" name="api_payment_server_key" value="{{ old('api_payment_server_key', $settings['api_payment_server_key'] ?? '') }}" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-brand-500 focus:ring focus:ring-brand-500/20 px-4 py-2 font-mono text-sm" placeholder="e.g. zYheKNkM45358a68665e0a572py8zmzf">
-                    <p class="text-xs text-gray-500 mt-1">Masukkan API Key dari Komerce Payment atau Server Key Anda di sini.</p>
+                <div class="mt-6 space-y-5" x-show="enabled" x-collapse>
+                    <div>
+                        <label for="api_payment_provider" class="block text-sm font-semibold text-gray-800 mb-2">Payment Provider</label>
+                        <select id="api_payment_provider" name="api_payment_provider" x-model="provider" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-brand-500 focus:ring focus:ring-brand-500/20 px-4 py-2 text-sm bg-gray-50">
+                            <option value="midtrans">Midtrans</option>
+                            <option value="xendit">Xendit</option>
+                            <option value="komerce">Komerce Payment</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="api_payment_server_key" class="block text-sm font-semibold text-gray-800 mb-1" x-text="provider === 'komerce' ? 'API Key (Komerce)' : 'Server Key (Secret Key)'"></label>
+                        <input type="text" id="api_payment_server_key" name="api_payment_server_key" value="{{ old('api_payment_server_key', $settings['api_payment_server_key'] ?? '') }}" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-brand-500 focus:ring focus:ring-brand-500/20 px-4 py-2 font-mono text-sm" placeholder="Enter Key">
+                        <p class="text-xs text-gray-500 mt-1" x-show="provider === 'komerce'">Masukkan API Key dari Komerce Payment Anda di sini.</p>
+                        <p class="text-xs text-gray-500 mt-1" x-show="provider !== 'komerce'">Masukkan Server Key dari dashboard Midtrans / Xendit Anda.</p>
+                    </div>
+                    
+                    <div x-show="provider !== 'komerce'">
+                        <label for="api_payment_client_key" class="block text-sm font-semibold text-gray-800 mb-1">Client Key (Public Key)</label>
+                        <input type="text" id="api_payment_client_key" name="api_payment_client_key" value="{{ old('api_payment_client_key', $settings['api_payment_client_key'] ?? '') }}" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-brand-500 focus:ring focus:ring-brand-500/20 px-4 py-2 font-mono text-sm" placeholder="Enter Client Key">
+                        <p class="text-xs text-gray-500 mt-1">Masukkan Client Key dari dashboard Midtrans / Xendit Anda.</p>
+                    </div>
                 </div>
             </div>
 
