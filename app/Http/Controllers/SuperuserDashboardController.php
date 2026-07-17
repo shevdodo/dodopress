@@ -303,17 +303,35 @@ class SuperuserDashboardController extends Controller
             'store_catalog_title' => 'nullable|string|max:255',
             'store_page_subtitle' => 'nullable|string',
             'store_products_per_page' => 'nullable|integer|min:1|max:100',
+            'whatsapp_cs_number' => 'nullable|string',
+            'bank_accounts' => 'nullable|string',
         ]);
 
-        $data = $request->only(['store_page_title', 'store_catalog_title', 'store_page_subtitle', 'store_products_per_page']);
+        $data = $request->only([
+            'store_page_title', 
+            'store_catalog_title', 
+            'store_page_subtitle', 
+            'store_products_per_page',
+            'whatsapp_cs_number',
+            'bank_accounts'
+        ]);
 
         if ($request->hasFile('store_banner_image')) {
             $folder = 'media/' . date('Y/m');
             $file = $request->file('store_banner_image');
             $safeName = 'store-banner-' . uniqid() . '.' . $file->getClientOriginalExtension();
             $data['store_banner_image'] = $file->storeAs($folder, $safeName, 'public');
-        } else {
+        } elseif ($request->has('store_banner_image_media_path')) {
             $data['store_banner_image'] = $request->input('store_banner_image_media_path');
+        }
+        
+        if ($request->hasFile('qris_image')) {
+            $folder = 'media/' . date('Y/m');
+            $file = $request->file('qris_image');
+            $safeName = 'qris-' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $data['qris_image'] = $file->storeAs($folder, $safeName, 'public');
+        } elseif ($request->has('qris_image_media_path')) {
+            $data['qris_image'] = $request->input('qris_image_media_path');
         }
 
         foreach ($data as $key => $value) {
