@@ -179,6 +179,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/checkout', [App\Http\Controllers\CartController::class, 'checkout'])->name('checkout');
 
     Route::get('/orders', [App\Http\Controllers\OrderController::class, 'index'])->name('orders.index');
+    Route::get('/orders/{order}/payment', [App\Http\Controllers\OrderController::class, 'payment'])->name('orders.payment');
 });
 
 require __DIR__ . '/auth.php';
