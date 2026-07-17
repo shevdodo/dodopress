@@ -11,6 +11,16 @@
         </div>
     @endif
 
+    @if ($errors->any())
+        <div class="mb-6 p-4 rounded-xl bg-red-50 border border-red-100 text-red-700 text-sm font-medium">
+            <ul class="list-disc pl-5">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <form method="POST" action="{{ route('superuser.settings.api.update') }}">
         @csrf
         <div class="bg-white rounded-3xl border border-gray-100 p-6 sm:p-8 shadow-sm mb-6 space-y-8 max-w-3xl">
