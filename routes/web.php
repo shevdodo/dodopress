@@ -115,6 +115,9 @@ Route::prefix('pranotoweb')
         Route::get('/settings/footer', [SuperuserDashboardController::class, 'settingsFooter'])->name('settings.footer');
         Route::post('/settings/footer', [SuperuserDashboardController::class, 'settingsFooterUpdate'])->name('settings.footer.update');
 
+        Route::get('/settings/header', [SuperuserDashboardController::class, 'settingsHeader'])->name('settings.header');
+        Route::post('/settings/header', [SuperuserDashboardController::class, 'settingsHeaderUpdate'])->name('settings.header.update');
+
         Route::get('/settings/permalink', [SuperuserDashboardController::class, 'settingsPermalink'])->name('settings.permalink');
         Route::post('/settings/permalink', [SuperuserDashboardController::class, 'settingsPermalinkUpdate'])->name('settings.permalink.update');
 

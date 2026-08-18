@@ -63,9 +63,11 @@
     @if($page->css)
         <style>{!! $page->css !!}</style>
     @endif
+    <x-frontend-header-scripts />
 </head>
 
 <body class="font-sans antialiased text-gray-900 bg-gray-50 min-h-screen flex flex-col">
+    <x-frontend-body-scripts />
     <x-frontend-navbar />
 
     <main class="flex-grow {{ ($page->template === 'blank' || $page->template === 'ux-builder') ? '' : ($page->template === 'block' ? 'pb-0' : 'pt-24 pb-12') }}">

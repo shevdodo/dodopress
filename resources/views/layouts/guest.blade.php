@@ -28,8 +28,10 @@
         
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <x-frontend-header-scripts />
     </head>
     <body class="font-sans text-gray-900 antialiased bg-brand-50 relative overflow-x-hidden">
+        <x-frontend-body-scripts />
         
         <!-- Decorative Background -->
         <div class="absolute top-0 left-0 w-full h-full overflow-hidden -z-10">

@@ -239,6 +239,28 @@ class SuperuserDashboardController extends Controller
         return redirect()->route('superuser.settings.footer')->with('status', 'Footer settings saved successfully.');
     }
 
+    public function settingsHeader()
+    {
+        $settings = \App\Models\Setting::pluck('value', 'key')->toArray();
+        return view('dashboard.settings.header', compact('settings'));
+    }
+
+    public function settingsHeaderUpdate(Request $request)
+    {
+        $request->validate([
+            'header_scripts' => 'nullable|string',
+            'header_body_scripts' => 'nullable|string',
+        ]);
+
+        $data = $request->only(['header_scripts', 'header_body_scripts']);
+        
+        foreach ($data as $key => $value) {
+            \App\Models\Setting::updateOrCreate(['key' => $key], ['value' => $value ?? '']);
+        }
+
+        return redirect()->route('superuser.settings.header')->with('status', 'Header settings saved successfully.');
+    }
+
     public function settingsApi()
     {
         $settings = \App\Models\Setting::pluck('value', 'key')->toArray();

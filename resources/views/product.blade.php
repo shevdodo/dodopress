@@ -85,9 +85,11 @@
     <!-- AlpineJS -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <x-theme-config />
+    <x-frontend-header-scripts />
 </head>
 
 <body class="font-sans antialiased text-gray-900 bg-gray-50 min-h-screen flex flex-col" x-data="{ lightboxOpen: false, activeLightboxImage: '' }">
+    <x-frontend-body-scripts />
     <x-frontend-navbar />
 
     <main class="flex-grow pt-8 pb-12">

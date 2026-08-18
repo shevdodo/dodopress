@@ -18,9 +18,11 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
     <x-theme-config />
+    <x-frontend-header-scripts />
 </head>
 
 <body class="font-sans antialiased text-gray-900 bg-gray-50 min-h-screen flex flex-col">
+    <x-frontend-body-scripts />
     <x-frontend-navbar />
 
     <main class="flex-grow pt-8 pb-12">

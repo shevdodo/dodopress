@@ -175,6 +175,14 @@
                         <span class="{{ request()->routeIs('superuser.menus.*') ? 'font-medium' : '' }}">Menus</span>
                     </a>
                     
+                    <a href="{{ route('superuser.settings.header') }}"
+                        class="flex items-center space-x-3 px-4 py-3 rounded-xl {{ request()->routeIs('superuser.settings.header') ? 'text-white bg-gradient-to-r from-brand-600 to-brand-700 shadow-lg shadow-brand-900/30 font-medium' : 'text-brand-200 hover:text-white hover:bg-brand-800/60' }} transition-all duration-200">
+                        <div class="w-5 h-5 flex items-center justify-center">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>
+                        </div>
+                        <span class="{{ request()->routeIs('superuser.settings.header') ? 'font-medium' : '' }}">Header</span>
+                    </a>
+
                     <a href="{{ route('superuser.settings.footer') }}"
                         class="flex items-center space-x-3 px-4 py-3 rounded-xl {{ request()->routeIs('superuser.settings.footer') ? 'text-white bg-gradient-to-r from-brand-600 to-brand-700 shadow-lg shadow-brand-900/30 font-medium' : 'text-brand-200 hover:text-white hover:bg-brand-800/60' }} transition-all duration-200">
                         <div class="w-5 h-5 flex items-center justify-center">

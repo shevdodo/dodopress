@@ -29,7 +29,12 @@
         .stagger-1 { animation-delay:0.1s; } .stagger-2 { animation-delay:0.2s; }
         .stagger-3 { animation-delay:0.3s; } .stagger-4 { animation-delay:0.4s; }
     </style>
+    <x-frontend-header-scripts />
 </head>
+
+<body class="font-sans antialiased text-gray-900 bg-white min-h-screen flex flex-col overflow-x-hidden">
+    <x-frontend-body-scripts />
+    <x-frontend-navbar />
 
     <!-- ===== HERO ===== -->
     <section class="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
@@ -164,7 +169,3 @@
     <x-frontend-footer />
 </body>
 </html>
-
-
-<body class="font-sans antialiased text-gray-900 bg-white min-h-screen flex flex-col overflow-x-hidden">
-    <x-frontend-navbar />
