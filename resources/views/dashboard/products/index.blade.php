@@ -136,6 +136,15 @@
                                 <label class="block text-sm font-medium text-gray-700 mb-1">Update Stok (Opsional)</label>
                                 <input type="number" name="bulk_stock" placeholder="Biarkan kosong jika tidak diubah" class="w-full border-gray-300 rounded-lg focus:ring-brand-500 focus:border-brand-500 text-sm">
                             </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Update Status Pre Order (Opsional)</label>
+                                <select name="bulk_is_preorder" class="w-full border-gray-300 rounded-lg focus:ring-brand-500 focus:border-brand-500 text-sm">
+                                    <option value="">-- Jangan Ubah --</option>
+                                    <option value="1">Aktifkan Pre Order</option>
+                                    <option value="0">Matikan Pre Order</option>
+                                </select>
+                            </div>
                         </div>
 
                         <div class="mt-8 flex justify-end gap-3">
@@ -217,6 +226,9 @@
                                             <span class="px-2 py-1 bg-emerald-100 text-emerald-800 rounded-full text-xs font-medium">Available</span>
                                         @else
                                             <span class="px-2 py-1 bg-red-100 text-red-800 rounded-full text-xs font-medium">Unavailable</span>
+                                        @endif
+                                        @if($product->is_preorder)
+                                            <span class="px-2 py-0.5 bg-blue-100 text-blue-800 rounded-full text-xs font-medium inline-block mt-1">Pre Order</span>
                                         @endif
                                     </td>
                                     <td class="py-4 px-4 text-right space-x-3">

@@ -242,6 +242,9 @@ class ProductController extends Controller
         if ($request->filled('bulk_stock')) {
             $updateData['stock'] = $request->input('bulk_stock');
         }
+        if ($request->has('bulk_is_preorder') && $request->input('bulk_is_preorder') !== '') {
+            $updateData['is_preorder'] = (bool) $request->input('bulk_is_preorder');
+        }
 
         if (empty($updateData)) {
             return redirect()->route('superuser.products.index')->with('status', 'No changes specified for bulk edit.');
