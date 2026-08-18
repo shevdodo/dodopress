@@ -53,9 +53,12 @@ class ProductController extends Controller
             'meta_schema' => 'nullable|string',
             'rating'      => 'nullable|numeric|min:0|max:5',
             'review_count'=> 'nullable|integer|min:0',
+            'shopee_link' => 'nullable|string|max:500',
+            'is_preorder' => 'nullable|boolean',
         ]);
 
         $data = $request->except(['image']);
+        $data['is_preorder'] = $request->has('is_preorder');
         if (empty($data['slug'])) {
             $data['slug'] = Str::slug($data['name']);
         }
@@ -132,9 +135,12 @@ class ProductController extends Controller
             'meta_schema' => 'nullable|string',
             'rating'      => 'nullable|numeric|min:0|max:5',
             'review_count'=> 'nullable|integer|min:0',
+            'shopee_link' => 'nullable|string|max:500',
+            'is_preorder' => 'nullable|boolean',
         ]);
 
         $data = $request->except(['image']);
+        $data['is_preorder'] = $request->has('is_preorder');
         if (empty($data['slug'])) {
             $data['slug'] = Str::slug($data['name']);
         }

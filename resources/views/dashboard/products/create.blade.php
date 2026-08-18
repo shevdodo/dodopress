@@ -99,6 +99,31 @@
                             placeholder="0">
                     </div>
                 </div>
+
+                <div class="mt-6 pt-5 border-t border-gray-100 space-y-5">
+                    <h4 class="text-sm font-bold text-gray-900 uppercase tracking-wider">Opsi Marketplace & Pre-Order</h4>
+
+                    <!-- Shopee Link -->
+                    <div>
+                        <label for="shopee_link" class="block text-sm font-semibold text-gray-800 mb-1">Link Shopee (Opsional)</label>
+                        <input type="url" name="shopee_link" id="shopee_link" value="{{ old('shopee_link') }}"
+                            class="w-full border-gray-300 rounded-xl shadow-sm focus:border-brand-500 focus:ring focus:ring-brand-500/20 px-4 py-2.5 transition text-sm"
+                            placeholder="https://shopee.co.id/product-name...">
+                        <p class="text-xs text-gray-400 mt-1">Masukkan URL produk di Shopee jika ada. Tombol "Beli di Shopee" akan otomatis tampil di halaman produk.</p>
+                    </div>
+
+                    <!-- Pre Order Enable -->
+                    <div class="p-4 rounded-xl bg-blue-50/60 border border-blue-100 flex items-center justify-between">
+                        <div>
+                            <label for="is_preorder" class="block text-sm font-bold text-gray-900 cursor-pointer">Aktifkan Tombol Pre Order</label>
+                            <p class="text-xs text-gray-500 mt-0.5">Jika diaktifkan, tombol "Pre Order" via WhatsApp CS akan tampil pada detail produk.</p>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" name="is_preorder" id="is_preorder" value="1" {{ old('is_preorder') ? 'checked' : '' }} class="sr-only peer">
+                            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                        </label>
+                    </div>
+                </div>
             </div>
         </div>
 

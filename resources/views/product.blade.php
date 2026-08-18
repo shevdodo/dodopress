@@ -258,6 +258,37 @@
                                     Tanya CS
                                 </a>
                             </div>
+
+                            @if(!empty($product->shopee_link) || $product->is_preorder)
+                                <div class="mt-3 flex flex-col sm:flex-row gap-3">
+                                    @if(!empty($product->shopee_link))
+                                        @php
+                                            $shopeeUrl = \Illuminate\Support\Str::startsWith($product->shopee_link, ['http://', 'https://']) ? $product->shopee_link : 'https://' . $product->shopee_link;
+                                        @endphp
+                                        <a href="{{ $shopeeUrl }}" target="_blank" rel="noopener noreferrer"
+                                            class="w-full {{ $product->is_preorder ? 'sm:w-1/2' : 'sm:w-full' }} px-6 py-3.5 text-white font-bold rounded-lg bg-[#EE4D2D] hover:bg-[#d73211] shadow-md transition flex items-center justify-center gap-2 group">
+                                            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M19.388 7.376h-3.142c-.25-2.227-2.128-3.976-4.424-3.976s-4.174 1.749-4.424 3.976H4.256L2.83 20.624c-.068.749.493 1.376 1.246 1.376h15.692c.753 0 1.314-.627 1.246-1.376l-1.626-13.248zm-7.566-2.476c1.455 0 2.668 1.077 2.903 2.476H8.919c.235-1.399 1.448-2.476 2.903-2.476zm6.353 14.224H5.47l1.246-10.248h2.003v1.8c0 .414.336.75.75.75s.75-.336.75-.75v-1.8h3.122v1.8c0 .414.336.75.75.75s.75-.336.75-.75v-1.8h2.003l1.246 10.248z"/>
+                                            </svg>
+                                            <span>Beli di Shopee</span>
+                                        </a>
+                                    @endif
+
+                                    @if($product->is_preorder)
+                                        @php
+                                            $preorderMessage = "Halo CS Batik Mukti, saya ingin Pre-Order produk *" . $product->name . "*.\n\nLink Produk: " . route('product.show', ['category_slug' => $product->category ? $product->category->slug : 'uncategorized', 'slug' => $product->slug]);
+                                            $preorderWaUrl = "https://api.whatsapp.com/send?phone=" . $whatsappCs . "&text=" . urlencode($preorderMessage);
+                                        @endphp
+                                        <a href="{{ $preorderWaUrl }}" target="_blank" rel="noopener noreferrer"
+                                            class="w-full {{ !empty($product->shopee_link) ? 'sm:w-1/2' : 'sm:w-full' }} px-6 py-3.5 text-white font-bold rounded-lg bg-blue-600 hover:bg-blue-700 shadow-md transition flex items-center justify-center gap-2">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                            </svg>
+                                            <span>Pre Order</span>
+                                        </a>
+                                    @endif
+                                </div>
+                            @endif
                         </form>
                     </div>
                 </div>

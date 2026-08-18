@@ -27,10 +27,13 @@ class Product extends Model
         'meta_schema',
         'rating',
         'review_count',
+        'shopee_link',
+        'is_preorder',
     ];
 
     protected $casts = [
         'images' => 'array',
+        'is_preorder' => 'boolean',
     ];
 
     public function category()
